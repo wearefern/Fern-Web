@@ -17,7 +17,7 @@ import { Logo } from '~ui/widgets/logo';
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
   <Link
     href={href}
-    className='text-sm font-medium text-ctx-primary-fg-solid transition-opacity hover:opacity-70 sm:text-base'
+    className='text-xs font-medium text-ctx-primary-fg-solid transition-opacity hover:opacity-70 sm:text-sm'
   >
     {children}
   </Link>
