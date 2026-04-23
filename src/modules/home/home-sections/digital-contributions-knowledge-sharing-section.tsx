@@ -52,10 +52,7 @@ const DigitalContributionsKnowledgeSharing = () => {
 
   return (
     <SectionContainer>
-      <SectionHeader
-        title='Digital Contributions'
-        subtitle='Knowledge sharing'
-      />
+      <SectionHeader title='Projects' />
 
       <ContentCardContainer>
         {contents.map((entry) => (

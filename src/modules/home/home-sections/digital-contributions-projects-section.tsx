@@ -10,7 +10,7 @@ import { SectionHeader } from '~ui/molecules/section/section-header';
 // TODO: :)
 const DigitalContributionsProjects = () => {
   return (
-    <SectionContainer>
+    <SectionContainer id='projects'>
       <SectionHeader title='Digital Contributions' subtitle='Projects' />
     </SectionContainer>
   );

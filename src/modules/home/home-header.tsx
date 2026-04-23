@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import { BLOG_PATH } from '~constants/index';
 
-import { ButtonWithVideo } from '~ui/atoms/button';
+
 import { LAYOUT_ID_HOME_LOGO } from '~ui/atoms/motion';
 import { ThemeToggle } from '~ui/atoms/theme/theme-toggle';
 import { AppHeader } from '~ui/molecules/app-header';
@@ -15,6 +15,15 @@ import { Logo } from '~ui/widgets/logo';
  * HomeHeader
  * -----------------------------------------------------------------------------------------------*/
 
+const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
+  <Link
+    href={href}
+    className="text-lg font-medium text-ctx-primary-fg-solid hover:opacity-70 transition-opacity"
+  >
+    {children}
+  </Link>
+);
+
 const HomeHeader = () => {
   return (
     <AppHeader innerClassName='flex gap-x-2 justify-between'>
@@ -23,19 +32,11 @@ const HomeHeader = () => {
       </Link>
 
       <MotionConfig transition={{ type: 'spring', duration: 0.5, bounce: 0 }}>
-        <motion.nav layout='position' className='flex items-center gap-x-2'>
-          <ButtonWithVideo
-            whenVideo={{ inverse: true }}
-            variant='outline'
-            asChild
-            videoFileName='header-button-home'
-          >
-            <Link href={BLOG_PATH}>Blog</Link>
-          </ButtonWithVideo>
-
-          <ButtonWithVideo videoFileName='header-button-home' asChild>
-            <Link href='#contact'>Get in touch</Link>
-          </ButtonWithVideo>
+        <motion.nav layout='position' className='flex items-center gap-x-6'>
+          <NavLink href='/#projects'>Projects.</NavLink>
+          <NavLink href='/#about'>About.</NavLink>
+          <NavLink href={BLOG_PATH}>Blog.</NavLink>
+          <NavLink href='#contact'>Contact.</NavLink>
 
           <ThemeToggle />
         </motion.nav>

@@ -21,7 +21,7 @@ import { InterestsSpotlight } from '~ui/widgets/interests-spotlight';
 
 const AboutSection = () => {
   return (
-    <div>
+    <div id='about'>
       <SectionContainer>
         <SectionHeader title='About' />
 
