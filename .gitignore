@@ -4,6 +4,8 @@ node_modules/
 .*.env
 .env*
 
+#pka#
+
 # OS generated files #
 ######################
 .DS_Store
