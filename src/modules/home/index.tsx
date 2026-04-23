@@ -9,9 +9,6 @@ import { HomeFooter } from '~modules/home/home-footer';
 import { HomeHeader } from '~modules/home/home-header';
 import { AboutSection } from '~modules/home/home-sections/about-section/about-section';
 import { ContactSection } from '~modules/home/home-sections/contact-section';
-import { DigitalContributionsKnowledgeSharing } from '~modules/home/home-sections/digital-contributions-knowledge-sharing-section';
-import { DigitalContributionsProjects } from '~modules/home/home-sections/digital-contributions-projects-section';
-import { ExperienceSection } from '~modules/home/home-sections/experience-section';
 import { HeroSection } from '~modules/home/home-sections/hero-section';
 
 import { cn } from '~utils/style';
@@ -57,12 +54,6 @@ const Home = ({ blogContent, authorPortraits, className }: HomeProps) => {
 
         <div className='w-full space-y-section-sm sm:space-y-section'>
           <HeroSection />
-
-          <DigitalContributionsKnowledgeSharing />
-
-          <DigitalContributionsProjects />
-
-          <ExperienceSection />
 
           <AboutSection />
 
