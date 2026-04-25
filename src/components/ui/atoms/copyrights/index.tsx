@@ -14,7 +14,7 @@ export const Copyrights = memo(({ className, ...rest }: CopyrightsProps) => {
       className={cn('w-full  text-center', className)}
       {...rest}
     >
-      All rights reserved &copy; Bruno Kawka 2024
+      All rights reserved &copy; Fern 2026
     </Typography>
   );
 });
