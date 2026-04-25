@@ -19,7 +19,7 @@ const HighlightedContributionsSection = () => {
 
   return (
     <SectionContainer>
-      <SectionHeader title='Top-rated contributions' />
+      <SectionHeader title='Featured insights' />
 
       <ContentCardContainer>
         {highlightedContents.map((content) => (
