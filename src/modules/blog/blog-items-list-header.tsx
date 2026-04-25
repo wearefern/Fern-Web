@@ -15,9 +15,7 @@ export const BlogItemsListHeader = () => {
     <header>
       <Typography variant='hero' asChild>
         <h1>
-          {
-            'I believe knowledge sharing is a fundamental method to pursue expertise in a given field. '
-          }
+          {'Practical writing, talks, and ideas from Fern on building software that scales.'}
         </h1>
       </Typography>
     </header>
