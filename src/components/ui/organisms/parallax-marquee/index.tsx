@@ -1,13 +1,4 @@
-import {
-  MotionValue,
-  motion,
-  useMotionValue,
-  useScroll,
-  useSpring,
-  useTransform,
-  useVelocity,
-  wrap,
-} from 'framer-motion';
+import { motion, useMotionValue, useScroll, useSpring, useTransform, useVelocity, wrap } from 'framer-motion';
 import { ComponentPropsWithoutRef, useRef } from 'react';
 
 import { useAnimationFrameInView } from '~hooks/use-animation-frame-in-view';
@@ -34,7 +25,7 @@ export const ParallaxMarquee = ({
     stiffness: 400,
   });
   const velocityFactor = useTransform(
-    smoothVelocity as MotionValue<number>,
+    smoothVelocity,
     [0, 1000],
     [0, 5],
     {
