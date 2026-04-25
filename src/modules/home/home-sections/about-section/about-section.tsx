@@ -1,16 +1,8 @@
 'use client';
 
-import Link from 'next/link';
-
-import { BLOG_PATH } from '~constants/index';
-
-import { AboutSectionHeadline } from '~modules/home/home-sections/about-section/about-section-headline';
-
-import { ButtonWithVideo } from '~ui/atoms/button';
 import { Typography } from '~ui/atoms/typography';
 import { SectionContainer } from '~ui/molecules/section/section-container';
 import { SectionHeader } from '~ui/molecules/section/section-header';
-import { InterestsSpotlight } from '~ui/widgets/interests-spotlight';
 
 /* -------------------------------------------------------------------------------------------------
  * AboutSection
@@ -18,51 +10,85 @@ import { InterestsSpotlight } from '~ui/widgets/interests-spotlight';
 
 const AboutSection = () => {
   return (
-    <div id='about'>
+    <div id='process'>
       <SectionContainer>
         <SectionHeader
-          title='Company'
-          subtitle='How Fern works across the software lifecycle.'
+          title='Process'
+          subtitle='How Fern moves from planning to reliable delivery.'
+          className='pb-16 sm:pb-24'
         />
 
-        <AboutSectionHeadline />
+        <Typography
+          className='mx-auto max-w-5xl text-center text-xl leading-9 sm:text-2xl sm:leading-10'
+          balance
+          asChild
+        >
+          <h3>
+            A lean delivery process built to reduce ambiguity, keep momentum,
+            and turn product decisions into maintainable software.
+          </h3>
+        </Typography>
 
-        <div className='flex justify-between gap-x-8 md:gap-x-24'>
-          <div className='flex-1'>
-            <Typography balance>
-              Fern works with founders, operators, and product teams that need
-              reliable execution. We prioritize understandable architecture,
-              pragmatic scope, and delivery systems that stay healthy as the
-              business grows.
-            </Typography>
-
-            <ButtonWithVideo
-              className='mt-6'
-              whenVideo={{ inverse: true }}
-              variant='outline'
-              asChild
-              videoFileName='read-about-google-code-in'
+        <div className='mt-16 grid grid-cols-1 gap-6 sm:mt-24 sm:grid-cols-2 sm:gap-8 xl:mt-28 xl:grid-cols-4 xl:gap-10'>
+          {steps.map((step, index) => (
+            <div
+              key={step.title}
+              className='rounded-[1.75rem] border border-ctx-primary-fg-hint bg-ctx-primary px-6 py-7 sm:px-8 sm:py-9'
             >
-              <Link href={BLOG_PATH}>Read our insights</Link>
-            </ButtonWithVideo>
-          </div>
+              <Typography
+                variant='sm'
+                color='secondary'
+                weight='bold'
+                prose={false}
+                className='uppercase tracking-[0.2em]'
+              >
+                {`0${index + 1}`}
+              </Typography>
 
-          <div className='flex-1'>
-            <Typography>
-              Our approach covers discovery, design, implementation,
-              integration, optimization, and support so teams can move from idea
-              to production with one software partner.
-            </Typography>
-          </div>
+              <Typography
+                variant='heading'
+                weight='medium'
+                prose={false}
+                className='mt-6 text-[1.35rem] leading-8'
+              >
+                {step.title}
+              </Typography>
+
+              <Typography color='secondary' className='mt-4 leading-8'>
+                {step.description}
+              </Typography>
+            </div>
+          ))}
         </div>
       </SectionContainer>
-
-      <InterestsSpotlight className='mt-content-sm sm:mt-content' />
     </div>
   );
 };
 
 AboutSection.displayName = 'AboutSection';
+
+const steps = [
+  {
+    title: 'Discover',
+    description:
+      'We align on the product goal, business constraints, users, and the shortest path to a useful release.',
+  },
+  {
+    title: 'Design',
+    description:
+      'We shape the experience, define system behavior, and remove ambiguity before engineering effort scales.',
+  },
+  {
+    title: 'Build',
+    description:
+      'We implement the product with clear architecture, tight feedback loops, and production-focused engineering.',
+  },
+  {
+    title: 'Refine',
+    description:
+      'We optimize, stabilize, and iterate after launch so the product keeps improving as the business grows.',
+  },
+];
 
 /* -----------------------------------------------------------------------------------------------*/
 

@@ -1,0 +1,13 @@
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+ ⨯ ./src/modules/home/home-sections/about-section/about-section.tsx
+Error: Failed to read source code from C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\src\modules\home\home-sections\about-section\about-section.tsx
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Import trace for requested module:
+./src/modules/home/home-sections/about-section/about-section.tsx
+./src/modules/home/index.tsx
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.

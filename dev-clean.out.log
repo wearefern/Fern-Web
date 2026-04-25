@@ -1,0 +1,31 @@
+   ▲ Next.js 14.1.4
+   - Local:        http://localhost:3000
+   - Environments: .env.local
+
+   automatically enabled Fast Refresh for 1 custom loader
+ ✓ Ready in 5.4s
+ ✓ Compiled /src/middleware in 191ms (79 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 9.4s (1787 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 2.6s (1766 modules)
+ ✓ Compiled in 828ms (1760 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 2.4s (1766 modules)
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 803ms (922 modules)
+ ✓ Compiled in 1105ms (1750 modules)
+ ✓ Compiled in 456ms (1750 modules)
+ ✓ Compiled in 1304ms (1750 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 3.3s (1756 modules)
+ ✓ Compiled /icon.svg in 369ms (917 modules)
+ ✓ Compiled in 610ms (867 modules)
+ ✓ Compiled in 581ms (867 modules)
+ ✓ Compiled in 1255ms (1752 modules)
+ ✓ Compiled in 808ms (1752 modules)
+ ✓ Compiled in 857ms (1752 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 1336ms (1743 modules)
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 716ms (918 modules)

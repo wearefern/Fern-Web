@@ -1,0 +1,8 @@
+   ▲ Next.js 14.1.4
+   - Local:        http://localhost:3101
+   - Environments: .env.local
+
+   automatically enabled Fast Refresh for 1 custom loader
+ ✓ Ready in 381.7s
+ ○ Compiling /src/middleware ...
+ ✓ Compiled /src/middleware in 675ms (79 modules)

@@ -1,0 +1,18 @@
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3001
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at Server.listen (node:net:2067:7)
+    at C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\server\lib\start-server.js:279:16
+    at new Promise (<anonymous>)
+    at startServer (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\server\lib\start-server.js:190:11)
+    at C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\server\lib\start-server.js:309:52
+    at Span.traceAsyncFn (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\trace\trace.js:151:26)
+    at process.<anonymous> (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\server\lib\start-server.js:309:35)
+    at process.emit (node:events:524:28) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 3001
+}

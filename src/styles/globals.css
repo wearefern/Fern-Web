@@ -6,11 +6,23 @@
 
 @layer base {
   :root {
-    --base-fg-solid: 0 0% 0%;
-    --base-fg-primary: 0 0% 0% / 87%;
-    --base-fg-secondary: 0 0% 0% / 64%;
-    --base-fg-hint: 0 0% 0% / 34%;
-    --base-fg-decorative: 0 0% 0% / 16%;
+    --bg: 0 0% 100%;
+    --surface: 0 0% 96.1%;
+    --text: 0 0% 0% / 87%;
+    --text-solid: 0 0% 0%;
+    --muted: 0 0% 0% / 64%;
+    --hint: 0 0% 0% / 34%;
+    --border: 0 0% 0% / 16%;
+    --accent: 90.9 75.6% 19.2%;
+    --accent-contrast: 0 0% 100%;
+    --button-surface: 0 0% 0%;
+    --button-contrast: 0 0% 100%;
+
+    --base-fg-solid: var(--text-solid);
+    --base-fg-primary: var(--text);
+    --base-fg-secondary: var(--muted);
+    --base-fg-hint: var(--hint);
+    --base-fg-decorative: var(--border);
     --base-fg-destructive: 0 100% 70%;
 
     --base-fg-inv-solid: 0 0% 100%;
@@ -20,23 +32,23 @@
     --base-fg-inv-decorative: 0 0% 100% / 16%;
     --base-fg-inv-destructive: 0 100% 70%;
 
-    --ctx-primary: 0 0% 100%;
+    --ctx-primary: var(--bg);
     --ctx-primary-inv: 0 0% 0%;
 
-    --ctx-secondary: 0 0% 96.1%;
+    --ctx-secondary: var(--surface);
 
     --ctx-accent-primary: 101 95.5% 92.2%;
     --ctx-accent-primary-fg: 90.9 75.6% 19.2%;
 
-    --ctx-accent-secondary: 90.9 75.6% 19.2%;
-    --ctx-accent-secondary-fg: 0 0% 100%;
+    --ctx-accent-secondary: var(--accent);
+    --ctx-accent-secondary-fg: var(--accent-contrast);
     --ctx-accent-secondary-fg-secondary: 0 0% 0% / 87%;
     --ctx-accent-secondary-fg-hint: 0 0% 0% / 64%;
 
     --ctx-destructive: 0 66.7% 63.5%;
 
-    --ctx-button: 0 0% 0%;
-    --ctx-button-inv: 0 0% 100%;
+    --ctx-button: var(--button-surface);
+    --ctx-button-inv: var(--button-contrast);
 
     --socials-youtube: 0 100% 50%;
     --socials-stackoverflow: 28.6 87.5% 54.1%;
@@ -52,11 +64,23 @@
   }
 
   .dark {
-    --base-fg-solid: 0 0% 80%;
-    --base-fg-primary: 0 0% 100% / 64%;
-    --base-fg-secondary: 0 0% 100% / 48%;
-    --base-fg-hint: 0 0% 100% / 34%;
-    --base-fg-decorative: 0 0% 100% / 16%;
+    --bg: 0 0% 7%;
+    --surface: 0 0% 15%;
+    --text: 0 0% 100% / 64%;
+    --text-solid: 0 0% 80%;
+    --muted: 0 0% 100% / 48%;
+    --hint: 0 0% 100% / 34%;
+    --border: 0 0% 100% / 16%;
+    --accent: 90 45% 67%;
+    --accent-contrast: 0 0% 0%;
+    --button-surface: 0 0% 80%;
+    --button-contrast: 0 0% 7%;
+
+    --base-fg-solid: var(--text-solid);
+    --base-fg-primary: var(--text);
+    --base-fg-secondary: var(--muted);
+    --base-fg-hint: var(--hint);
+    --base-fg-decorative: var(--border);
     --base-fg-destructive: 0 67% 63.5%;
 
     --base-fg-inv-solid: 0 0% 0%;
@@ -66,23 +90,23 @@
     --base-fg-inv-decorative: 0 0% 0% / 16%;
     --base-fg-inv-destructive: 0 100% 70%;
 
-    --ctx-primary: 0 0% 7%;
+    --ctx-primary: var(--bg);
     --ctx-primary-inv: 0 0% 80%;
 
-    --ctx-secondary: 0 0% 15%;
+    --ctx-secondary: var(--surface);
 
     --ctx-accent-primary: 90 21% 30%;
     --ctx-accent-primary-fg: 100 95% 92%;
 
-    --ctx-accent-secondary: 90 45% 67%;
-    --ctx-accent-secondary-fg: 0 0% 0%;
+    --ctx-accent-secondary: var(--accent);
+    --ctx-accent-secondary-fg: var(--accent-contrast);
     --ctx-accent-secondary-fg-secondary: 0 0% 100% / 87%;
     --ctx-accent-secondary-fg-hint: 0 0% 100% / 64%;
 
     --ctx-destructive: 0 66.7% 55.3%;
 
-    --ctx-button: 0 0% 80%;
-    --ctx-button-inv: 0 0% 7%;
+    --ctx-button: var(--button-surface);
+    --ctx-button-inv: var(--button-contrast);
 
     --socials-youtube: 0 100% 50%;
     --socials-stackoverflow: 28.6 87.5% 54.1%;
@@ -97,10 +121,27 @@
     --heart-6: 0 66.7% 35.3%;
   }
 
+  html.services-theme-active {
+    --bg: 232 20% 8%;
+    --surface: 232 18% 11%;
+    --text: 0 0% 100% / 88%;
+    --text-solid: 0 0% 100%;
+    --muted: 0 0% 100% / 66%;
+    --hint: 0 0% 100% / 42%;
+    --border: 0 0% 100% / 18%;
+    --accent: 155 32% 66%;
+    --accent-contrast: 232 20% 8%;
+    --button-surface: 155 32% 66%;
+    --button-contrast: 232 20% 8%;
+  }
+
   html {
     @apply min-h-screen scroll-py-section-sm scroll-smooth bg-ctx-primary text-ctx-primary-fg-primary sm:scroll-py-section;
     -webkit-tap-highlight-color: transparent;
     color-scheme: light;
+    transition:
+      background-color 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 700ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .dark .html {
@@ -110,6 +151,23 @@
   body {
     font-family: var(--font-body);
     @apply min-h-screen;
+    background-color: hsl(var(--ctx-primary));
+    color: hsla(var(--base-fg-primary));
+  }
+
+  body,
+  body *,
+  body *::before,
+  body *::after {
+    transition-property:
+      background-color,
+      color,
+      border-color,
+      fill,
+      stroke,
+      box-shadow;
+    transition-duration: 700ms;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   h1,
@@ -135,6 +193,20 @@
 
   ::selection {
     @apply bg-ctx-accent-secondary text-ctx-accent-secondary-fg-primary;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+      transition-duration: 0.01ms;
+    }
+
+    body,
+    body *,
+    body *::before,
+    body *::after {
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 

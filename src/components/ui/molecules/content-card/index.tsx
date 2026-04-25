@@ -56,6 +56,7 @@ const ContentCard = ({
     return (
       <Typography
         title={title}
+        data-content-card-title
         className='mt-1 line-clamp-3 h-[calc(3em*1.25)] w-full text-left leading-5 sm:line-clamp-2 sm:h-[calc(2em*1.5)] sm:leading-6'
         prose={false}
         balance
@@ -67,9 +68,13 @@ const ContentCard = ({
 
   const renderDisplay = useCallback(
     () => (
-      <div className='relative mt-8 flex aspect-video w-full flex-col items-center justify-center overflow-hidden rounded-xl bg-ctx-secondary'>
+      <div
+        data-content-card-display
+        className='relative mt-8 flex aspect-video w-full flex-col items-center justify-center overflow-hidden rounded-xl bg-ctx-secondary'
+      >
         {display ?? displayPlaceholder ?? (
           <Typography
+            data-content-card-placeholder
             className='uppercase'
             variant='sm'
             color='secondary'
@@ -93,6 +98,7 @@ const ContentCard = ({
         transition={{ type: 'spring', duration: 0.2 }}
       >
         <Typography
+          data-content-card-label
           className='line-clamp-2 w-full text-left uppercase sm:line-clamp-1'
           variant='sm'
           color='secondary'

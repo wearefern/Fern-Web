@@ -11,6 +11,8 @@ import { HeroSection } from '~modules/blog/blog-sections/hero-section';
 import { HighlightedContributionsSection } from '~modules/blog/blog-sections/highlighted-contributions-section';
 import { MoreSection } from '~modules/blog/blog-sections/more-section';
 
+import { GsapReveal } from '~ui/atoms/gsap-reveal';
+
 import { cn } from '~utils/style';
 
 /* -------------------------------------------------------------------------------------------------
@@ -55,14 +57,22 @@ const Blog = ({ contents, highlightedContents, className }: BlogProps) => {
         <div className='w-full space-y-section-sm sm:space-y-section'>
           <HeroSection />
 
-          <HighlightedContributionsSection />
+          <GsapReveal>
+            <HighlightedContributionsSection />
+          </GsapReveal>
 
-          <AllContributionsSection />
+          <GsapReveal delay={0.05}>
+            <AllContributionsSection />
+          </GsapReveal>
 
-          <MoreSection />
+          <GsapReveal delay={0.08}>
+            <MoreSection />
+          </GsapReveal>
         </div>
 
-        <BlogFooter />
+        <GsapReveal delay={0.12}>
+          <BlogFooter />
+        </GsapReveal>
       </main>
     </BlogContext.Provider>
   );

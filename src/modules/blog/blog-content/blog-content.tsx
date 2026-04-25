@@ -5,6 +5,8 @@ import { BlogContentFooter } from '~modules/blog/blog-content/blog-content-foote
 import { BlogContentHeader } from '~modules/blog/blog-content/blog-content-header';
 import { BlogTwoPaneContainer } from '~modules/blog/blog-two-pane-container';
 
+import { GsapReveal } from '~ui/atoms/gsap-reveal';
+
 export interface BlogContentProps {
   content: Content;
 }
@@ -13,15 +15,23 @@ export function BlogContent({ content }: BlogContentProps) {
   return (
     <BlogTwoPaneContainer
       leadingClassName='sm:max-w-[35%]'
-      leading={<BlogContentHeader content={content} />}
+      leading={
+        <GsapReveal start='top 85%' y={40}>
+          <BlogContentHeader content={content} />
+        </GsapReveal>
+      }
       trailing={
         <>
-          <BlogContentArticle body={content.body} />
+          <GsapReveal start='top 88%' y={40}>
+            <BlogContentArticle body={content.body} />
+          </GsapReveal>
 
-          <BlogContentFooter
-            className='relative z-50 mt-section-sm sm:mt-section'
-            content={content}
-          />
+          <GsapReveal start='top 90%' y={32} delay={0.05}>
+            <BlogContentFooter
+              className='relative z-50 mt-section-sm sm:mt-section'
+              content={content}
+            />
+          </GsapReveal>
         </>
       }
     />
