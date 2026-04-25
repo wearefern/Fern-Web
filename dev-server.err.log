@@ -174,3 +174,24 @@ motion() is deprecated. Use motion.create() instead.
 motion() is deprecated. Use motion.create() instead.
 motion() is deprecated. Use motion.create() instead.
 motion() is deprecated. Use motion.create() instead.
+ ⨯ src\app\(root)\layout.tsx
+`next/font` error:
+Unknown font `Geist`
+ ⨯ src\app\(root)\layout.tsx
+`next/font` error:
+Unknown font `Geist`
+ ⨯ src\app\(root)\layout.tsx
+`next/font` error:
+Unknown font `Geist`
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+ ⨯ ./src/modules/home/home-sections/hero-section.tsx
+Error: Failed to read source code from C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\src\modules\home\home-sections\hero-section.tsx
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Import trace for requested module:
+./src/modules/home/home-sections/hero-section.tsx
+./src/modules/home/index.tsx
