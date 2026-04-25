@@ -29,3 +29,10 @@
  ✓ Compiled /icon.svg in 354ms (915 modules)
  ✓ Compiled in 2.7s (1779 modules)
  ✓ Compiled in 2.1s (1745 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 2.2s (1751 modules)
+ ✓ Compiled /icon.svg in 305ms (915 modules)
+ ○ Compiling /blog ...
+ ✓ Compiled /blog in 4.3s (1823 modules)
+ ✓ Compiled in 3.6s (1802 modules)
+ ✓ Compiled in 2.1s (1802 modules)
