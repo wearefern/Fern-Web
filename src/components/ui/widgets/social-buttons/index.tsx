@@ -17,25 +17,25 @@ interface SocialEntry {
 const socials: SocialEntry[] = [
   {
     id: 'github',
-    title: 'Follow me on GitHub',
+    title: 'Follow Fern on GitHub',
     name: 'github',
     href: SOCIALS.github.url,
   },
   {
     id: 'linkedin',
-    title: 'Add me on Linkedin',
+    title: 'Connect with Fern on LinkedIn',
     name: 'linkedin',
     href: SOCIALS.linkedin.url,
   },
   {
-    id: 'send',
-    title: 'Contact me via Telegram',
-    name: 'send',
-    href: SOCIALS.telegram.url,
+    id: 'twitter',
+    title: 'Follow Fern on X',
+    name: 'twitter',
+    href: SOCIALS.twitter.url,
   },
   {
     id: 'mail',
-    title: 'Send me an e-mail',
+    title: 'Send Fern an email',
     name: 'mail',
     href: `mailto:${SOCIALS.mail.url}`,
   },
