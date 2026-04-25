@@ -52,9 +52,9 @@ export const HeroSection = () => {
           asChild
         >
           <h1>
-            <p>Built to rank.</p>
-            <p>Designed to convert.</p>
-            <p>Made to scale.</p>
+            <p>Software for</p>
+            <p>teams that need</p>
+            <p>to move faster.</p>
           </h1>
         </Typography>
 
@@ -65,8 +65,8 @@ export const HeroSection = () => {
           asChild
         >
           <p>
-            From custom software to cloud-based systems — we engineer the tools
-            that move your business forward.
+            Fern partners with growing companies to design platforms, ship
+            products, and modernize operations across web, mobile, and cloud.
           </p>
         </Typography>
       </figure>
