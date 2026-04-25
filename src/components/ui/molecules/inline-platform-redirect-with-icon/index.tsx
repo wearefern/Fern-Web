@@ -6,7 +6,7 @@ import { SOCIALS } from '~constants/index';
 import { Button, ButtonProps } from '~ui/atoms/button';
 import { Icon, IconName, IconProps } from '~ui/atoms/icon';
 
-import { cn, tw } from '~utils/style';
+import { cn } from '~utils/style';
 
 /* -------------------------------------------------------------------------------------------------
  * InlinePlatformRedirectWithIcon
@@ -87,52 +87,9 @@ const InlinePlatformRedirectGitHub = () => {
 
 InlinePlatformRedirectGitHub.displayName = 'PlatformRedirectGitHub';
 
-/* -------------------------------------------------------------------------------------------------
- * PlatformRedirectStackOverflow
- * -----------------------------------------------------------------------------------------------*/
-
-const InlinePlatformRedirectStackOverflow = () => {
-  return (
-    <InlinePlatformRedirectWithIcon
-      label='StackOverflow'
-      link={SOCIALS.stackoverflow.url}
-      icon='stackoverflow'
-      buttonProps={{ className: 'hover:text-socials-stackoverflow' }}
-      iconProps={{
-        color: tw.theme.colors.socials.stackoverflow,
-      }}
-    />
-  );
-};
-
-InlinePlatformRedirectStackOverflow.displayName =
-  'PlatformRedirectStackOverflow';
-
-/* -----------------------------------------------------------------------------------------------*/
-
-const InlinePlatformRedirectReddit = () => {
-  return (
-    <InlinePlatformRedirectWithIcon
-      label='Reddit'
-      link={SOCIALS.reddit.url}
-      icon='reddit'
-      buttonProps={{ className: 'hover:text-socials-reddit' }}
-      iconProps={{
-        color: tw.theme.colors.socials.reddit,
-      }}
-    />
-  );
-};
-
-InlinePlatformRedirectReddit.displayName = 'InlinePlatformRedirectReddit';
-
-/* -----------------------------------------------------------------------------------------------*/
-
 export {
   InlinePlatformRedirectWithIcon,
   InlinePlatformRedirectTwitter,
   InlinePlatformRedirectGitHub,
-  InlinePlatformRedirectStackOverflow,
-  InlinePlatformRedirectReddit,
 };
 export type { InlinePlatformRedirectWithIconProps };
