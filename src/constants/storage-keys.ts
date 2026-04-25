@@ -1,1 +1,1 @@
-export const STORAGE_KEY_THEME = 'me.kawka.theme';
+export const STORAGE_KEY_THEME = 'fern.theme';
