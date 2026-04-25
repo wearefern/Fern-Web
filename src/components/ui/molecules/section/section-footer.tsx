@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  MotionValue,
   motion,
   useMotionValueEvent,
   useScroll,
@@ -70,7 +69,7 @@ const SectionFooter = ({ children }: PropsWithChildren) => {
   );
   const animationProgressSpring = useSpring(animationProgress, {
     bounce: 0,
-  }) as MotionValue<number>;
+  });
 
   const scale = useTransform(
     animationProgressSpring,
@@ -165,9 +164,10 @@ SectionFooter.displayName = 'SectionFooter';
 const OpenSourceHeadline = () => (
   <SectionHeadline disablePadding inverse>
     <span className='text-foreground-primary'>
-      This site is built on top of{' '}
+      Fern builds software with{' '}
     </span>
-    Next.js, using React, Typescript, Shadcn/UI, Framer-Motion, and more &#8212;{' '}
+    modern web architecture, strong UX foundations, and production-ready
+    engineering practices &#8212;{' '}
     <Button
       className='inline whitespace-break-spaces text-base'
       variant='link'
@@ -176,7 +176,7 @@ const OpenSourceHeadline = () => (
       asChild
     >
       <Link href={PORTFOLIO_GITHUB_REPOSITORY_URL}>
-        check the source-code on GitHub!
+        view the code on GitHub.
       </Link>
     </Button>
   </SectionHeadline>
@@ -188,30 +188,22 @@ OpenSourceHeadline.displayName = 'OpenSourceHeadline';
  * ArtistsHeadline
  * -----------------------------------------------------------------------------------------------*/
 
-const artists = [
+const partners = [
   {
-    name: 'Berlioz',
-    href: 'https://open.spotify.com/artist/3k3RY7kR8f0vp8Cq27P141?si=C-r3P0bdTSOA4PS4SalrxA',
+    name: 'Startups',
+    href: '/#projects',
   },
   {
-    name: 'Sir Chloe',
-    href: 'https://open.spotify.com/artist/6rniTPs9zN26kYnkPdFl1U',
+    name: 'Operations Teams',
+    href: '/#about',
   },
   {
-    name: 'Mother Mother',
-    href: 'https://open.spotify.com/artist/0e86yPdC41PGRkLp2Q1Bph',
+    name: 'Product Teams',
+    href: '/#projects',
   },
   {
-    name: 'Prometh',
-    href: 'https://open.spotify.com/artist/6saU4WOQFf2JMuZZHNVqWX',
-  },
-  {
-    name: 'Flume',
-    href: 'https://open.spotify.com/artist/6nxWCVXbOlEVRexSbLsTer',
-  },
-  {
-    name: '83FM by Steez',
-    href: 'https://open.spotify.com/playlist/1nQnvsp6fqgdQyerSMtFGQ?si=bb69bac8bcfc41e5',
+    name: 'Enterprise Leaders',
+    href: '/#contact',
   },
 ];
 
@@ -219,10 +211,10 @@ const artists = [
 
 const ArtistsHeadline = () => (
   <SectionHeadline disablePadding inverse>
-    Thanks to{' '}
-    {artists.map(({ name, href }, index) => (
+    Fern partners with{' '}
+    {partners.map(({ name, href }, index) => (
       <span key={href}>
-        {index === artists.length - 1 && ' and '}
+        {index === partners.length - 1 && ' and '}
 
         <Button
           className='inline text-base'
@@ -234,10 +226,10 @@ const ArtistsHeadline = () => (
           <Link href={href}>{name}</Link>
         </Button>
 
-        {index < artists.length - 1 && ', '}
+        {index < partners.length - 1 && ', '}
       </span>
     ))}{' '}
-    for keeping my headphones busy while working on it.
+    to turn ideas into maintainable, production-ready software.
   </SectionHeadline>
 );
 
