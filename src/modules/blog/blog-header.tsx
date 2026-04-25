@@ -23,7 +23,7 @@ const BlogHeader = () => {
 
       <nav className='flex items-center gap-x-2'>
         <ButtonWithVideo videoFileName='header-button-home' asChild>
-          <Link href='/'>Portfolio</Link>
+          <Link href='/'>Company</Link>
         </ButtonWithVideo>
 
         <ThemeToggle />
