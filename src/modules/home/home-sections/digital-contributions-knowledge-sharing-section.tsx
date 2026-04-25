@@ -40,9 +40,9 @@ const DigitalContributionsKnowledgeSharing = () => {
   const contents = useMemo(
     () =>
       [
-        { content: article, label: 'Last article' },
-        { content: youtubeVideo, label: 'Last video' },
-        { content: talk, label: 'Last talk' },
+        { content: article, label: 'Latest article' },
+        { content: youtubeVideo, label: 'Latest video' },
+        { content: talk, label: 'Latest talk' },
       ].filter((entry): entry is { content: Content; label: string } =>
         Boolean(entry.content)
       ),
@@ -51,7 +51,10 @@ const DigitalContributionsKnowledgeSharing = () => {
 
   return (
     <SectionContainer>
-      <SectionHeader title='Projects' />
+      <SectionHeader
+        title='Insights'
+        subtitle='Reusable thinking from real software delivery work.'
+      />
 
       <ContentCardContainer>
         {contents.map((entry) => (
@@ -77,7 +80,8 @@ const DigitalContributionsKnowledgeSharing = () => {
       </ContentCardContainer>
 
       <SectionHeadline className='mt-content'>
-        fern is really sick.
+        Explore our latest articles, talks, and technical perspectives on
+        product engineering.
       </SectionHeadline>
     </SectionContainer>
   );
