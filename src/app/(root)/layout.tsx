@@ -1,8 +1,9 @@
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
+import { Albert_Sans } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import { JetBrains_Mono } from 'next/font/google';
-import { Nunito_Sans } from 'next/font/google';
 
 import { SSRQueryClientProvider } from '~api/shared/query-client/provider';
 
@@ -14,10 +15,16 @@ import { ThemeProvider } from '~ui/atoms/theme/theme-provider';
 
 import { cn, tw } from '~utils/style';
 
-const fontSans = Nunito_Sans({
+const fontSans = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-sans',
+});
+
+const fontBody = Albert_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-body',
 });
 
 const fontMono = JetBrains_Mono({
@@ -111,7 +118,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={cn(`${fontSans.variable} ${fontMono.variable}`)}>
+      <body
+        className={cn(
+          `${fontSans.variable} ${fontBody.variable} ${fontMono.variable}`
+        )}
+      >
         <SSRQueryClientProvider>
           <ThemeProvider>{children}</ThemeProvider>
         </SSRQueryClientProvider>
