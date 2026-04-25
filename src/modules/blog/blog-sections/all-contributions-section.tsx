@@ -11,7 +11,7 @@ export const AllContributionsSection = () => {
 
   return (
     <SectionContainer>
-      <SectionHeader title='All Contributions' />
+      <SectionHeader title='All insights' />
 
       <FilterableBlogItemsList items={contents} />
     </SectionContainer>
