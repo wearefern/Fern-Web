@@ -25,7 +25,11 @@ const NavLink = ({ href, children }: { href: string; children: React.ReactNode }
 
 const HomeHeader = () => {
   return (
-    <AppHeader mode='compact' innerClassName='flex gap-x-2 justify-between'>
+    <AppHeader
+      mode='compact'
+      className='absolute top-0 bg-transparent from-transparent to-transparent backdrop-blur-0'
+      innerClassName='flex justify-between gap-x-2 pt-5 sm:pt-6'
+    >
       <Link title='Home' href={'/'}>
         <Logo width={58} layoutId={LAYOUT_ID_HOME_LOGO} />
       </Link>
