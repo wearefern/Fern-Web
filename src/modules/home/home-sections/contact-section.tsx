@@ -93,32 +93,15 @@ interface Social {
 
 const socials: Social[] = [
   {
-    id: 'youtube',
-    icon: {
-      name: 'youtube',
-      color: 'red',
-    },
-    content: [
-      { text: 'Follow', cta: true },
-      { text: ' me on ' },
-      { text: 'YouTube', highlighted: true },
-      { text: ' for a dose of Software Engineering knowledge:' },
-    ],
-    link: {
-      href: SOCIALS.youtube.url,
-      label: SOCIALS.youtube.handle,
-    },
-  },
-  {
     id: 'twitter',
     icon: {
       name: 'twitter',
       color: undefined,
     },
     content: [
-      { text: 'Be up-to-date', cta: true },
-      { text: ' with my Frontend findings on ' },
-      { text: 'X (Twitter):', highlighted: true },
+      { text: 'Start', cta: true },
+      { text: ' a conversation about your next ' },
+      { text: 'software initiative:', highlighted: true },
     ],
     link: {
       href: SOCIALS.twitter.url,
@@ -132,8 +115,8 @@ const socials: Social[] = [
       color: undefined,
     },
     content: [
-      { text: 'Code review', cta: true },
-      { text: ' my projects on ' },
+      { text: 'Review', cta: true },
+      { text: ' our engineering work on ' },
       { text: 'GitHub:', highlighted: true },
     ],
     link: {
@@ -148,8 +131,8 @@ const socials: Social[] = [
       color: undefined,
     },
     content: [
-      { text: 'Check', cta: true },
-      { text: ' my ' },
+      { text: 'Connect', cta: true },
+      { text: ' with Fern on ' },
       { text: 'LinkedIn:', highlighted: true },
     ],
     link: {
@@ -165,7 +148,7 @@ const socials: Social[] = [
     },
     content: [
       { text: 'Send', cta: true },
-      { text: ' me an ' },
+      { text: ' us an ' },
       { text: 'Email:', highlighted: true },
     ],
     link: {
@@ -174,19 +157,19 @@ const socials: Social[] = [
     },
   },
   {
-    id: 'telegram',
+    id: 'youtube',
     icon: {
-      name: 'send',
-      color: undefined,
+      name: 'youtube',
+      color: 'red',
     },
     content: [
-      { text: 'Chat', cta: true },
-      { text: ' on ' },
-      { text: 'Telegram:', highlighted: true },
+      { text: 'Watch', cta: true },
+      { text: ' technical updates on ' },
+      { text: 'YouTube:', highlighted: true },
     ],
     link: {
-      href: SOCIALS.telegram.url,
-      label: SOCIALS.telegram.handle,
+      href: SOCIALS.youtube.url,
+      label: SOCIALS.youtube.handle,
     },
   },
 ];
