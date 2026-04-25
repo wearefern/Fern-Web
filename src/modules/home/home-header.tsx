@@ -32,9 +32,9 @@ const HomeHeader = () => {
 
       <MotionConfig transition={{ type: 'spring', duration: 0.5, bounce: 0 }}>
         <motion.nav layout='position' className='flex items-center gap-x-4 sm:gap-x-5'>
-          <NavLink href='/#projects'>Projects.</NavLink>
-          <NavLink href='/#about'>About.</NavLink>
-          <NavLink href={BLOG_PATH}>Blog.</NavLink>
+          <NavLink href='/#projects'>Services.</NavLink>
+          <NavLink href='/#about'>Company.</NavLink>
+          <NavLink href={BLOG_PATH}>Insights.</NavLink>
           <NavLink href='#contact'>Contact.</NavLink>
 
           <ThemeToggle className='p-1 [&_svg]:h-4 [&_svg]:w-4 sm:[&_svg]:h-5 sm:[&_svg]:w-5' />
