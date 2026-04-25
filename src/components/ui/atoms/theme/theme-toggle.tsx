@@ -5,11 +5,7 @@ import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
 import { Button } from '~ui/atoms/button';
-import {
-  DEFAULT_THEME,
-  THEMES,
-  type Theme,
-} from '~ui/atoms/theme/theme-config';
+import { DEFAULT_THEME, THEMES } from '~ui/atoms/theme/theme-config';
 
 import { cn } from '~utils/style';
 
@@ -25,8 +21,10 @@ const themeToIcon = {
 const ThemeToggle = ({ className }: ThemeToggleProps) => {
   const { setTheme, theme } = useTheme();
 
-  const currentTheme = (theme ?? DEFAULT_THEME) as Theme;
-  const Icon = themeToIcon[currentTheme as keyof typeof themeToIcon];
+  const currentTheme = (theme === 'light' || theme === 'dark')
+    ? theme
+    : DEFAULT_THEME;
+  const Icon = themeToIcon[currentTheme];
 
   return (
     <Button
