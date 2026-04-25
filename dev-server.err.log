@@ -1,0 +1,174 @@
+The user aborted a request.
+
+Retrying 1/3...
+The user aborted a request.
+
+Retrying 1/3...
+The user aborted a request.
+
+Retrying 2/3...
+motion() is deprecated. Use motion.create() instead.
+ ⚠ ./src/modules/home/home-sections/about-section/about-section.tsx
+Attempted import error: 'GOOGLE_CODE_IN_ARTICLE_PATH' is not exported from '~constants/index' (imported as 'GOOGLE_CODE_IN_ARTICLE_PATH').
+
+Import trace for requested module:
+./src/modules/home/home-sections/about-section/about-section.tsx
+./src/modules/home/index.tsx
+
+./src/modules/home/home-sections/about-section/about-section.tsx
+Attempted import error: 'GOOGLE_CODE_IN_ARTICLE_PATH' is not exported from '~constants/index' (imported as 'GOOGLE_CODE_IN_ARTICLE_PATH').
+
+Import trace for requested module:
+./src/modules/home/home-sections/about-section/about-section.tsx
+./src/modules/home/index.tsx
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+motion() is deprecated. Use motion.create() instead.
+ ⨯ src\modules\home\home-sections\contact-section.tsx (188:29) @ url
+ ⨯ TypeError: Cannot read properties of undefined (reading 'url')
+    at eval (./src/modules/home/home-sections/contact-section.tsx:272:82)
+    at (ssr)/./src/modules/home/home-sections/contact-section.tsx (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\.next\server\app\(root)\page.js:789:1)
+    at __webpack_require__ (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\.next\server\webpack-runtime.js:33:43)
+    at eval (./src/modules/home/index.tsx:13:101)
+    at (ssr)/./src/modules/home/index.tsx (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\.next\server\app\(root)\page.js:811:1)
+    at __webpack_require__ (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\.next\server\webpack-runtime.js:33:43)
+[0m [90m 186 |[39m     ][33m,[39m[0m
+[0m [90m 187 |[39m     link[33m:[39m {[0m
+[0m[31m[1m>[22m[39m[90m 188 |[39m       href[33m:[39m [33mSOCIALS[39m[33m.[39mtelegram[33m.[39murl[33m,[39m[0m
+[0m [90m     |[39m                             [31m[1m^[22m[39m[0m
+[0m [90m 189 |[39m       label[33m:[39m [33mSOCIALS[39m[33m.[39mtelegram[33m.[39mhandle[33m,[39m[0m
+[0m [90m 190 |[39m     }[33m,[39m[0m
+[0m [90m 191 |[39m   }[33m,[39m[0m
+ ⚠ ./src/modules/home/home-sections/about-section/about-section.tsx
+Attempted import error: 'GOOGLE_CODE_IN_ARTICLE_PATH' is not exported from '~constants/index' (imported as 'GOOGLE_CODE_IN_ARTICLE_PATH').
+
+Import trace for requested module:
+./src/modules/home/home-sections/about-section/about-section.tsx
+./src/modules/home/index.tsx
+
+./src/modules/home/home-sections/about-section/about-section.tsx
+Attempted import error: 'GOOGLE_CODE_IN_ARTICLE_PATH' is not exported from '~constants/index' (imported as 'GOOGLE_CODE_IN_ARTICLE_PATH').
+
+Import trace for requested module:
+./src/modules/home/home-sections/about-section/about-section.tsx
+./src/modules/home/index.tsx
+ ⚠ ./src/modules/home/home-sections/about-section/about-section.tsx
+Attempted import error: 'GOOGLE_CODE_IN_ARTICLE_PATH' is not exported from '~constants/index' (imported as 'GOOGLE_CODE_IN_ARTICLE_PATH').
+
+Import trace for requested module:
+./src/modules/home/home-sections/about-section/about-section.tsx
+./src/modules/home/index.tsx
+
+./src/modules/home/home-sections/about-section/about-section.tsx
+Attempted import error: 'GOOGLE_CODE_IN_ARTICLE_PATH' is not exported from '~constants/index' (imported as 'GOOGLE_CODE_IN_ARTICLE_PATH').
+
+Import trace for requested module:
+./src/modules/home/home-sections/about-section/about-section.tsx
+./src/modules/home/index.tsx
+ ⚠ ./src/modules/home/home-sections/about-section/about-section.tsx
+Attempted import error: 'GOOGLE_CODE_IN_ARTICLE_PATH' is not exported from '~constants/index' (imported as 'GOOGLE_CODE_IN_ARTICLE_PATH').
+
+Import trace for requested module:
+./src/modules/home/home-sections/about-section/about-section.tsx
+./src/modules/home/index.tsx
+
+./src/modules/home/home-sections/about-section/about-section.tsx
+Attempted import error: 'GOOGLE_CODE_IN_ARTICLE_PATH' is not exported from '~constants/index' (imported as 'GOOGLE_CODE_IN_ARTICLE_PATH').
+
+Import trace for requested module:
+./src/modules/home/home-sections/about-section/about-section.tsx
+./src/modules/home/index.tsx
+ ⚠ ./src/modules/home/home-sections/about-section/about-section.tsx
+Attempted import error: 'GOOGLE_CODE_IN_ARTICLE_PATH' is not exported from '~constants/index' (imported as 'GOOGLE_CODE_IN_ARTICLE_PATH').
+
+Import trace for requested module:
+./src/modules/home/home-sections/about-section/about-section.tsx
+./src/modules/home/index.tsx
+
+./src/modules/home/home-sections/about-section/about-section.tsx
+Attempted import error: 'GOOGLE_CODE_IN_ARTICLE_PATH' is not exported from '~constants/index' (imported as 'GOOGLE_CODE_IN_ARTICLE_PATH').
+
+Import trace for requested module:
+./src/modules/home/home-sections/about-section/about-section.tsx
+./src/modules/home/index.tsx
+ ⚠ ./src/modules/home/home-sections/about-section/about-section.tsx
+Attempted import error: 'GOOGLE_CODE_IN_ARTICLE_PATH' is not exported from '~constants/index' (imported as 'GOOGLE_CODE_IN_ARTICLE_PATH').
+
+Import trace for requested module:
+./src/modules/home/home-sections/about-section/about-section.tsx
+./src/modules/home/index.tsx
+
+./src/modules/home/home-sections/about-section/about-section.tsx
+Attempted import error: 'GOOGLE_CODE_IN_ARTICLE_PATH' is not exported from '~constants/index' (imported as 'GOOGLE_CODE_IN_ARTICLE_PATH').
+
+Import trace for requested module:
+./src/modules/home/home-sections/about-section/about-section.tsx
+./src/modules/home/index.tsx
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+motion() is deprecated. Use motion.create() instead.
+ ⨯ src\modules\home\home-sections\contact-section.tsx (188:29) @ url
+ ⨯ TypeError: Cannot read properties of undefined (reading 'url')
+    at eval (./src/modules/home/home-sections/contact-section.tsx:272:82)
+    at (ssr)/./src/modules/home/home-sections/contact-section.tsx (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\.next\server\app\(root)\page.js:822:1)
+    at __webpack_require__ (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\.next\server\webpack-runtime.js:33:43)
+    at eval (./src/modules/home/index.tsx:13:101)
+    at (ssr)/./src/modules/home/index.tsx (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\.next\server\app\(root)\page.js:866:1)
+    at __webpack_require__ (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\.next\server\webpack-runtime.js:33:43)
+[0m [90m 186 |[39m     ][33m,[39m[0m
+[0m [90m 187 |[39m     link[33m:[39m {[0m
+[0m[31m[1m>[22m[39m[90m 188 |[39m       href[33m:[39m [33mSOCIALS[39m[33m.[39mtelegram[33m.[39murl[33m,[39m[0m
+[0m [90m     |[39m                             [31m[1m^[22m[39m[0m
+[0m [90m 189 |[39m       label[33m:[39m [33mSOCIALS[39m[33m.[39mtelegram[33m.[39mhandle[33m,[39m[0m
+[0m [90m 190 |[39m     }[33m,[39m[0m
+[0m [90m 191 |[39m   }[33m,[39m[0m
+ ⨯ ./src/modules/home/home-sections/about-section/about-section-headline.tsx
+Error: Failed to read source code from C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\src\modules\home\home-sections\about-section\about-section-headline.tsx
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Import trace for requested module:
+./src/modules/home/home-sections/about-section/about-section-headline.tsx
+./src/modules/home/home-sections/about-section/about-section.tsx
+./src/modules/home/index.tsx
+ ⨯ ./src/modules/home/home-sections/about-section/about-section.tsx
+Error: Failed to read source code from C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\src\modules\home\home-sections\about-section\about-section.tsx
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Import trace for requested module:
+./src/modules/home/home-sections/about-section/about-section.tsx
+./src/modules/home/index.tsx
+ ⨯ ./src/modules/home/home-sections/about-section/about-section.tsx:13:0
+Module not found: Can't resolve '~ui/widgets/interests-spotlight'
+[0m [90m 11 |[39m [36mimport[39m { [33mSectionContainer[39m } [36mfrom[39m [32m'~ui/molecules/section/section-container'[39m[33m;[39m[0m
+[0m [90m 12 |[39m [36mimport[39m { [33mSectionHeader[39m } [36mfrom[39m [32m'~ui/molecules/section/section-header'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 13 |[39m [36mimport[39m { [33mInterestsSpotlight[39m } [36mfrom[39m [32m'~ui/widgets/interests-spotlight'[39m[33m;[39m[0m
+[0m [90m 14 |[39m[0m
+[0m [90m 15 |[39m [90m/* -------------------------------------------------------------------------------------------------[39m[0m
+[0m [90m 16 |[39m [90m * AboutSection[39m[0m
+
+https://nextjs.org/docs/messages/module-not-found
+
+Import trace for requested module:
+./src/modules/home/index.tsx
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+motion() is deprecated. Use motion.create() instead.
+ ⨯ src\modules\home\home-sections\contact-section.tsx (188:29) @ url
+ ⨯ TypeError: Cannot read properties of undefined (reading 'url')
+    at eval (./src/modules/home/home-sections/contact-section.tsx:272:82)
+    at (ssr)/./src/modules/home/home-sections/contact-section.tsx (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\.next\server\app\(root)\page.js:723:1)
+    at __webpack_require__ (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\.next\server\webpack-runtime.js:33:43)
+    at eval (./src/modules/home/index.tsx:13:101)
+    at (ssr)/./src/modules/home/index.tsx (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\.next\server\app\(root)\page.js:767:1)
+    at __webpack_require__ (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\.next\server\webpack-runtime.js:33:43)
+[0m [90m 186 |[39m     ][33m,[39m[0m
+[0m [90m 187 |[39m     link[33m:[39m {[0m
+[0m[31m[1m>[22m[39m[90m 188 |[39m       href[33m:[39m [33mSOCIALS[39m[33m.[39mtelegram[33m.[39murl[33m,[39m[0m
+[0m [90m     |[39m                             [31m[1m^[22m[39m[0m
+[0m [90m 189 |[39m       label[33m:[39m [33mSOCIALS[39m[33m.[39mtelegram[33m.[39mhandle[33m,[39m[0m
+[0m [90m 190 |[39m     }[33m,[39m[0m
+[0m [90m 191 |[39m   }[33m,[39m[0m
+motion() is deprecated. Use motion.create() instead.
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+motion() is deprecated. Use motion.create() instead.
