@@ -20,7 +20,7 @@ const BlogLogo = ({ trailing, className, ...rest }: BlogLogoProps) => {
       <Logo />
 
       <Typography className='ml-1 text-xl tracking-widest sm:text-2xl'>
-        <DynamicWeightOnHoverText text=':blog' />
+        <DynamicWeightOnHoverText text=':insights' />
         {trailing ? <DynamicWeightOnHoverText text={`:${trailing}`} /> : null}
       </Typography>
     </motion.div>
