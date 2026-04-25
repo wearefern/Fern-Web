@@ -7,12 +7,12 @@ import { cn } from '~utils/style';
 const typographyVariants = cva('tracking-normal', {
   variants: {
     variant: {
-      hero: 'font-sans text-xl leading-6 sm:text-4xl sm:leading-10',
-      heading: 'font-sans text-lg leading-7',
-      subheading: 'font-sans text-base leading-7',
-      body: 'font-sans text-base leading-6',
-      'body-sm': 'font-sans text-sm leading-6',
-      sm: 'font-sans text-xs leading-4',
+      hero: 'font-sans text-xl leading-6 tracking-tight sm:text-4xl sm:leading-10',
+      heading: 'font-sans text-lg leading-7 tracking-tight',
+      subheading: 'font-sans text-base leading-7 tracking-tight',
+      body: 'font-body text-base leading-7',
+      'body-sm': 'font-body text-sm leading-6',
+      sm: 'font-body text-xs leading-4',
     },
     weight: {
       bold: 'font-bold',
