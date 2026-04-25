@@ -36,3 +36,13 @@
  ✓ Compiled /blog in 4.3s (1823 modules)
  ✓ Compiled in 3.6s (1802 modules)
  ✓ Compiled in 2.1s (1802 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 1825ms (1808 modules)
+ ✓ Compiled in 2.8s (1814 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 1682ms (1796 modules)
+ ✓ Compiled /icon.svg in 428ms (944 modules)
+ ✓ Compiled in 1745ms (1805 modules)
+ ✓ Compiled in 2.6s (1805 modules)
+ ✓ Compiled in 1106ms (1805 modules)
+ ✓ Compiled in 1877ms (1805 modules)
