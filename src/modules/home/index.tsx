@@ -1,14 +1,15 @@
 'use client';
 
-import { createContext, useContext, useMemo } from 'react';
+import { createContext, useContext } from 'react';
 
 import { Content } from '~lib/content/provider';
-import { ImageItem } from '~lib/images/provider';
 
 import { HomeFooter } from '~modules/home/home-footer';
 import { HomeHeader } from '~modules/home/home-header';
 import { AboutSection } from '~modules/home/home-sections/about-section/about-section';
 import { ContactSection } from '~modules/home/home-sections/contact-section';
+import { DigitalContributionsKnowledgeSharing } from '~modules/home/home-sections/digital-contributions-knowledge-sharing-section';
+import { DigitalContributionsProjects } from '~modules/home/home-sections/digital-contributions-projects-section';
 import { HeroSection } from '~modules/home/home-sections/hero-section';
 
 import { cn } from '~utils/style';
@@ -19,12 +20,10 @@ import { cn } from '~utils/style';
 
 interface HomeContextProps {
   blogContent: Content[];
-  authorPortraits: ImageItem[];
 }
 
 const HomeContext = createContext<HomeContextProps>({
   blogContent: [],
-  authorPortraits: [],
 });
 
 const useHomeContext = () => {
@@ -37,25 +36,23 @@ const useHomeContext = () => {
 
 interface HomeProps {
   blogContent: Content[];
-  authorPortraits: ImageItem[];
   className?: string;
 }
 
-const Home = ({ blogContent, authorPortraits, className }: HomeProps) => {
-  const contextValue = useMemo(
-    () => ({ blogContent, authorPortraits }),
-    [authorPortraits, blogContent]
-  );
-
+const Home = ({ blogContent, className }: HomeProps) => {
   return (
-    <HomeContext.Provider value={contextValue}>
+    <HomeContext.Provider value={{ blogContent }}>
       <main className={cn('min-h-screen space-y-6', className)}>
         <HomeHeader />
 
         <div className='w-full space-y-section-sm sm:space-y-section'>
           <HeroSection />
 
+          <DigitalContributionsProjects />
+
           <AboutSection />
+
+          <DigitalContributionsKnowledgeSharing />
 
           <ContactSection />
 
