@@ -31,13 +31,13 @@ const PROMPTER_DURATION_PER_PART = 0.075;
 const PROMPTER_PART_TRANSITION_DURATION = PROMPTER_DURATION_PER_PART * 5;
 
 const PROMPTER_TEXT =
-  'Taste is maybe the biggest deciding factor in whether a product ends up *feeling* good or not, regardless of how much skill is involved.' as const;
+  'Clear software wins when strategy, engineering, and execution stay aligned from the first requirement to the final release.';
 
 const prompterParts = createPrompterParts(
   PROMPTER_TEXT,
   { duration: PROMPTER_DURATION_PER_PART },
-  { value: 'Taste', duration: 0.75 },
-  { value: 'not,', duration: 0.4 }
+  { value: 'software', duration: 0.75 },
+  { value: 'execution', duration: 0.4 }
 );
 
 const PROMPTER_TEXT_ANIMATION_DURATION = prompterParts
@@ -224,7 +224,7 @@ const Intro = ({ className, ...rest }: IntroProps) => {
                 }}
                 onAnimationComplete={handleIntroComplete}
               >
-                <Typography color='secondary'>~@benjitaylor</Typography>
+                <Typography color='secondary'>Fern</Typography>
               </motion.div>
             </motion.div>
 
