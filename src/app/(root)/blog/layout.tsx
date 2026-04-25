@@ -3,9 +3,9 @@ import { Metadata } from 'next';
 import '~styles/highlight-js/style.css';
 
 export const metadata: Metadata = {
-  title: 'Blog',
+  title: 'Insights',
   description:
-    "I'm a Software Engineer sharing my experience with Web Development, and UI/UX design. I write, record, and talk about programming.",
+    'Insights from Fern on software strategy, architecture, delivery, and product engineering.',
 };
 
 export default function BlogLayout({
