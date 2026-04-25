@@ -1,0 +1,31 @@
+
+> portfolio@0.1.0 dev C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web
+> next dev
+
+   ▲ Next.js 14.1.4
+   - Local:        http://localhost:3000
+   - Environments: .env.local
+
+   automatically enabled Fast Refresh for 1 custom loader
+ ✓ Ready in 7.2s
+ ○ Compiling /src/middleware ...
+ ✓ Compiled /src/middleware in 1024ms (79 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 23.2s (1774 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 15.6s (1762 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /icon.svg in 2.1s (1781 modules)
+ ✓ Compiled in 2.6s (1781 modules)
+ ✓ Compiled in 2.8s (1781 modules)
+ ✓ Compiled in 1276ms (1745 modules)
+ ✓ Compiled in 751ms (864 modules)
+ ✓ Compiled in 3.1s (1745 modules)
+ ✓ Compiled in 1954ms (1745 modules)
+ ✓ Compiled in 989ms (864 modules)
+ ✓ Compiled in 2.3s (1745 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 2.5s (1736 modules)
+ ✓ Compiled /icon.svg in 354ms (915 modules)
+ ✓ Compiled in 2.7s (1779 modules)
+ ✓ Compiled in 2.1s (1745 modules)
