@@ -94,8 +94,9 @@ const config = {
     },
     extend: {
       fontFamily: {
-        sans: ['var(----font-sans)', ...defaultTheme.fontFamily.sans],
-        mono: ['var(----font-mono)', ...defaultTheme.fontFamily.mono],
+        sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
+        body: ['var(--font-body)', ...defaultTheme.fontFamily.sans],
+        mono: ['var(--font-mono)', ...defaultTheme.fontFamily.mono],
       },
       spacing: {
         section: '8rem',
