@@ -32,6 +32,9 @@ export const useScrollThemeToggle = ({
     const createObserverFallback = () => {
       const observer = new IntersectionObserver(
         ([entry]) => {
+          if (!entry) {
+            return;
+          }
           setThemeActive(entry.intersectionRatio >= INTERSECTION_THRESHOLD);
         },
         {

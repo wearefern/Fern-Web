@@ -12,6 +12,7 @@ import { BASE_URL } from '~constants/index';
 import '~styles/globals.css';
 
 import { ThemeProvider } from '~ui/atoms/theme/theme-provider';
+import { HomeFooter } from '~modules/home/home-footer';
 
 import { cn, tw } from '~utils/style';
 
@@ -124,7 +125,10 @@ export default function RootLayout({
         )}
       >
         <SSRQueryClientProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            {children}
+            <HomeFooter />
+          </ThemeProvider>
         </SSRQueryClientProvider>
 
         <SpeedInsights />

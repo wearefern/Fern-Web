@@ -107,7 +107,7 @@ const HomeHeader = () => {
           <NavLink href='/#projects'>Services.</NavLink>
           <NavLink href='/#process'>Process.</NavLink>
           <NavLink href={BLOG_PATH}>Insights.</NavLink>
-          <NavLink href='#contact' emphasize>
+          <NavLink href='/contact' emphasize>
             Contact.
           </NavLink>
 

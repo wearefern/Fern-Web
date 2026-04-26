@@ -189,8 +189,9 @@ const ButtonWithVideo = forwardRef<HTMLButtonElement, ButtonWithVideoProps>(
   ({ videoFileName, className, whenVideo, children, ...rest }, ref) => {
     const [hovered, setHovered] = useState(false);
     const [videoLoaded, setVideoLoaded] = useState(false);
+    const content = children as ReactNode;
 
-    const child = Children.only(children) as ReactElement;
+    const child = Children.only(content) as ReactElement;
 
     const buttonProps = useMemo(
       () => (hovered && videoLoaded ? { ...rest, ...whenVideo } : { ...rest }),
@@ -244,7 +245,7 @@ const ButtonWithVideo = forwardRef<HTMLButtonElement, ButtonWithVideoProps>(
       >
         {buttonProps.asChild
           ? cloneWithNestedChildren()
-          : renderChildrenWithVideoWrapper(children)}
+          : renderChildrenWithVideoWrapper(content)}
       </Button>
     );
   }

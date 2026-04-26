@@ -4,7 +4,6 @@ import { createContext, useContext, useMemo } from 'react';
 
 import { Content } from '~lib/content/provider';
 
-import { BlogFooter } from '~modules/blog/blog-footer';
 import { BlogHeader } from '~modules/blog/blog-header';
 import { AllContributionsSection } from '~modules/blog/blog-sections/all-contributions-section';
 import { HeroSection } from '~modules/blog/blog-sections/hero-section';
@@ -69,10 +68,6 @@ const Blog = ({ contents, highlightedContents, className }: BlogProps) => {
             <MoreSection />
           </GsapReveal>
         </div>
-
-        <GsapReveal delay={0.12}>
-          <BlogFooter />
-        </GsapReveal>
       </main>
     </BlogContext.Provider>
   );

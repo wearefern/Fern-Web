@@ -40,9 +40,9 @@ const DigitalContributionsKnowledgeSharing = () => {
   const contents = useMemo(
     () =>
       [
-        { content: article, label: 'Latest article' },
-        { content: youtubeVideo, label: 'Latest video' },
-        { content: talk, label: 'Latest talk' },
+        { content: article, label: 'Engineering article' },
+        { content: youtubeVideo, label: 'Systems video' },
+        { content: talk, label: 'Technical talk' },
       ].filter((entry): entry is { content: Content; label: string } =>
         Boolean(entry.content)
       ),
@@ -53,7 +53,7 @@ const DigitalContributionsKnowledgeSharing = () => {
     <SectionContainer>
       <SectionHeader
         title='Insights'
-        subtitle='Reusable thinking from real software delivery work.'
+        subtitle='Technical perspectives on API design, automation systems, cloud delivery, and production engineering.'
       />
 
       <ContentCardContainer>
@@ -80,8 +80,9 @@ const DigitalContributionsKnowledgeSharing = () => {
       </ContentCardContainer>
 
       <SectionHeadline className='mt-content'>
-        Explore our latest articles, talks, and technical perspectives on
-        product engineering.
+        Explore how Fern approaches API management, automation workflows,
+        cloud handling patterns, frontend performance, and the operational
+        systems behind reliable software delivery.
       </SectionHeadline>
     </SectionContainer>
   );

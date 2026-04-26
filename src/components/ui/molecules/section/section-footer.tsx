@@ -10,8 +10,6 @@ import {
 import Link from 'next/link';
 import { PropsWithChildren, useRef, useState } from 'react';
 
-import { PORTFOLIO_GITHUB_REPOSITORY_URL } from '~constants/index';
-
 import { useElementGeometry } from '~hooks/use-element-geometry';
 
 import { Button, ButtonWithVideo } from '~ui/atoms/button';
@@ -128,7 +126,7 @@ const SectionFooter = ({ children }: PropsWithChildren) => {
               inverse
               asChild
             >
-              <Link href='/#contact'>Get in touch</Link>
+              <Link href='/contact'>Get in touch</Link>
             </ButtonWithVideo>
           </div>
         </motion.footer>
@@ -167,18 +165,7 @@ const OpenSourceHeadline = () => (
       Fern builds software with{' '}
     </span>
     modern web architecture, strong UX foundations, and production-ready
-    engineering practices &#8212;{' '}
-    <Button
-      className='inline whitespace-break-spaces text-base'
-      variant='link'
-      size='inline'
-      inverse
-      asChild
-    >
-      <Link href={PORTFOLIO_GITHUB_REPOSITORY_URL}>
-        view the code on GitHub.
-      </Link>
-    </Button>
+    engineering practices.
   </SectionHeadline>
 );
 
@@ -203,7 +190,7 @@ const partners = [
   },
   {
     name: 'Enterprise Leaders',
-    href: '/#contact',
+    href: '/contact',
   },
 ];
 

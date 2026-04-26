@@ -11,3 +11,419 @@ Import trace for requested module:
 ./src/modules/home/index.tsx
 motion() is deprecated. Use motion.create() instead.
 motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+motion() is deprecated. Use motion.create() instead.
+Warning: Received NaN for the `strokeWidth` attribute. If this is expected, cast the value to a string.
+    at svg
+    at eval (webpack-internal:///(ssr)/./node_modules/.pnpm/lucide-react@0.402.0_react@18.3.1/node_modules/lucide-react/dist/esm/Icon.js:22:5)
+    at eval (webpack-internal:///(ssr)/./node_modules/.pnpm/lucide-react@0.402.0_react@18.3.1/node_modules/lucide-react/dist/esm/createLucideIcon.js:22:8)
+    at Icon (webpack-internal:///(ssr)/./src/components/ui/atoms/icon/index.tsx:33:17)
+    at ContentIcon (webpack-internal:///(ssr)/./src/components/ui/molecules/content-icon/index.tsx:20:24)
+    at div
+    at a
+    at LinkComponent (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/link.js:105:19)
+    at MotionComponent (webpack-internal:///(ssr)/./node_modules/.pnpm/framer-motion@11.18.2_react_cce3d889a93a74b971da0f2788960b34/node_modules/framer-motion/dist/es/motion/index.mjs:50:65)
+    at eval (webpack-internal:///(ssr)/./node_modules/.pnpm/@radix-ui+react-slot@1.2.4_@types+react@18.3.28_react@18.3.1/node_modules/@radix-ui/react-slot/dist/index.mjs:56:11)
+    at eval (webpack-internal:///(ssr)/./node_modules/.pnpm/@radix-ui+react-slot@1.2.4_@types+react@18.3.28_react@18.3.1/node_modules/@radix-ui/react-slot/dist/index.mjs:29:11)
+    at eval (webpack-internal:///(ssr)/./src/components/ui/atoms/card/index.tsx:15:81)
+    at ContentCard (webpack-internal:///(ssr)/./src/components/ui/molecules/content-card/index.tsx:29:24)
+    at div
+    at ContentCardContainer (webpack-internal:///(ssr)/./src/components/ui/molecules/content-card/index.tsx:158:33)
+    at section
+    at eval (webpack-internal:///(ssr)/./src/components/ui/molecules/section/section-container.tsx:13:93)
+    at HighlightedContributionsSection (webpack-internal:///(ssr)/./src/modules/blog/blog-sections/highlighted-contributions-section.tsx:23:98)
+    at div
+    at GsapReveal (webpack-internal:///(ssr)/./src/components/ui/atoms/gsap-reveal/index.tsx:13:23)
+    at div
+    at main
+    at Blog (webpack-internal:///(ssr)/./src/modules/blog/index.tsx:36:17)
+    at Lazy
+    at InnerLayoutRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:241:11)
+    at RedirectErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:73:9)
+    at RedirectBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:81:11)
+    at NotFoundBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/not-found-boundary.js:84:11)
+    at LoadingBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:338:11)
+    at ErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/error-boundary.js:160:11)
+    at InnerScrollAndFocusHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:152:9)
+    at ScrollAndFocusHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:227:11)
+    at RenderFromTemplateContext (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/render-from-template-context.js:16:44)
+    at Lazy
+    at OuterLayoutRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:356:11)
+    at Lazy
+    at main
+    at InnerLayoutRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:241:11)
+    at RedirectErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:73:9)
+    at RedirectBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:81:11)
+    at NotFoundErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/not-found-boundary.js:76:9)
+    at NotFoundBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/not-found-boundary.js:84:11)
+    at LoadingBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:338:11)
+    at ErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/error-boundary.js:160:11)
+    at InnerScrollAndFocusHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:152:9)
+    at ScrollAndFocusHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:227:11)
+    at RenderFromTemplateContext (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/render-from-template-context.js:16:44)
+    at Lazy
+    at OuterLayoutRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:356:11)
+    at Lazy
+    at V (webpack-internal:///(ssr)/./node_modules/.pnpm/next-themes@0.4.6_react-dom_ea2b9ae5ba4104b1d67ca3475ba7dfc2/node_modules/next-themes/dist/index.mjs:47:24)
+    at J (webpack-internal:///(ssr)/./node_modules/.pnpm/next-themes@0.4.6_react-dom_ea2b9ae5ba4104b1d67ca3475ba7dfc2/node_modules/next-themes/dist/index.mjs:42:48)
+    at ThemeProvider (webpack-internal:///(ssr)/./src/components/ui/atoms/theme/theme-provider.tsx:17:26)
+    at Lazy
+    at QueryClientProvider (webpack-internal:///(ssr)/./node_modules/.pnpm/@tanstack+react-query@5.100.1_react@18.3.1/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:23:30)
+    at SSRQueryClientProvider (webpack-internal:///(ssr)/./src/app/api/shared/query-client/provider.tsx:18:35)
+    at Lazy
+    at body
+    at html
+    at InnerLayoutRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:241:11)
+    at RedirectErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:73:9)
+    at RedirectBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:81:11)
+    at NotFoundErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/not-found-boundary.js:76:9)
+    at NotFoundBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/not-found-boundary.js:84:11)
+    at LoadingBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:338:11)
+    at ErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/error-boundary.js:160:11)
+    at InnerScrollAndFocusHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:152:9)
+    at ScrollAndFocusHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:227:11)
+    at RenderFromTemplateContext (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/render-from-template-context.js:16:44)
+    at Lazy
+    at OuterLayoutRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:356:11)
+    at Lazy
+    at RedirectErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:73:9)
+    at RedirectBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:81:11)
+    at ReactDevOverlay (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/react-dev-overlay/internal/ReactDevOverlay.js:84:9)
+    at HotReload (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/react-dev-overlay/hot-reloader-client.js:308:11)
+    at Router (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/app-router.js:177:11)
+    at ErrorBoundaryHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/error-boundary.js:114:9)
+    at ErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/error-boundary.js:160:11)
+    at AppRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/app-router.js:521:13)
+    at Lazy
+    at Lazy
+    at rw (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:39:15737)
+    at rw (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:39:15737)
+    at ServerInsertedHTMLProvider (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:39:21384)
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+ ⨯ ./src/modules/home/home-sections/digital-contributions-projects-section.tsx
+Error: Failed to read source code from C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\src\modules\home\home-sections\digital-contributions-projects-section.tsx
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Import trace for requested module:
+./src/modules/home/home-sections/digital-contributions-projects-section.tsx
+./src/modules/home/index.tsx
+ ⨯ ./src/modules/home/home-sections/digital-contributions-projects-section.tsx
+Error: Failed to read source code from C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\src\modules\home\home-sections\digital-contributions-projects-section.tsx
+
+Caused by:
+    The system cannot find the file specified. (os error 2)
+
+Import trace for requested module:
+./src/modules/home/home-sections/digital-contributions-projects-section.tsx
+./src/modules/home/index.tsx
+motion() is deprecated. Use motion.create() instead.
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+ ⨯ ./src/components/ui/molecules/app-header/index.tsx
+Error: 
+  [31mx[0m You're importing a component that needs useState. It only works in a Client Component but none of its parents are marked with "use client", so they're Server Components by default.
+  [31m|[0m Learn more: https://nextjs.org/docs/getting-started/react-essentials
+  [31m|[0m 
+  [31m|[0m 
+    ,-[[36;1;4mC:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\src\components\ui\molecules\app-header\index.tsx[0m:6:1]
+ [2m 6[0m |   useScroll,
+ [2m 7[0m |   useVelocity,
+ [2m 8[0m | } from 'framer-motion';
+ [2m 9[0m | import { ReactNode, forwardRef, useState } from 'react';
+    : [31;1m                                ^^^^^^^^[0m
+ [2m10[0m | 
+ [2m11[0m | import { cn, vhToPx } from '~utils/style';
+ [2m11[0m | 
+    `----
+
+Import trace for requested module:
+./src/components/ui/molecules/app-header/index.tsx
+./src/app/(root)/contact/page.tsx
+ ⨯ ./src/components/ui/molecules/app-header/index.tsx
+Error: 
+  [31mx[0m You're importing a component that needs useState. It only works in a Client Component but none of its parents are marked with "use client", so they're Server Components by default.
+  [31m|[0m Learn more: https://nextjs.org/docs/getting-started/react-essentials
+  [31m|[0m 
+  [31m|[0m 
+    ,-[[36;1;4mC:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\src\components\ui\molecules\app-header\index.tsx[0m:6:1]
+ [2m 6[0m |   useScroll,
+ [2m 7[0m |   useVelocity,
+ [2m 8[0m | } from 'framer-motion';
+ [2m 9[0m | import { ReactNode, forwardRef, useState } from 'react';
+    : [31;1m                                ^^^^^^^^[0m
+ [2m10[0m | 
+ [2m11[0m | import { cn, vhToPx } from '~utils/style';
+ [2m11[0m | 
+    `----
+
+Import trace for requested module:
+./src/components/ui/molecules/app-header/index.tsx
+./src/app/(root)/contact/page.tsx
+ ⨯ ./src/components/ui/molecules/app-header/index.tsx
+Error: 
+  [31mx[0m You're importing a component that needs useState. It only works in a Client Component but none of its parents are marked with "use client", so they're Server Components by default.
+  [31m|[0m Learn more: https://nextjs.org/docs/getting-started/react-essentials
+  [31m|[0m 
+  [31m|[0m 
+    ,-[[36;1;4mC:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\src\components\ui\molecules\app-header\index.tsx[0m:6:1]
+ [2m 6[0m |   useScroll,
+ [2m 7[0m |   useVelocity,
+ [2m 8[0m | } from 'framer-motion';
+ [2m 9[0m | import { ReactNode, forwardRef, useState } from 'react';
+    : [31;1m                                ^^^^^^^^[0m
+ [2m10[0m | 
+ [2m11[0m | import { cn, vhToPx } from '~utils/style';
+ [2m11[0m | 
+    `----
+
+Import trace for requested module:
+./src/components/ui/molecules/app-header/index.tsx
+./src/app/(root)/contact/page.tsx
+ ⨯ ./src/components/ui/molecules/app-header/index.tsx
+Error: 
+  [31mx[0m You're importing a component that needs useState. It only works in a Client Component but none of its parents are marked with "use client", so they're Server Components by default.
+  [31m|[0m Learn more: https://nextjs.org/docs/getting-started/react-essentials
+  [31m|[0m 
+  [31m|[0m 
+    ,-[[36;1;4mC:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\src\components\ui\molecules\app-header\index.tsx[0m:6:1]
+ [2m 6[0m |   useScroll,
+ [2m 7[0m |   useVelocity,
+ [2m 8[0m | } from 'framer-motion';
+ [2m 9[0m | import { ReactNode, forwardRef, useState } from 'react';
+    : [31;1m                                ^^^^^^^^[0m
+ [2m10[0m | 
+ [2m11[0m | import { cn, vhToPx } from '~utils/style';
+ [2m11[0m | 
+    `----
+
+Import trace for requested module:
+./src/components/ui/molecules/app-header/index.tsx
+./src/app/(root)/contact/page.tsx
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename 'C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\.next\cache\webpack\client-development-fallback\0.pack.gz_' -> 'C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\.next\cache\webpack\client-development-fallback\0.pack.gz'
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+motion() is deprecated. Use motion.create() instead.
+Warning: Received NaN for the `strokeWidth` attribute. If this is expected, cast the value to a string.
+    at svg
+    at eval (webpack-internal:///(ssr)/./node_modules/.pnpm/lucide-react@0.402.0_react@18.3.1/node_modules/lucide-react/dist/esm/Icon.js:22:5)
+    at eval (webpack-internal:///(ssr)/./node_modules/.pnpm/lucide-react@0.402.0_react@18.3.1/node_modules/lucide-react/dist/esm/createLucideIcon.js:22:8)
+    at Icon (webpack-internal:///(ssr)/./src/components/ui/atoms/icon/index.tsx:33:17)
+    at ContentIcon (webpack-internal:///(ssr)/./src/components/ui/molecules/content-icon/index.tsx:20:24)
+    at div
+    at a
+    at LinkComponent (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/link.js:105:19)
+    at MotionComponent (webpack-internal:///(ssr)/./node_modules/.pnpm/framer-motion@11.18.2_react_cce3d889a93a74b971da0f2788960b34/node_modules/framer-motion/dist/es/motion/index.mjs:50:65)
+    at eval (webpack-internal:///(ssr)/./node_modules/.pnpm/@radix-ui+react-slot@1.2.4_@types+react@18.3.28_react@18.3.1/node_modules/@radix-ui/react-slot/dist/index.mjs:56:11)
+    at eval (webpack-internal:///(ssr)/./node_modules/.pnpm/@radix-ui+react-slot@1.2.4_@types+react@18.3.28_react@18.3.1/node_modules/@radix-ui/react-slot/dist/index.mjs:29:11)
+    at eval (webpack-internal:///(ssr)/./src/components/ui/atoms/card/index.tsx:15:81)
+    at ContentCard (webpack-internal:///(ssr)/./src/components/ui/molecules/content-card/index.tsx:29:24)
+    at div
+    at ContentCardContainer (webpack-internal:///(ssr)/./src/components/ui/molecules/content-card/index.tsx:158:33)
+    at section
+    at eval (webpack-internal:///(ssr)/./src/components/ui/molecules/section/section-container.tsx:13:93)
+    at HighlightedContributionsSection (webpack-internal:///(ssr)/./src/modules/blog/blog-sections/highlighted-contributions-section.tsx:23:98)
+    at div
+    at GsapReveal (webpack-internal:///(ssr)/./src/components/ui/atoms/gsap-reveal/index.tsx:13:23)
+    at div
+    at main
+    at Blog (webpack-internal:///(ssr)/./src/modules/blog/index.tsx:36:17)
+    at Lazy
+    at InnerLayoutRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:241:11)
+    at RedirectErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:73:9)
+    at RedirectBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:81:11)
+    at NotFoundBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/not-found-boundary.js:84:11)
+    at LoadingBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:338:11)
+    at ErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/error-boundary.js:160:11)
+    at InnerScrollAndFocusHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:152:9)
+    at ScrollAndFocusHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:227:11)
+    at RenderFromTemplateContext (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/render-from-template-context.js:16:44)
+    at Lazy
+    at OuterLayoutRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:356:11)
+    at Lazy
+    at main
+    at InnerLayoutRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:241:11)
+    at RedirectErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:73:9)
+    at RedirectBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:81:11)
+    at NotFoundErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/not-found-boundary.js:76:9)
+    at NotFoundBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/not-found-boundary.js:84:11)
+    at LoadingBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:338:11)
+    at ErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/error-boundary.js:160:11)
+    at InnerScrollAndFocusHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:152:9)
+    at ScrollAndFocusHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:227:11)
+    at RenderFromTemplateContext (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/render-from-template-context.js:16:44)
+    at Lazy
+    at OuterLayoutRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:356:11)
+    at Lazy
+    at V (webpack-internal:///(ssr)/./node_modules/.pnpm/next-themes@0.4.6_react-dom_ea2b9ae5ba4104b1d67ca3475ba7dfc2/node_modules/next-themes/dist/index.mjs:47:24)
+    at J (webpack-internal:///(ssr)/./node_modules/.pnpm/next-themes@0.4.6_react-dom_ea2b9ae5ba4104b1d67ca3475ba7dfc2/node_modules/next-themes/dist/index.mjs:42:48)
+    at ThemeProvider (webpack-internal:///(ssr)/./src/components/ui/atoms/theme/theme-provider.tsx:17:26)
+    at Lazy
+    at QueryClientProvider (webpack-internal:///(ssr)/./node_modules/.pnpm/@tanstack+react-query@5.100.1_react@18.3.1/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:23:30)
+    at SSRQueryClientProvider (webpack-internal:///(ssr)/./src/app/api/shared/query-client/provider.tsx:18:35)
+    at Lazy
+    at body
+    at html
+    at InnerLayoutRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:241:11)
+    at RedirectErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:73:9)
+    at RedirectBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:81:11)
+    at NotFoundErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/not-found-boundary.js:76:9)
+    at NotFoundBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/not-found-boundary.js:84:11)
+    at LoadingBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:338:11)
+    at ErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/error-boundary.js:160:11)
+    at InnerScrollAndFocusHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:152:9)
+    at ScrollAndFocusHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:227:11)
+    at RenderFromTemplateContext (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/render-from-template-context.js:16:44)
+    at Lazy
+    at OuterLayoutRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:356:11)
+    at Lazy
+    at RedirectErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:73:9)
+    at RedirectBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:81:11)
+    at ReactDevOverlay (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/react-dev-overlay/internal/ReactDevOverlay.js:84:9)
+    at HotReload (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/react-dev-overlay/hot-reloader-client.js:308:11)
+    at Router (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/app-router.js:177:11)
+    at ErrorBoundaryHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/error-boundary.js:114:9)
+    at ErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/error-boundary.js:160:11)
+    at AppRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/app-router.js:521:13)
+    at Lazy
+    at Lazy
+    at rw (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:39:15737)
+    at rw (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:39:15737)
+    at ServerInsertedHTMLProvider (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:39:21384)
+ ⨯     at stringify (<anonymous>)
+    at AsyncLocalStorage.run (node:async_hooks:346:14)
+ ⨯ Internal error: Error: Could not find the module "C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\framer-motion@11.18.2_react_cce3d889a93a74b971da0f2788960b34\node_modules\framer-motion\dist\es\index.mjs#motion#img" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:264638
+    at eA (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:264833)
+    at C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:279388
+    at Array.toJSON (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:280578)
+    at stringify (<anonymous>)
+    at C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266934
+    at eW (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267013)
+    at ez (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267413)
+    at Timeout._onTimeout (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:263912)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+ ⨯ Internal error: Error: Could not find the module "C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\framer-motion@11.18.2_react_cce3d889a93a74b971da0f2788960b34\node_modules\framer-motion\dist\es\index.mjs#motion#img" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:264638
+    at eA (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:264833)
+    at C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:279388
+    at Array.toJSON (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:280578)
+    at stringify (<anonymous>)
+    at C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:266934
+    at eW (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267013)
+    at ez (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:267413)
+    at Timeout._onTimeout (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:263912)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+digest: "2940226490"
+motion() is deprecated. Use motion.create() instead.
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+motion() is deprecated. Use motion.create() instead.
+ ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+motion() is deprecated. Use motion.create() instead.
+Warning: Received NaN for the `strokeWidth` attribute. If this is expected, cast the value to a string.
+    at svg
+    at eval (webpack-internal:///(ssr)/./node_modules/.pnpm/lucide-react@0.402.0_react@18.3.1/node_modules/lucide-react/dist/esm/Icon.js:22:5)
+    at eval (webpack-internal:///(ssr)/./node_modules/.pnpm/lucide-react@0.402.0_react@18.3.1/node_modules/lucide-react/dist/esm/createLucideIcon.js:22:8)
+    at Icon (webpack-internal:///(ssr)/./src/components/ui/atoms/icon/index.tsx:33:17)
+    at ContentIcon (webpack-internal:///(ssr)/./src/components/ui/molecules/content-icon/index.tsx:20:24)
+    at div
+    at a
+    at LinkComponent (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/link.js:105:19)
+    at MotionComponent (webpack-internal:///(ssr)/./node_modules/.pnpm/framer-motion@11.18.2_react_cce3d889a93a74b971da0f2788960b34/node_modules/framer-motion/dist/es/motion/index.mjs:50:65)
+    at eval (webpack-internal:///(ssr)/./node_modules/.pnpm/@radix-ui+react-slot@1.2.4_@types+react@18.3.28_react@18.3.1/node_modules/@radix-ui/react-slot/dist/index.mjs:56:11)
+    at eval (webpack-internal:///(ssr)/./node_modules/.pnpm/@radix-ui+react-slot@1.2.4_@types+react@18.3.28_react@18.3.1/node_modules/@radix-ui/react-slot/dist/index.mjs:29:11)
+    at eval (webpack-internal:///(ssr)/./src/components/ui/atoms/card/index.tsx:15:81)
+    at ContentCard (webpack-internal:///(ssr)/./src/components/ui/molecules/content-card/index.tsx:29:24)
+    at div
+    at ContentCardContainer (webpack-internal:///(ssr)/./src/components/ui/molecules/content-card/index.tsx:158:33)
+    at section
+    at eval (webpack-internal:///(ssr)/./src/components/ui/molecules/section/section-container.tsx:13:93)
+    at HighlightedContributionsSection (webpack-internal:///(ssr)/./src/modules/blog/blog-sections/highlighted-contributions-section.tsx:23:98)
+    at div
+    at GsapReveal (webpack-internal:///(ssr)/./src/components/ui/atoms/gsap-reveal/index.tsx:13:23)
+    at div
+    at main
+    at Blog (webpack-internal:///(ssr)/./src/modules/blog/index.tsx:36:17)
+    at Lazy
+    at InnerLayoutRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:241:11)
+    at RedirectErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:73:9)
+    at RedirectBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:81:11)
+    at NotFoundBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/not-found-boundary.js:84:11)
+    at LoadingBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:338:11)
+    at ErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/error-boundary.js:160:11)
+    at InnerScrollAndFocusHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:152:9)
+    at ScrollAndFocusHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:227:11)
+    at RenderFromTemplateContext (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/render-from-template-context.js:16:44)
+    at Lazy
+    at OuterLayoutRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:356:11)
+    at Lazy
+    at main
+    at InnerLayoutRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:241:11)
+    at RedirectErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:73:9)
+    at RedirectBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:81:11)
+    at NotFoundErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/not-found-boundary.js:76:9)
+    at NotFoundBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/not-found-boundary.js:84:11)
+    at LoadingBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:338:11)
+    at ErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/error-boundary.js:160:11)
+    at InnerScrollAndFocusHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:152:9)
+    at ScrollAndFocusHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:227:11)
+    at RenderFromTemplateContext (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/render-from-template-context.js:16:44)
+    at Lazy
+    at OuterLayoutRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:356:11)
+    at Lazy
+    at V (webpack-internal:///(ssr)/./node_modules/.pnpm/next-themes@0.4.6_react-dom_ea2b9ae5ba4104b1d67ca3475ba7dfc2/node_modules/next-themes/dist/index.mjs:47:24)
+    at J (webpack-internal:///(ssr)/./node_modules/.pnpm/next-themes@0.4.6_react-dom_ea2b9ae5ba4104b1d67ca3475ba7dfc2/node_modules/next-themes/dist/index.mjs:42:48)
+    at ThemeProvider (webpack-internal:///(ssr)/./src/components/ui/atoms/theme/theme-provider.tsx:17:26)
+    at Lazy
+    at QueryClientProvider (webpack-internal:///(ssr)/./node_modules/.pnpm/@tanstack+react-query@5.100.1_react@18.3.1/node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:23:30)
+    at SSRQueryClientProvider (webpack-internal:///(ssr)/./src/app/api/shared/query-client/provider.tsx:18:35)
+    at Lazy
+    at body
+    at html
+    at InnerLayoutRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:241:11)
+    at RedirectErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:73:9)
+    at RedirectBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:81:11)
+    at NotFoundErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/not-found-boundary.js:76:9)
+    at NotFoundBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/not-found-boundary.js:84:11)
+    at LoadingBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:338:11)
+    at ErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/error-boundary.js:160:11)
+    at InnerScrollAndFocusHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:152:9)
+    at ScrollAndFocusHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:227:11)
+    at RenderFromTemplateContext (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/render-from-template-context.js:16:44)
+    at Lazy
+    at OuterLayoutRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/layout-router.js:356:11)
+    at Lazy
+    at RedirectErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:73:9)
+    at RedirectBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/redirect-boundary.js:81:11)
+    at ReactDevOverlay (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/react-dev-overlay/internal/ReactDevOverlay.js:84:9)
+    at HotReload (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/react-dev-overlay/hot-reloader-client.js:308:11)
+    at Router (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/app-router.js:177:11)
+    at ErrorBoundaryHandler (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/error-boundary.js:114:9)
+    at ErrorBoundary (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/error-boundary.js:160:11)
+    at AppRouter (webpack-internal:///(ssr)/./node_modules/.pnpm/next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d/node_modules/next/dist/client/components/app-router.js:521:13)
+    at Lazy
+    at Lazy
+    at rw (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:39:15737)
+    at rw (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:39:15737)
+    at ServerInsertedHTMLProvider (C:\Users\User\Desktop\zeylo-clone\zeyyylo1\New folder\Fern-Web\node_modules\.pnpm\next@14.1.4_@babel+core@7.2_490887e587e611fd82f4addab5a7d13d\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:39:21384)
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.

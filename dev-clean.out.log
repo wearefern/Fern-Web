@@ -29,3 +29,108 @@
  ✓ Compiled /not-found in 1336ms (1743 modules)
  ○ Compiling /icon.svg ...
  ✓ Compiled /icon.svg in 716ms (918 modules)
+ ○ Compiling /blog/[slug] ...
+ ✓ Compiled /blog in 15.4s (2905 modules)
+ ✓ Compiled in 2.3s (2325 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 1427ms (2316 modules)
+ ✓ Compiled /icon.svg in 402ms (946 modules)
+ ✓ Compiled in 6.3s (2325 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 1337ms (2316 modules)
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 1328ms (2346 modules)
+ ✓ Compiled in 3s (2325 modules)
+ ✓ Compiled in 1717ms (2325 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 957ms (2316 modules)
+ ✓ Compiled in 3.4s (2325 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 1068ms (2316 modules)
+ ✓ Compiled in 2.1s (2325 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 994ms (2316 modules)
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 1525ms (946 modules)
+ ✓ Compiled in 2.3s (2331 modules)
+ ✓ Compiled in 5.2s (2325 modules)
+ ✓ Compiled in 2.3s (2325 modules)
+ ✓ Compiled in 2.1s (2325 modules)
+ ✓ Compiled in 2.2s (2325 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 2.3s (2316 modules)
+ ✓ Compiled in 3.4s (2325 modules)
+ ✓ Compiled in 2.8s (2325 modules)
+ ✓ Compiled in 2.8s (2325 modules)
+ ✓ Compiled in 3.1s (2325 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 2.4s (2316 modules)
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 1017ms (946 modules)
+ ✓ Compiled in 1423ms (2361 modules)
+ ✓ Compiled in 2.1s (2325 modules)
+ ✓ Compiled in 4.7s (2323 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 1547ms (2314 modules)
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 860ms (945 modules)
+ ✓ Compiled in 2.9s (2323 modules)
+ ✓ Compiled in 2.5s (2324 modules)
+ ✓ Compiled in 1274ms (2324 modules)
+ ✓ Compiled in 2s (2323 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 3.1s (2329 modules)
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 753ms (945 modules)
+ ✓ Compiled in 2.2s (2323 modules)
+ ✓ Compiled in 2.1s (2323 modules)
+ ✓ Compiled in 2.2s (2323 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 1604ms (2314 modules)
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 1479ms (2344 modules)
+ ✓ Compiled in 3.6s (2321 modules)
+ ✓ Compiled in 1ms (910 modules)
+ ✓ Compiled in 1ms (910 modules)
+ ✓ Compiled in 0ms (910 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 1776ms (2312 modules)
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 1289ms (2342 modules)
+ ✓ Compiled in 6s (2400 modules)
+ ○ Compiling /contact ...
+   automatically enabled Fast Refresh for 1 custom loader
+   automatically enabled Fast Refresh for 1 custom loader
+ ✓ Compiled /not-found in 6.2s (2490 modules)
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 1956ms (2505 modules)
+ ○ Compiling /contact ...
+ ✓ Compiled /contact in 3.1s (2518 modules)
+ ✓ Compiled in 3.1s (2517 modules)
+ ✓ Compiled in 3s (2496 modules)
+ ✓ Compiled in 3.3s (2496 modules)
+ ✓ Compiled in 1668ms (2496 modules)
+ ✓ Compiled in 1771ms (2496 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 2.7s (2502 modules)
+ ✓ Compiled in 3.6s (2499 modules)
+ ✓ Compiled in 1813ms (2499 modules)
+ ✓ Compiled in 0ms (962 modules)
+ ✓ Compiled in 1ms (962 modules)
+ ✓ Compiled in 0ms (962 modules)
+ ✓ Compiled in 1ms (962 modules)
+ ✓ Compiled in 3.6s (2493 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 2.1s (2499 modules)
+ ✓ Compiled in 5.8s (2485 modules)
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 1859ms (2515 modules)
+ ✓ Compiled in 3.5s (2494 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 2.4s (2485 modules)
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 1690ms (2515 modules)
+ ✓ Compiled in 4.8s (2492 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 3s (2498 modules)
+[?25h

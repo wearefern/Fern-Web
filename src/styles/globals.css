@@ -121,20 +121,6 @@
     --heart-6: 0 66.7% 35.3%;
   }
 
-  html.services-theme-active {
-    --bg: 232 20% 8%;
-    --surface: 232 18% 11%;
-    --text: 0 0% 100% / 88%;
-    --text-solid: 0 0% 100%;
-    --muted: 0 0% 100% / 66%;
-    --hint: 0 0% 100% / 42%;
-    --border: 0 0% 100% / 18%;
-    --accent: 155 32% 66%;
-    --accent-contrast: 232 20% 8%;
-    --button-surface: 155 32% 66%;
-    --button-contrast: 232 20% 8%;
-  }
-
   html {
     @apply min-h-screen scroll-py-section-sm scroll-smooth bg-ctx-primary text-ctx-primary-fg-primary sm:scroll-py-section;
     -webkit-tap-highlight-color: transparent;
@@ -212,11 +198,11 @@
 
 @layer utilities {
   .layout-padding {
-    @apply px-4 sm:px-[5vw] 2xl:px-0;
+    @apply px-4 sm:px-6 lg:px-[2.75vw] 2xl:px-10;
   }
 
   .layout-width-limiter {
-    @apply mx-auto my-0 max-w-screen-xl;
+    @apply mx-auto my-0 max-w-[1720px];
   }
 
   .lock-scroll {

@@ -9,6 +9,8 @@ import { getApiContextValue } from '~api/shared/middleware';
 import { getModelClient } from '~api/shared/model-client';
 import { ResponseBodyError } from '~api/shared/types';
 
+export const dynamic = 'force-dynamic';
+
 const client = getModelClient();
 
 interface PostBody {

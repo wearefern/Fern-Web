@@ -5,6 +5,8 @@ import { isSlugMatchingContent } from '~api/contents/shared/utils';
 import { getApiContextValue } from '~api/shared/middleware';
 import { getModelClient } from '~api/shared/model-client';
 
+export const dynamic = 'force-dynamic';
+
 const client = getModelClient();
 
 export async function POST(

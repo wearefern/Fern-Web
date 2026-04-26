@@ -7,6 +7,8 @@ import {
 import { getModelClient } from '~api/shared/model-client';
 import { ResponseBodyError } from '~api/shared/types';
 
+export const dynamic = 'force-dynamic';
+
 const client = getModelClient();
 
 export async function GET(): Promise<

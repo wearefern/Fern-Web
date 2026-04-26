@@ -3,11 +3,10 @@
 import { createContext, useContext } from 'react';
 
 import { Content } from '~lib/content/provider';
+import { ImageItem } from '~lib/images/provider';
 
-import { HomeFooter } from '~modules/home/home-footer';
 import { HomeHeader } from '~modules/home/home-header';
 import { AboutSection } from '~modules/home/home-sections/about-section/about-section';
-import { ContactSection } from '~modules/home/home-sections/contact-section';
 import { DigitalContributionsKnowledgeSharing } from '~modules/home/home-sections/digital-contributions-knowledge-sharing-section';
 import { DigitalContributionsProjects } from '~modules/home/home-sections/digital-contributions-projects-section';
 import { HeroSection } from '~modules/home/home-sections/hero-section';
@@ -22,10 +21,12 @@ import { cn } from '~utils/style';
 
 interface HomeContextProps {
   blogContent: Content[];
+  authorPortraits: ImageItem[];
 }
 
 const HomeContext = createContext<HomeContextProps>({
   blogContent: [],
+  authorPortraits: [],
 });
 
 const useHomeContext = () => {
@@ -43,29 +44,23 @@ interface HomeProps {
 
 const Home = ({ blogContent, className }: HomeProps) => {
   return (
-    <HomeContext.Provider value={{ blogContent }}>
+    <HomeContext.Provider value={{ blogContent, authorPortraits: [] }}>
       <main className={cn('min-h-screen space-y-6', className)}>
         <HomeHeader />
 
         <div className='w-full space-y-section-sm sm:space-y-section'>
           <HeroSection />
 
-          <DigitalContributionsProjects />
+          <div>
+            <DigitalContributionsProjects />
 
-          <GsapReveal delay={0.05}>
-            <AboutSection />
-          </GsapReveal>
+            <GsapReveal delay={0.05}>
+              <AboutSection />
+            </GsapReveal>
+          </div>
 
           <GsapReveal delay={0.08}>
             <DigitalContributionsKnowledgeSharing />
-          </GsapReveal>
-
-          <GsapReveal delay={0.1}>
-            <ContactSection />
-          </GsapReveal>
-
-          <GsapReveal delay={0.12}>
-            <HomeFooter />
           </GsapReveal>
         </div>
       </main>

@@ -85,7 +85,9 @@ const FallingEntities = ({
               height: `${size}px`,
             }}
             key={idx}
-            ref={(e) => (elements.current[idx] = e)}
+            ref={(e) => {
+              elements.current[idx] = e;
+            }}
           >
             {child}
           </div>
