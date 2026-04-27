@@ -1,0 +1,36 @@
+
+> portfolio@0.1.0 dev
+> next dev
+
+   ▲ Next.js 14.1.4
+   - Local:        http://localhost:3000
+
+   automatically enabled Fast Refresh for 1 custom loader
+ ✓ Ready in 3.7s
+ ○ Compiling /src/middleware ...
+ ✓ Compiled /src/middleware in 559ms (79 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 13.2s (1772 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 2.4s (1751 modules)
+ ✓ Compiled /icon.svg in 472ms (915 modules)
+ ○ Compiling /blog ...
+ ✓ Compiled /blog in 1395ms (1833 modules)
+ ○ Compiling /blog/[slug] ...
+ ✓ Compiled /blog/[slug] in 6s (2848 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 610ms (2853 modules)
+ ○ Compiling /api/contents/[slug]/views ...
+ ✓ Compiled /api/contents/[slug]/views in 1265ms (1497 modules)
+ ✓ Compiled (1499 modules)
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 1130ms (1487 modules)
+ ○ Compiling /api/contents/[slug] ...
+ ✓ Compiled /api/contents/[slug] in 890ms (1524 modules)
+ ✓ Compiled (1526 modules)
+ ✓ Compiled in 760ms (1409 modules)
+ ✓ Compiled in 312ms (1409 modules)
+ ✓ Compiled in 334ms (1409 modules)
+ ✓ Compiled in 302ms (1409 modules)
+ ✓ Compiled in 330ms (1409 modules)
+ ✓ Compiled in 343ms (1409 modules)

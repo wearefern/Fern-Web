@@ -26,15 +26,15 @@ const BlogItemsList = ({ items }: BlogItemsListProps) => {
   }
 
   return (
-    <ul className='flex w-full flex-col gap-y-8'>
+    <ul className='mx-auto flex w-full max-w-6xl flex-col'>
       <AnimatePresence mode='popLayout'>
         {items.map((content) => (
           <motion.div
             className='w-full'
             key={content.slug}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 12 }}
             layout
           >
             <BlogItem content={content} />
@@ -109,7 +109,7 @@ const FilterableBlogItemsList = ({ items }: FilterableBlogItemsListProps) => {
   const itemsHiddenCount = items.length - itemsFiltered.length;
 
   return (
-    <div className='flex flex-col gap-y-8'>
+    <div className='mx-auto flex w-full max-w-6xl flex-col gap-y-8'>
       <TagsList
         tagProps={{ className: 'text-base leading-6' }}
         tags={tagsToPairWithSelected}

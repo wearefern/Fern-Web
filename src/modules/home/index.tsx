@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useLayoutEffect } from 'react';
 
 import { Content } from '~lib/content/provider';
 import { ImageItem } from '~lib/images/provider';
@@ -43,6 +43,19 @@ interface HomeProps {
 }
 
 const Home = ({ blogContent, className }: HomeProps) => {
+  useLayoutEffect(() => {
+    if (window.location.hash) {
+      return;
+    }
+
+    window.history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+
+    const timeout = window.setTimeout(() => window.scrollTo(0, 0), 0);
+
+    return () => window.clearTimeout(timeout);
+  }, []);
+
   return (
     <HomeContext.Provider value={{ blogContent, authorPortraits: [] }}>
       <main className={cn('min-h-screen space-y-6', className)}>

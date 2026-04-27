@@ -1,0 +1,361 @@
+The user aborted a request.
+
+Retrying 1/3...
+The user aborted a request.
+
+Retrying 1/3...
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+ ⨯ PrismaClientInitializationError: 
+Invalid `prisma.contentInteraction.findMany()` invocation:
+
+
+error: Environment variable not found: POSTGRES_PRISMA_URL.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider  = "postgresql"
+ 7 |   url       = env("POSTGRES_PRISMA_URL")
+   | 
+
+Validation Error Count: 1
+    at In.handleRequestError (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:7154)
+    at In.handleAndLogRequestError (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:6188)
+    at In.request (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:5896)
+    at async l (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:127:11167)
+    at async Object.getStatistics (webpack-internal:///(rsc)/./src/app/api/contents/shared/controllers.ts:26:41)
+    at async GET (webpack-internal:///(rsc)/./src/app/api/contents/[slug]/route.ts:37:24)
+    at async C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:63809
+    at async eU.execute (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:53964)
+    at async eU.handle (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:65062)
+    at async doRender (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1527:40)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1447:28)
+    at async DevServer.renderPageComponent (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1882:32)
+    at async DevServer.pipeImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\next-server.js:269:17)
+    at async DevServer.handleRequestImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:791:17)
+    at async C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\dev\next-dev-server.js:331:20
+    at async Span.traceAsyncFn (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\trace\trace.js:151:20)
+    at async DevServer.handleRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\dev\next-dev-server.js:328:24)
+    at async invokeRender (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:174:21)
+    at async handleRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:353:24)
+    at async requestHandlerImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:377:13)
+    at async Server.requestListener (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\start-server.js:140:13) {
+  clientVersion: '5.12.1',
+  errorCode: undefined
+}
+ ⨯ PrismaClientInitializationError: 
+Invalid `prisma.contentInteraction.upsert()` invocation:
+
+
+error: Environment variable not found: POSTGRES_PRISMA_URL.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider  = "postgresql"
+ 7 |   url       = env("POSTGRES_PRISMA_URL")
+   | 
+
+Validation Error Count: 1
+    at In.handleRequestError (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:7154)
+    at In.handleAndLogRequestError (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:6188)
+    at In.request (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:5896)
+    at async l (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:127:11167)
+    at async Object.incrementViews (webpack-internal:///(rsc)/./src/app/api/contents/shared/controllers.ts:49:20)
+    at async POST (webpack-internal:///(rsc)/./src/app/api/contents/[slug]/views/route.ts:37:25)
+    at async C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:63809
+    at async eU.execute (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:53964)
+    at async eU.handle (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:65062)
+    at async doRender (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1527:40)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1447:28)
+    at async DevServer.renderPageComponent (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1882:32)
+    at async DevServer.pipeImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\next-server.js:269:17)
+    at async DevServer.handleRequestImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:791:17)
+    at async C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\dev\next-dev-server.js:331:20
+    at async Span.traceAsyncFn (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\trace\trace.js:151:20)
+    at async DevServer.handleRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\dev\next-dev-server.js:328:24)
+    at async invokeRender (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:174:21)
+    at async handleRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:353:24)
+    at async requestHandlerImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:377:13)
+    at async Server.requestListener (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\start-server.js:140:13) {
+  clientVersion: '5.12.1',
+  errorCode: undefined
+}
+ ⨯ PrismaClientInitializationError: 
+Invalid `prisma.contentInteraction.upsert()` invocation:
+
+
+error: Environment variable not found: POSTGRES_PRISMA_URL.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider  = "postgresql"
+ 7 |   url       = env("POSTGRES_PRISMA_URL")
+   | 
+
+Validation Error Count: 1
+    at In.handleRequestError (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:7154)
+    at In.handleAndLogRequestError (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:6188)
+    at In.request (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:5896)
+    at async l (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:127:11167)
+    at async Object.incrementViews (webpack-internal:///(rsc)/./src/app/api/contents/shared/controllers.ts:49:20)
+    at async POST (webpack-internal:///(rsc)/./src/app/api/contents/[slug]/views/route.ts:37:25)
+    at async C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:63809
+    at async eU.execute (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:53964)
+    at async eU.handle (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:65062)
+    at async doRender (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1527:40)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1447:28)
+    at async DevServer.renderPageComponent (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1882:32)
+    at async DevServer.pipeImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\next-server.js:269:17)
+    at async DevServer.handleRequestImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:791:17)
+    at async C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\dev\next-dev-server.js:331:20
+    at async Span.traceAsyncFn (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\trace\trace.js:151:20)
+    at async DevServer.handleRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\dev\next-dev-server.js:328:24)
+    at async invokeRender (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:174:21)
+    at async handleRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:353:24)
+    at async requestHandlerImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:377:13)
+    at async Server.requestListener (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\start-server.js:140:13) {
+  clientVersion: '5.12.1',
+  errorCode: undefined
+}
+ ⨯ PrismaClientInitializationError: 
+Invalid `prisma.contentInteraction.findMany()` invocation:
+
+
+error: Environment variable not found: POSTGRES_PRISMA_URL.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider  = "postgresql"
+ 7 |   url       = env("POSTGRES_PRISMA_URL")
+   | 
+
+Validation Error Count: 1
+    at In.handleRequestError (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:7154)
+    at In.handleAndLogRequestError (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:6188)
+    at In.request (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:5896)
+    at async l (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:127:11167)
+    at async Object.getStatistics (webpack-internal:///(rsc)/./src/app/api/contents/shared/controllers.ts:26:41)
+    at async GET (webpack-internal:///(rsc)/./src/app/api/contents/[slug]/route.ts:37:24)
+    at async C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:63809
+    at async eU.execute (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:53964)
+    at async eU.handle (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:65062)
+    at async doRender (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1527:40)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1447:28)
+    at async DevServer.renderPageComponent (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1882:32)
+    at async DevServer.pipeImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\next-server.js:269:17)
+    at async DevServer.handleRequestImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:791:17)
+    at async C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\dev\next-dev-server.js:331:20
+    at async Span.traceAsyncFn (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\trace\trace.js:151:20)
+    at async DevServer.handleRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\dev\next-dev-server.js:328:24)
+    at async invokeRender (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:174:21)
+    at async handleRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:353:24)
+    at async requestHandlerImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:377:13)
+    at async Server.requestListener (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\start-server.js:140:13) {
+  clientVersion: '5.12.1',
+  errorCode: undefined
+}
+ ⨯ PrismaClientInitializationError: 
+Invalid `prisma.contentInteraction.findMany()` invocation:
+
+
+error: Environment variable not found: POSTGRES_PRISMA_URL.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider  = "postgresql"
+ 7 |   url       = env("POSTGRES_PRISMA_URL")
+   | 
+
+Validation Error Count: 1
+    at In.handleRequestError (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:7154)
+    at In.handleAndLogRequestError (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:6188)
+    at In.request (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:5896)
+    at async l (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:127:11167)
+    at async Object.getStatistics (webpack-internal:///(rsc)/./src/app/api/contents/shared/controllers.ts:26:41)
+    at async GET (webpack-internal:///(rsc)/./src/app/api/contents/[slug]/route.ts:37:24)
+    at async C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:63809
+    at async eU.execute (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:53964)
+    at async eU.handle (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:65062)
+    at async doRender (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1527:40)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1447:28)
+    at async DevServer.renderPageComponent (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1882:32)
+    at async DevServer.pipeImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\next-server.js:269:17)
+    at async DevServer.handleRequestImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:791:17)
+    at async C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\dev\next-dev-server.js:331:20
+    at async Span.traceAsyncFn (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\trace\trace.js:151:20)
+    at async DevServer.handleRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\dev\next-dev-server.js:328:24)
+    at async invokeRender (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:174:21)
+    at async handleRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:353:24)
+    at async requestHandlerImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:377:13)
+    at async Server.requestListener (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\start-server.js:140:13) {
+  clientVersion: '5.12.1',
+  errorCode: undefined
+}
+ ⨯ PrismaClientInitializationError: 
+Invalid `prisma.contentInteraction.findMany()` invocation:
+
+
+error: Environment variable not found: POSTGRES_PRISMA_URL.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider  = "postgresql"
+ 7 |   url       = env("POSTGRES_PRISMA_URL")
+   | 
+
+Validation Error Count: 1
+    at In.handleRequestError (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:7154)
+    at In.handleAndLogRequestError (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:6188)
+    at In.request (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:5896)
+    at async l (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:127:11167)
+    at async Object.getStatistics (webpack-internal:///(rsc)/./src/app/api/contents/shared/controllers.ts:26:41)
+    at async GET (webpack-internal:///(rsc)/./src/app/api/contents/[slug]/route.ts:37:24)
+    at async C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:63809
+    at async eU.execute (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:53964)
+    at async eU.handle (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:65062)
+    at async doRender (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1527:40)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1447:28)
+    at async DevServer.renderPageComponent (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1882:32)
+    at async DevServer.pipeImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\next-server.js:269:17)
+    at async DevServer.handleRequestImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:791:17)
+    at async C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\dev\next-dev-server.js:331:20
+    at async Span.traceAsyncFn (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\trace\trace.js:151:20)
+    at async DevServer.handleRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\dev\next-dev-server.js:328:24)
+    at async invokeRender (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:174:21)
+    at async handleRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:353:24)
+    at async requestHandlerImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:377:13)
+    at async Server.requestListener (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\start-server.js:140:13) {
+  clientVersion: '5.12.1',
+  errorCode: undefined
+}
+motion() is deprecated. Use motion.create() instead.
+ ⨯ PrismaClientInitializationError: 
+Invalid `prisma.contentInteraction.upsert()` invocation:
+
+
+error: Environment variable not found: POSTGRES_PRISMA_URL.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider  = "postgresql"
+ 7 |   url       = env("POSTGRES_PRISMA_URL")
+   | 
+
+Validation Error Count: 1
+    at In.handleRequestError (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:7154)
+    at In.handleAndLogRequestError (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:6188)
+    at In.request (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:5896)
+    at async l (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:127:11167)
+    at async Object.incrementViews (webpack-internal:///(rsc)/./src/app/api/contents/shared/controllers.ts:49:20)
+    at async POST (webpack-internal:///(rsc)/./src/app/api/contents/[slug]/views/route.ts:37:25)
+    at async C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:63809
+    at async eU.execute (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:53964)
+    at async eU.handle (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:65062)
+    at async doRender (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1527:40)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1447:28)
+    at async DevServer.renderPageComponent (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1882:32)
+    at async DevServer.pipeImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\next-server.js:269:17)
+    at async DevServer.handleRequestImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:791:17)
+    at async C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\dev\next-dev-server.js:331:20
+    at async Span.traceAsyncFn (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\trace\trace.js:151:20)
+    at async DevServer.handleRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\dev\next-dev-server.js:328:24)
+    at async invokeRender (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:174:21)
+    at async handleRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:353:24)
+    at async requestHandlerImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:377:13)
+    at async Server.requestListener (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\start-server.js:140:13) {
+  clientVersion: '5.12.1',
+  errorCode: undefined
+}
+ ⨯ PrismaClientInitializationError: 
+Invalid `prisma.contentInteraction.upsert()` invocation:
+
+
+error: Environment variable not found: POSTGRES_PRISMA_URL.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider  = "postgresql"
+ 7 |   url       = env("POSTGRES_PRISMA_URL")
+   | 
+
+Validation Error Count: 1
+    at In.handleRequestError (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:7154)
+    at In.handleAndLogRequestError (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:6188)
+    at In.request (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:5896)
+    at async l (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:127:11167)
+    at async Object.incrementViews (webpack-internal:///(rsc)/./src/app/api/contents/shared/controllers.ts:49:20)
+    at async POST (webpack-internal:///(rsc)/./src/app/api/contents/[slug]/views/route.ts:37:25)
+    at async C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:63809
+    at async eU.execute (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:53964)
+    at async eU.handle (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:65062)
+    at async doRender (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1527:40)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1447:28)
+    at async DevServer.renderPageComponent (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1882:32)
+    at async DevServer.pipeImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\next-server.js:269:17)
+    at async DevServer.handleRequestImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:791:17)
+    at async C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\dev\next-dev-server.js:331:20
+    at async Span.traceAsyncFn (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\trace\trace.js:151:20)
+    at async DevServer.handleRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\dev\next-dev-server.js:328:24)
+    at async invokeRender (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:174:21)
+    at async handleRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:353:24)
+    at async requestHandlerImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:377:13)
+    at async Server.requestListener (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\start-server.js:140:13) {
+  clientVersion: '5.12.1',
+  errorCode: undefined
+}
+ ⨯ PrismaClientInitializationError: 
+Invalid `prisma.contentInteraction.findMany()` invocation:
+
+
+error: Environment variable not found: POSTGRES_PRISMA_URL.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider  = "postgresql"
+ 7 |   url       = env("POSTGRES_PRISMA_URL")
+   | 
+
+Validation Error Count: 1
+    at In.handleRequestError (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:7154)
+    at In.handleAndLogRequestError (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:6188)
+    at In.request (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:122:5896)
+    at async l (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\@prisma\client\runtime\library.js:127:11167)
+    at async Object.getStatistics (webpack-internal:///(rsc)/./src/app/api/contents/shared/controllers.ts:26:41)
+    at async GET (webpack-internal:///(rsc)/./src/app/api/contents/[slug]/route.ts:37:24)
+    at async C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:63809
+    at async eU.execute (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:53964)
+    at async eU.handle (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\compiled\next-server\app-route.runtime.dev.js:6:65062)
+    at async doRender (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1317:42)
+    at async cacheEntry.responseCache.get.routeKind (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1527:40)
+    at async DevServer.renderToResponseWithComponentsImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1447:28)
+    at async DevServer.renderPageComponent (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1844:24)
+    at async DevServer.renderToResponseImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:1882:32)
+    at async DevServer.pipeImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:895:25)
+    at async NextNodeServer.handleCatchallRenderRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\next-server.js:269:17)
+    at async DevServer.handleRequestImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\base-server.js:791:17)
+    at async C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\dev\next-dev-server.js:331:20
+    at async Span.traceAsyncFn (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\trace\trace.js:151:20)
+    at async DevServer.handleRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\dev\next-dev-server.js:328:24)
+    at async invokeRender (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:174:21)
+    at async handleRequest (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:353:24)
+    at async requestHandlerImpl (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\router-server.js:377:13)
+    at async Server.requestListener (C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\lib\start-server.js:140:13) {
+  clientVersion: '5.12.1',
+  errorCode: undefined
+}
+motion() is deprecated. Use motion.create() instead.

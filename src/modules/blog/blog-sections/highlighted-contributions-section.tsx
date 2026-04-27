@@ -1,12 +1,11 @@
 'use client';
 
-import Image from 'next/image';
-
-import { BLOG_PATH } from '~constants/index';
-
 import { useBlogContext } from '~modules/blog';
+import {
+  BlogFeatureItem,
+  BlogSecondaryItem,
+} from '~modules/blog/blog-item';
 
-import { ContentCard, ContentCardContainer } from '~ui/molecules/content-card';
 import { SectionContainer } from '~ui/molecules/section/section-container';
 import { SectionHeader } from '~ui/molecules/section/section-header';
 
@@ -16,34 +15,27 @@ import { SectionHeader } from '~ui/molecules/section/section-header';
 
 const HighlightedContributionsSection = () => {
   const { highlightedContents } = useBlogContext();
+  const [featuredContent, ...secondaryContents] = highlightedContents;
+
+  if (!featuredContent) {
+    return null;
+  }
 
   return (
     <SectionContainer>
       <SectionHeader title='Featured insights' />
 
-      <ContentCardContainer>
-        {highlightedContents.map((content) => (
-          <ContentCard
-            href={`${BLOG_PATH}/${content.slug}`}
-            key={content.slug}
-            label={content.title}
-            title={content.description}
-            contentType={content.type}
-            display={
-              content.thumbnail ? (
-                <Image
-                  fill
-                  priority
-                  sizes='100%'
-                  className='object-cover'
-                  src={content.thumbnail}
-                  alt={content.description}
-                />
-              ) : null
-            }
-          />
-        ))}
-      </ContentCardContainer>
+      <div className='flex flex-col gap-5 sm:gap-6'>
+        <BlogFeatureItem content={featuredContent} />
+
+        {secondaryContents.length ? (
+          <div className='grid gap-4 sm:grid-cols-2 sm:gap-6'>
+            {secondaryContents.slice(0, 2).map((content) => (
+              <BlogSecondaryItem content={content} key={content.slug} />
+            ))}
+          </div>
+        ) : null}
+      </div>
     </SectionContainer>
   );
 };
