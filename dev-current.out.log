@@ -34,3 +34,6 @@
  ✓ Compiled in 302ms (1409 modules)
  ✓ Compiled in 330ms (1409 modules)
  ✓ Compiled in 343ms (1409 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /icon.svg in 2.1s (2868 modules)
+ ✓ Compiled in 951ms (2898 modules)
