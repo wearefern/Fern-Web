@@ -5,22 +5,24 @@ import { Logo } from '~ui/widgets/logo';
 import { cn } from '~utils/style';
 
 /* -------------------------------------------------------------------------------------------------
- * BlogLogo
+ * PluginsLogo
  * -----------------------------------------------------------------------------------------------*/
 
-interface BlogLogoProps extends HTMLMotionProps<'div'> {}
+interface PluginsLogoProps extends HTMLMotionProps<'div'> {}
 
-const BlogLogo = ({ className, ...rest }: BlogLogoProps) => {
+const PluginsLogo = ({ className, ...rest }: PluginsLogoProps) => {
   return (
     <motion.div className={cn('flex items-center', className)} {...rest}>
-      <Logo />
+      <Link href='/' title='Fern'>
+        <Logo />
+      </Link>
     </motion.div>
   );
 };
 
-BlogLogo.displayName = 'BlogLogo';
+PluginsLogo.displayName = 'PluginsLogo';
 
 /* -----------------------------------------------------------------------------------------------*/
 
-export { BlogLogo };
-export type { BlogLogoProps };
+export { PluginsLogo };
+export type { PluginsLogoProps };

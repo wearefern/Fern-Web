@@ -4,12 +4,12 @@ import { MotionConfig, motion } from 'framer-motion';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
-import { BLOG_PATH } from '~constants/index';
+import { BLOG_PATH, PLUGINS_PATH } from '~constants/index';
 
 import { LAYOUT_ID_HOME_LOGO } from '~ui/atoms/motion';
 import { ThemeToggle } from '~ui/atoms/theme/theme-toggle';
 import { AppHeader } from '~ui/molecules/app-header';
-import { Logo } from '~ui/widgets/logo';
+import { FernLogo } from '../../components/ui/atoms/fern-logo';
 
 /* -------------------------------------------------------------------------------------------------
  * HomeHeader
@@ -99,13 +99,14 @@ const HomeHeader = () => {
       innerClassName='flex justify-between gap-x-2 pt-5 sm:pt-6'
     >
       <Link title='Home' href={'/'}>
-        <Logo width={58} layoutId={LAYOUT_ID_HOME_LOGO} />
+        <FernLogo width={58} layoutId={LAYOUT_ID_HOME_LOGO} />
       </Link>
 
       <MotionConfig transition={{ type: 'spring', duration: 0.5, bounce: 0 }}>
         <motion.nav layout='position' className='flex items-center gap-x-4 sm:gap-x-5'>
           <NavLink href='/#projects'>Services.</NavLink>
           <NavLink href='/#process'>Process.</NavLink>
+          <NavLink href={PLUGINS_PATH}>Plugins.</NavLink>
           <NavLink href={BLOG_PATH}>Insights.</NavLink>
           <NavLink href='/contact' emphasize>
             Contact.

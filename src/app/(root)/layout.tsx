@@ -13,6 +13,8 @@ import '~styles/globals.css';
 
 import { ThemeProvider } from '~ui/atoms/theme/theme-provider';
 import { HomeFooter } from '~modules/home/home-footer';
+import { CartProvider } from '../../context/cart-context';
+import { UserProvider } from '../../context/user-context';
 
 import { cn, tw } from '~utils/style';
 
@@ -126,8 +128,12 @@ export default function RootLayout({
       >
         <SSRQueryClientProvider>
           <ThemeProvider>
-            {children}
-            <HomeFooter />
+            <CartProvider>
+              <UserProvider>
+                {children}
+                <HomeFooter />
+              </UserProvider>
+            </CartProvider>
           </ThemeProvider>
         </SSRQueryClientProvider>
 
