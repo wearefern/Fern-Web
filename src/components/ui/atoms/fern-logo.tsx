@@ -7,9 +7,9 @@ interface FernLogoProps {
   layoutId?: string;
 }
 
-export const FernLogo = ({ className, width, layoutId, ...rest }: FernLogoProps) => {
+export const FernLogo = ({ className, width, layoutId }: FernLogoProps) => {
   return (
-    <Link href='/' title='Fern' className={className}>
+    <Link href="/" title="Fern" className={className}>
       <Logo width={width} layoutId={layoutId} />
     </Link>
   );
