@@ -9,6 +9,7 @@ import { ThemeToggle } from '~ui/atoms/theme/theme-toggle';
 import { AppHeader } from '~ui/molecules/app-header';
 import { FernLogo } from '../../components/ui/atoms/fern-logo';
 import { useCart } from '../../context/cart-context';
+import { PluginsLogo } from './plugins-logo';
 
 /* -------------------------------------------------------------------------------------------------
  * PluginsHeader
