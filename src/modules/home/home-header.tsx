@@ -106,7 +106,10 @@ const HomeHeader = () => {
         <motion.nav layout='position' className='flex items-center gap-x-4 sm:gap-x-5'>
           <NavLink href='/#projects'>Services.</NavLink>
           <NavLink href='/#process'>Process.</NavLink>
+          <NavLink href='/plugins'>Plugins.</NavLink>
           <NavLink href={BLOG_PATH}>Insights.</NavLink>
+          <NavLink href='/cart'>View Cart.</NavLink>
+          <NavLink href='/account/downloads'>Account.</NavLink>
           <NavLink href='/contact' emphasize>
             Contact.
           </NavLink>
