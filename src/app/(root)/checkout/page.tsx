@@ -20,7 +20,7 @@ export default function CheckoutPage() {
   };
 
   return (
-    <main className='min-h-screen space-y-10 pb-section-sm'>
+    <main className='min-h-screen bg-white pb-section-sm text-black'>
       <PluginsNavbar />
 
       <section className='layout-width-limiter layout-padding grid gap-8 pt-32 sm:pt-40 lg:grid-cols-[1fr_24rem]'>
@@ -30,39 +30,46 @@ export default function CheckoutPage() {
               <h1>Checkout</h1>
             </Typography>
             <Typography variant='body' color='secondary' prose={false}>
-              Complete your purchase to unlock plugin downloads.
+              Complete your purchase to get instant access.
             </Typography>
           </div>
 
-          <Card asChild className='rounded-xl'>
+          <Card className='rounded-xl border border-gray-200 bg-white p-6'>
+            <Typography variant='heading' weight='medium' prose={false} className='mb-5'>
+              Customer Details
+            </Typography>
             <form onSubmit={handleSubmit} className='space-y-5'>
               <label className='block space-y-2'>
-                <span className='text-sm font-medium text-ctx-primary-fg-secondary'>Name</span>
+                <span className='text-sm font-medium text-gray-600'>Full Name</span>
                 <input
                   required
                   name='name'
-                  className='w-full rounded-xl border border-ctx-primary-fg-decorative bg-ctx-primary px-4 py-3 text-ctx-primary-fg-solid outline-none focus:border-ctx-primary-fg-solid'
+                  className='w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-black outline-none focus:border-black'
                 />
               </label>
 
               <label className='block space-y-2'>
-                <span className='text-sm font-medium text-ctx-primary-fg-secondary'>Email</span>
+                <span className='text-sm font-medium text-gray-600'>Email</span>
                 <input
                   required
                   type='email'
                   name='email'
-                  className='w-full rounded-xl border border-ctx-primary-fg-decorative bg-ctx-primary px-4 py-3 text-ctx-primary-fg-solid outline-none focus:border-ctx-primary-fg-solid'
+                  className='w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-black outline-none focus:border-black'
                 />
               </label>
 
-              <Button type='submit' disabled={cartItems.length === 0}>
+              <Typography variant='body-sm' color='secondary' prose={false} className='text-gray-500'>
+                We'll use this information to send you download links and receipts.
+              </Typography>
+
+              <Button type='submit' disabled={cartItems.length === 0} className='w-full'>
                 Complete Purchase
               </Button>
             </form>
           </Card>
         </div>
 
-        <Card className='h-fit rounded-xl'>
+        <Card className='h-fit rounded-xl border border-gray-200 bg-white p-6'>
           <Typography variant='heading' weight='medium' prose={false}>
             Order Summary
           </Typography>
@@ -80,9 +87,19 @@ export default function CheckoutPage() {
               ))
             )}
           </div>
-          <div className='flex justify-between border-t border-ctx-primary-fg-decorative pt-4 font-sans text-lg font-medium'>
-            <span>Total</span>
-            <span>${total}</span>
+          <div className='space-y-2 border-t border-gray-200 pt-4'>
+            <div className='flex justify-between font-sans text-lg font-medium'>
+              <span>Subtotal</span>
+              <span>${total}</span>
+            </div>
+            <div className='flex justify-between font-sans text-xl font-bold'>
+              <span>Total</span>
+              <span>${total}</span>
+            </div>
+          </div>
+          <div className='mt-6 space-y-2 text-center text-sm text-gray-500'>
+            <div>Secure checkout</div>
+            <div>Instant access after purchase</div>
           </div>
         </Card>
       </section>
