@@ -10,11 +10,17 @@ interface Params {
   };
 }
 
-export async function POST(_request: Request, { params }: Params) {
+export async function POST(request: Request, { params }: Params) {
   try {
     const user = await getCurrentUser();
     if (!user?.clerkId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const body = (await request.json().catch(() => null)) as { platform?: unknown } | null;
+    const platform = body?.platform;
+    if (platform !== 'MAC' && platform !== 'WINDOWS') {
+      return NextResponse.json({ error: 'Invalid platform' }, { status: 400 });
     }
 
     const prisma = getModelClient();
@@ -25,6 +31,9 @@ export async function POST(_request: Request, { params }: Params) {
           pluginId: params.pluginId,
         },
       },
+      include: {
+        plugin: true,
+      },
     });
 
     if (!purchase) {
@@ -32,7 +41,7 @@ export async function POST(_request: Request, { params }: Params) {
     }
 
     const token = crypto.randomUUID();
-    const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
     const downloadToken = await prisma.downloadToken.create({
       data: {
@@ -43,9 +52,7 @@ export async function POST(_request: Request, { params }: Params) {
     });
 
     return NextResponse.json({
-      token: downloadToken.token,
-      expiresAt: downloadToken.expiresAt.toISOString(),
-      url: `/api/downloads/placeholder/${downloadToken.token}`,
+      url: `/api/downloads/file?token=${downloadToken.token}`,
     });
   } catch (error) {
     console.error('Failed to generate download token', error);

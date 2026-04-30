@@ -1,9 +1,9 @@
 import { headers } from "next/headers";
 import Stripe from "stripe";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "~lib/prisma";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2023-10-16",
+  apiVersion: "2026-04-22.dahlia",
 });
 
 export async function POST(req: Request) {
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     return new Response("Missing signature", { status: 400 });
   }
 
-  let event: Stripe.Event;
+  let event: any;
 
   try {
     const body = await req.text();
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
   }
 
   if (event.type === "checkout.session.completed") {
-    const session = event.data.object as Stripe.Checkout.Session;
+    const session = event.data.object as any;
 
     console.log("SESSION:", session);
     console.log("METADATA:", session.metadata);
@@ -63,12 +63,9 @@ export async function POST(req: Request) {
         where: { id: { in: pluginIds } },
       });
 
-      const totalCents = plugins.reduce(
-        (sum, p) => sum + p.priceCents,
-        0
-      );
+      const totalCents = plugins.reduce((sum: number, plugin) => sum + plugin.priceCents, 0);
 
-      await prisma.$transaction(async (tx) => {
+      await prisma.$transaction(async (tx: any) => {
         const order = await tx.order.create({
           data: {
             userId,
@@ -80,11 +77,11 @@ export async function POST(req: Request) {
 
         if (plugins.length > 0) {
           await tx.orderItem.createMany({
-            data: plugins.map((p) => ({
+            data: plugins.map((plugin) => ({
               orderId: order.id,
-              pluginId: p.id,
+              pluginId: plugin.id,
               quantity: 1,
-              unitPriceCents: p.priceCents,
+              unitPriceCents: plugin.priceCents,
             })),
           });
         }

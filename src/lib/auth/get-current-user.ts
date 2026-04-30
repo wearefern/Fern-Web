@@ -1,6 +1,6 @@
 import { auth, currentUser } from '@clerk/nextjs/server';
 
-import { getModelClient } from '~api/shared/model-client';
+import { prisma } from '~lib/prisma';
 
 export const getCurrentUser = async () => {
   const { userId } = await auth();
@@ -8,7 +8,6 @@ export const getCurrentUser = async () => {
     return null;
   }
 
-  const prisma = getModelClient();
   const byClerkId = await prisma.user.findUnique({
     where: { clerkId: userId },
   });
