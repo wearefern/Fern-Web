@@ -47,7 +47,7 @@ export const AudioPreview = ({ pluginName, audioUrl, duration }: AudioPreviewPro
     if (!audio) return;
 
     if (isPlaying) {
-      audio.play();
+      void audio.play();
     } else {
       audio.pause();
     }

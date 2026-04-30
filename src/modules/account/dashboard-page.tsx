@@ -19,6 +19,12 @@ export function DashboardPage() {
   const latestOrder = orders?.[0];
 
   useEffect(() => {
+    void fetch('/api/account/me', { cache: 'no-store' }).catch((error) => {
+      console.error(error);
+    });
+  }, []);
+
+  useEffect(() => {
     const loadPlugins = async () => {
       try {
         const response = await fetch('/api/plugins', { cache: 'no-store' });
@@ -32,7 +38,7 @@ export function DashboardPage() {
       }
     };
 
-    loadPlugins();
+    void loadPlugins();
   }, []);
 
   const recentDownloads = allPlugins

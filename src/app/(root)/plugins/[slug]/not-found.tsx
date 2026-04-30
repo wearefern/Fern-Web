@@ -14,7 +14,7 @@ export default function PluginNotFound() {
             Plugin Not Found
           </h1>
           <p className='text-lg text-gray-600 mb-8'>
-            The plugin you're looking for doesn't exist or has been moved.
+            The plugin you&apos;re looking for doesn&apos;t exist or has been moved.
           </p>
         </div>
 
@@ -27,7 +27,7 @@ export default function PluginNotFound() {
           </Link>
           
           <div className='text-gray-500'>
-            <p>The plugin you're looking for doesn't exist.</p>
+            <p>The plugin you&apos;re looking for doesn&apos;t exist.</p>
           </div>
         </div>
       </main>

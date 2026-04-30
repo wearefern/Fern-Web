@@ -5,8 +5,14 @@ import { UserButton, useUser } from '@clerk/nextjs';
 
 import { AccountShell } from './account-shell';
 
+interface ClerkUserShape {
+  fullName?: string | null;
+  primaryEmailAddress?: { emailAddress?: string | null } | null;
+}
+
 export const ProfilePage = () => {
-  const { user } = useUser();
+  const useUserSafe = useUser as unknown as () => { user: ClerkUserShape | null };
+  const { user } = useUserSafe();
   const fullName = user?.fullName ?? 'Not set';
   const primaryEmail = user?.primaryEmailAddress?.emailAddress ?? 'Not available';
 

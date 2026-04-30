@@ -5,7 +5,7 @@ import { Show, UserButton, useAuth } from '@clerk/nextjs';
 
 import { ClientOnly } from '../client-only';
 
-type AuthNavControlsProps = {
+interface AuthNavControlsProps {
   showAccountLink?: boolean;
   accountClassName?: string;
   accountLabel?: string;
@@ -13,7 +13,7 @@ type AuthNavControlsProps = {
   signedOutHref?: string;
   showUserButton?: boolean;
   userButtonAvatarClassName?: string;
-};
+}
 
 export function AuthNavControls({
   showAccountLink = true,

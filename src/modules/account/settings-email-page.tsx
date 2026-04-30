@@ -11,6 +11,8 @@ const defaultPreferences = {
   marketingEmails: false,
 };
 
+type Preferences = typeof defaultPreferences;
+
 export const SettingsEmailPage = () => {
   const [preferences, setPreferences] = useState(defaultPreferences);
   const [status, setStatus] = useState<'loading' | 'idle' | 'saving' | 'success' | 'error'>('loading');
@@ -24,7 +26,7 @@ export const SettingsEmailPage = () => {
           throw new Error('Failed to load preferences');
         }
 
-        const data = await response.json();
+        const data = (await response.json()) as Partial<Preferences>;
         setPreferences((current) => ({
           ...current,
           ...data,
@@ -36,7 +38,7 @@ export const SettingsEmailPage = () => {
       }
     };
 
-    fetchPreferences();
+    void fetchPreferences();
   }, []);
 
   const handleToggle = (key: keyof typeof preferences) => {
@@ -124,7 +126,9 @@ export const SettingsEmailPage = () => {
           <button
             type='button'
             disabled={status === 'saving' || status === 'loading'}
-            onClick={handleSave}
+            onClick={() => {
+              void handleSave();
+            }}
             className='inline-flex h-10 items-center justify-center rounded-md bg-black px-4 text-sm font-medium text-white transition-opacity duration-200 ease-in-out hover:opacity-90 disabled:cursor-not-allowed disabled:bg-gray-400'
           >
             Save preferences

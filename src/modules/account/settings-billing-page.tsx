@@ -16,6 +16,20 @@ const emptyBilling = {
   postalCode: '',
 };
 
+interface BillingForm {
+  fullName: string;
+  billingEmail: string;
+  country: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  postalCode: string;
+}
+
+interface ApiError {
+  error?: string;
+}
+
 interface FieldProps {
   label: string;
   className?: string;
@@ -35,7 +49,7 @@ export const SettingsBillingPage = () => {
   type SaveStatus = 'idle' | 'loading' | 'success' | 'error';
   type LoadStatus = 'idle' | 'loading' | 'success' | 'error';
 
-  const [form, setForm] = useState(emptyBilling);
+  const [form, setForm] = useState<BillingForm>(emptyBilling);
   const [loadStatus, setLoadStatus] = useState<LoadStatus>('idle');
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -55,7 +69,7 @@ export const SettingsBillingPage = () => {
           throw new Error('Failed to load billing details');
         }
 
-        const data = await res.json();
+        const data = (await res.json()) as Partial<BillingForm>;
         setForm({
           fullName: data?.fullName ?? '',
           billingEmail: data?.billingEmail ?? '',
@@ -73,7 +87,7 @@ export const SettingsBillingPage = () => {
       }
     };
 
-    loadBillingProfile();
+    void loadBillingProfile();
   }, []);
 
   const handleChange = (key: keyof typeof emptyBilling, value: string) => {
@@ -98,11 +112,11 @@ export const SettingsBillingPage = () => {
       });
 
       if (!res.ok) {
-        const data = await res.json().catch(() => null);
+        const data = (await res.json().catch(() => null)) as ApiError | null;
         throw new Error(data?.error || 'Failed to save billing profile');
       }
 
-      const saved = await res.json();
+      const saved = (await res.json()) as Partial<BillingForm>;
       setForm({
         fullName: saved?.fullName ?? '',
         billingEmail: saved?.billingEmail ?? '',
@@ -130,7 +144,12 @@ export const SettingsBillingPage = () => {
               <p className='text-sm text-gray-600'>Update the billing address and contact information used for invoices.</p>
             </div>
 
-            <form onSubmit={handleSubmit} className='w-full space-y-8'>
+            <form
+              onSubmit={(event) => {
+                void handleSubmit(event);
+              }}
+              className='w-full space-y-8'
+            >
               <div className='grid w-full grid-cols-1 gap-6 md:grid-cols-2'>
                 <Field label='Full name / company name'>
                   <input

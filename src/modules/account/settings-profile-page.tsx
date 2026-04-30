@@ -6,8 +6,19 @@ import { useUser } from '@clerk/nextjs';
 
 import { AccountShell } from './account-shell';
 
+interface ClerkUserShape {
+  fullName?: string | null;
+  imageUrl?: string | null;
+  primaryEmailAddress?: { emailAddress?: string | null } | null;
+  update: (data: { firstName: string; lastName: string }) => Promise<unknown>;
+}
+
 export const SettingsProfilePage = () => {
-  const { user, isLoaded } = useUser();
+  const useUserSafe = useUser as unknown as () => {
+    user: ClerkUserShape | null;
+    isLoaded: boolean;
+  };
+  const { user, isLoaded } = useUserSafe();
   const [fullName, setFullName] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [success, setSuccess] = useState(false);
@@ -88,7 +99,9 @@ export const SettingsProfilePage = () => {
             <div className='flex flex-col gap-3 sm:flex-row sm:items-center'>
               <button
                 type='button'
-                onClick={handleSave}
+                onClick={() => {
+                  void handleSave();
+                }}
                 className='inline-flex h-10 items-center justify-center rounded-md bg-black px-4 text-sm font-medium text-white transition-opacity duration-200 ease-in-out hover:opacity-90'
               >
                 Save changes

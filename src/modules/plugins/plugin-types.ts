@@ -2,6 +2,7 @@ export interface Plugin {
   id: string;
   slug: string;
   name: string;
+  status?: string;
   category: string;
   description: string;
   longDescription: string;

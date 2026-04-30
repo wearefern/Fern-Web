@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { type Plugin } from './plugin-types';
 import { PluginsHeader } from './plugins-header';
 import { AudioPreview } from './audio-preview';
@@ -11,11 +12,36 @@ interface PluginDetailPageProps {
 }
 
 export const PluginDetailPage = ({ plugin }: PluginDetailPageProps) => {
+  const router = useRouter();
   const [cartMessage, setCartMessage] = useState('');
   const [showCartMessage, setShowCartMessage] = useState(false);
   const { addToCart } = useCart();
 
   const handleAddToCart = () => {
+    if (plugin.status === 'coming_soon') {
+      return;
+    }
+
+    if (plugin.status === 'free') {
+      fetch('/api/plugins/free-download', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ pluginId: plugin.id }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Unable to claim free plugin');
+          }
+          router.push('/account/downloads');
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      return;
+    }
+
     const result = addToCart(plugin);
     setCartMessage(result.message);
     setShowCartMessage(true);
@@ -64,9 +90,14 @@ export const PluginDetailPage = ({ plugin }: PluginDetailPageProps) => {
             </button>
             <button
               onClick={handleAddToCart}
+              disabled={plugin.status === 'coming_soon'}
               className='px-6 py-3 bg-black text-white font-medium rounded-lg hover:bg-gray-800 transition-colors duration-200'
             >
-              Add to Cart
+              {plugin.status === 'free'
+                ? 'Get for Free'
+                : plugin.status === 'coming_soon'
+                ? 'Coming Soon'
+                : 'Add to Cart'}
             </button>
           </div>
 
@@ -118,7 +149,7 @@ export const PluginDetailPage = ({ plugin }: PluginDetailPageProps) => {
 
         {/* Included Items */}
         <section className='mb-16'>
-          <h2 className='text-2xl font-bold text-black mb-8'>What's Included</h2>
+          <h2 className='text-2xl font-bold text-black mb-8'>What&apos;s Included</h2>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
             {plugin.includedItems.map((item, index) => (
               <div key={index} className='flex items-start gap-3'>

@@ -1,37 +1,31 @@
 'use client';
 
 import Link from 'next/link';
-import { useUser } from '../../context/user-context';
 import { useEffect, useState } from 'react';
 import { type Plugin } from '../plugins/plugin-types';
 import { AppleLogo, WindowsLogo } from '../../components/ui/atoms/platform-logos';
 import { AccountShell } from './account-shell';
 
 export const DownloadsPage = () => {
-  const { purchasedPlugins } = useUser();
-  const [allPlugins, setAllPlugins] = useState<Plugin[]>([]);
+  const [purchasedPluginDetails, setPurchasedPluginDetails] = useState<Plugin[]>([]);
 
   useEffect(() => {
-    const loadPlugins = async () => {
+    const loadDownloads = async () => {
       try {
-        const response = await fetch('/api/plugins', { cache: 'no-store' });
+        const response = await fetch('/api/downloads', { cache: 'no-store' });
         if (!response.ok) {
-          throw new Error('Failed to load plugins');
+          throw new Error('Failed to load downloads');
         }
-        const data: Plugin[] = await response.json();
-        setAllPlugins(data);
+        const data = (await response.json()) as { plugin: Plugin }[];
+        setPurchasedPluginDetails(data.map((item) => item.plugin));
       } catch (error) {
         console.error(error);
+        setPurchasedPluginDetails([]);
       }
     };
 
-    loadPlugins();
+    void loadDownloads();
   }, []);
-  
-  // Filter plugins that have been purchased
-  const purchasedPluginDetails = allPlugins.filter(plugin => 
-    purchasedPlugins.includes(plugin.id)
-  );
 
   return (
     <AccountShell

@@ -120,7 +120,7 @@ const Intro = ({ className, ...rest }: IntroProps) => {
   }, [cleanup, saveUserPreferenceToSkipIntro]);
 
   const partRenderer: PrompterRenderer = useCallback(
-    (part, _index, _params) => (
+    (part) => (
       <Typography variant='heading' italic>
         {part.value}
       </Typography>

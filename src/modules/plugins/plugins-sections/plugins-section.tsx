@@ -63,7 +63,7 @@ const MinimalPlayer = ({
     if (!audio) return;
 
     if (isPlaying && isActive) {
-      audio.play();
+      void audio.play();
     } else {
       audio.pause();
     }
@@ -280,7 +280,7 @@ export const PluginsSection = () => {
       }
     };
 
-    loadPlugins();
+    void loadPlugins();
   }, []);
 
   const filteredPlugins = selectedCategory === 'All'

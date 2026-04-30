@@ -3,13 +3,11 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCart } from '../../context/cart-context';
-import { useUser } from '../../context/user-context';
 import { PluginsHeader } from '../plugins/plugins-header';
 
 export const CheckoutPage = () => {
   const router = useRouter();
   const { items, getTotalPrice, clearCart } = useCart();
-  const { addOrder } = useUser();
   const [isProcessing, setIsProcessing] = useState(false);
   const [isCompletingPurchase, setIsCompletingPurchase] = useState(false);
   const [formData, setFormData] = useState({
@@ -37,21 +35,21 @@ export const CheckoutPage = () => {
     // Simulate payment processing
     await new Promise(resolve => setTimeout(resolve, 2000));
 
-    // Create order
-    const order = {
-      id: `order-${Date.now()}`,
-      date: new Date().toISOString(),
-      items: items.map(item => ({
-        plugin: item.plugin,
-        quantity: item.quantity,
-        price: item.plugin.price,
-      })),
-      total: getTotalPrice(),
-      status: 'completed' as const,
-    };
+    const response = await fetch('/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items: items.map((item) => ({
+          pluginId: item.plugin.id,
+          quantity: item.quantity,
+        })),
+      }),
+    });
 
-    // Add order to user context
-    addOrder(order);
+    if (!response.ok) {
+      setIsProcessing(false);
+      return;
+    }
 
     setIsCompletingPurchase(true);
 
@@ -82,7 +80,12 @@ export const CheckoutPage = () => {
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
           {/* Order Details */}
           <div className='lg:col-span-2'>
-            <form onSubmit={handleSubmit} className='space-y-6'>
+            <form
+              onSubmit={(event) => {
+                void handleSubmit(event);
+              }}
+              className='space-y-6'
+            >
               {/* User Details */}
               <div className='rounded-lg border border-gray-200 bg-gray-50/40 p-6'>
                 <h2 className='text-lg font-semibold text-black mb-4'>Contact Information</h2>
@@ -181,7 +184,7 @@ export const CheckoutPage = () => {
                 </div>
                 <div className='mt-4 rounded-md border border-gray-200 bg-white px-4 py-5 text-center'>
                   <p className='text-gray-700 font-medium'>Demo Payment Gateway</p>
-                  <p className='mt-1 text-xs text-gray-500'>Click "Complete Purchase" to simulate payment</p>
+                  <p className='mt-1 text-xs text-gray-500'>Click &quot;Complete Purchase&quot; to simulate payment</p>
                 </div>
               </div>
 

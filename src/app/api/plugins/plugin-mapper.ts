@@ -23,6 +23,7 @@ export const mapDBPluginToUIPlugin = (plugin: DBPlugin): Plugin => {
     id: plugin.id,
     slug: plugin.slug,
     name: plugin.name,
+    status: plugin.status,
     category: details.category,
     description: plugin.description ?? details.description,
     longDescription: details.longDescription,

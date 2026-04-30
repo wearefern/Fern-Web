@@ -1,12 +1,42 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
-import { useUser } from '../../context/user-context';
 import { AccountShell } from './account-shell';
 
+interface OrderView {
+  id: string;
+  date: string;
+  total: string;
+  status: string;
+  items: {
+    quantity: number;
+    price: string;
+    plugin: { id: string; name: string; slug: string; category: string };
+  }[];
+}
+
 export const OrdersPage = () => {
-  const { orders } = useUser();
+  const [orders, setOrders] = useState<OrderView[]>([]);
+
+  useEffect(() => {
+    const loadOrders = async () => {
+      try {
+        const response = await fetch('/api/orders', { cache: 'no-store' });
+        if (!response.ok) {
+          throw new Error('Failed to load orders');
+        }
+        const data = (await response.json()) as OrderView[];
+        setOrders(data);
+      } catch (error) {
+        console.error(error);
+        setOrders([]);
+      }
+    };
+
+    void loadOrders();
+  }, []);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {

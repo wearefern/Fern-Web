@@ -3,16 +3,26 @@ import { NextResponse } from 'next/server';
 import { getModelClient } from '../../shared/model-client';
 import { getCurrentUser } from '~lib/auth/get-current-user';
 
+interface BillingPayload {
+  fullName?: unknown;
+  billingEmail?: unknown;
+  country?: unknown;
+  city?: unknown;
+  addressLine1?: unknown;
+  addressLine2?: unknown;
+  postalCode?: unknown;
+}
+
 export async function GET() {
   try {
     const user = await getCurrentUser();
-    if (!user?.id) {
+    if (!user?.clerkId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const prisma = getModelClient();
     const billing = await prisma.billingProfile.findUnique({
-      where: { userId: user.id },
+      where: { userId: user.clerkId },
     });
 
     if (!billing) {
@@ -37,11 +47,11 @@ export async function GET() {
 export async function PATCH(request: Request) {
   try {
     const user = await getCurrentUser();
-    if (!user?.id) {
+    if (!user?.clerkId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const body = await request.json();
+    const body = (await request.json()) as BillingPayload;
     const data = {
       fullName: String(body.fullName ?? ''),
       billingEmail: String(body.billingEmail ?? ''),
@@ -54,10 +64,10 @@ export async function PATCH(request: Request) {
 
     const prisma = getModelClient();
     const profile = await prisma.billingProfile.upsert({
-      where: { userId: user.id },
+      where: { userId: user.clerkId },
       update: data,
       create: {
-        userId: user.id,
+        userId: user.clerkId,
         ...data,
       },
     });
