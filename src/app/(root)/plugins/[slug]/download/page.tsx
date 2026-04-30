@@ -1,21 +1,30 @@
-'use client';
-
 import { notFound } from 'next/navigation';
-import { getPluginBySlug } from '../../../../../data/plugins-data';
-import { PluginDownloadPage } from '../../../../../modules/plugins/plugin-download-page';
 
-interface PluginDownloadPageProps {
+import { getRequestOrigin } from '~lib/server/get-request-origin';
+import { PluginDownloadPage } from '~modules/plugins/plugin-download-page';
+import { Plugin } from '~modules/plugins/plugin-types';
+
+interface PluginDownloadProps {
   params: {
     slug: string;
   };
 }
 
-export default function PluginDownload({ params }: PluginDownloadPageProps) {
-  const plugin = getPluginBySlug(params.slug);
+export default async function PluginDownload({ params }: PluginDownloadProps) {
+  const origin = getRequestOrigin();
+  const response = await fetch(`${origin}/api/plugins/${params.slug}`, {
+    cache: 'no-store',
+  });
 
-  if (!plugin) {
+  if (response.status === 404) {
     notFound();
   }
+
+  if (!response.ok) {
+    notFound();
+  }
+
+  const plugin = (await response.json()) as Plugin;
 
   return <PluginDownloadPage plugin={plugin} />;
 }

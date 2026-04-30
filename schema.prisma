@@ -4,8 +4,8 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL")
-  directUrl = env("POSTGRES_URL_NON_POOLING")
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -38,4 +38,44 @@ model ContentInteraction {
 
   @@id(name: "interactionRelation", [userHash, contentSlug])
   @@map(name: "content_interactions")
+}
+
+model UserPreference {
+  userId             String   @id @unique @map(name: "user_id")
+  orderConfirmations Boolean  @default(true)
+  downloadUpdates    Boolean  @default(false)
+  productAnnouncements Boolean @default(false)
+  marketingEmails    Boolean  @default(false)
+  createdAt          DateTime @default(now()) @map(name: "created_at")
+  updatedAt          DateTime @updatedAt @map(name: "updated_at")
+
+  @@map(name: "user_preferences")
+}
+
+model BillingProfile {
+  userId      String   @id @unique @map(name: "user_id")
+  fullName    String   @default("")
+  billingEmail String  @default("")
+  country     String   @default("")
+  addressLine1 String  @default("")
+  addressLine2 String  @default("")
+  city        String   @default("")
+  postalCode  String   @default("")
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @updatedAt @map(name: "updated_at")
+
+  @@map(name: "billing_profiles")
+}
+
+model Plugin {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  priceCents  Int
+  status      String
+  previewUrl  String?
+  fileKey     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

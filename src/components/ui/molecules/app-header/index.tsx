@@ -8,7 +8,7 @@ import {
   useScroll,
   useVelocity,
 } from 'framer-motion';
-import { ReactNode, forwardRef, useState } from 'react';
+import { ReactNode, forwardRef, useEffect, useState } from 'react';
 
 import { cn, vhToPx } from '~utils/style';
 
@@ -20,13 +20,19 @@ export interface AppHeaderProps extends HTMLMotionProps<'header'> {
 
 const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
   ({ className, innerClassName, children, mode = 'dynamic', ...rest }, ref) => {
+    const [mounted, setMounted] = useState(false);
     const [compact, setCompact] = useState(false);
 
     const { scrollY } = useScroll();
     const scrollVelocity = useVelocity(scrollY);
     const scrollDistanceStartY = useMotionValue(0);
 
+    useEffect(() => {
+      setMounted(true);
+    }, []);
+
     useMotionValueEvent(scrollVelocity, 'change', (latest) => {
+      if (!mounted) return;
       // If scroll is slow enough, the velocity will reset `scrollDistanceStartY`
       // to avoid displaying normal view immediately when user scrolls up.
       if (latest * 10000 === 0) {
@@ -35,6 +41,7 @@ const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
     });
 
     useMotionValueEvent(scrollY, 'change', (latest) => {
+      if (!mounted) return;
       if (mode === 'compact') {
         setCompact(true);
         return;
@@ -86,7 +93,7 @@ const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
           },
         }}
         initial='normal'
-        animate={compact ? 'compact' : 'normal'}
+        animate={mounted && compact ? 'compact' : 'normal'}
         className={cn(
           'sticky top-0 z-50 flex w-full bg-gradient-to-b from-ctx-primary to-ctx-primary/25 backdrop-blur-sm',
           className

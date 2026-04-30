@@ -2,12 +2,31 @@
 
 import Link from 'next/link';
 import { useUser } from '../../context/user-context';
-import { getAllPlugins } from '../../data/plugins-data';
-import { PluginsHeader } from '../plugins/plugins-header';
+import { useEffect, useState } from 'react';
+import { type Plugin } from '../plugins/plugin-types';
+import { AppleLogo, WindowsLogo } from '../../components/ui/atoms/platform-logos';
+import { AccountShell } from './account-shell';
 
 export const DownloadsPage = () => {
   const { purchasedPlugins } = useUser();
-  const allPlugins = getAllPlugins();
+  const [allPlugins, setAllPlugins] = useState<Plugin[]>([]);
+
+  useEffect(() => {
+    const loadPlugins = async () => {
+      try {
+        const response = await fetch('/api/plugins', { cache: 'no-store' });
+        if (!response.ok) {
+          throw new Error('Failed to load plugins');
+        }
+        const data: Plugin[] = await response.json();
+        setAllPlugins(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadPlugins();
+  }, []);
   
   // Filter plugins that have been purchased
   const purchasedPluginDetails = allPlugins.filter(plugin => 
@@ -15,65 +34,69 @@ export const DownloadsPage = () => {
   );
 
   return (
-    <div className='min-h-screen bg-white'>
-      <PluginsHeader />
-      
-      <main className='w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24'>
-        <div className='mb-8'>
-          <h1 className='text-3xl font-bold text-black mb-2'>Your Downloads</h1>
-          <p className='text-gray-600'>Download your purchased plugins</p>
+    <AccountShell
+      title='Your Downloads'
+      subtitle='Download your purchased plugins'
+    >
+      {purchasedPluginDetails.length === 0 ? (
+        <div className='rounded-lg border border-gray-200 bg-gray-50/40 py-12 text-center'>
+          <p className='text-gray-600 mb-6'>No downloads available yet</p>
+          <Link
+            href='/plugins'
+            className='inline-flex h-11 items-center justify-center rounded-lg bg-black px-6 text-white transition-opacity duration-200 ease-in-out hover:opacity-90'
+          >
+            Browse Plugins
+          </Link>
         </div>
-
-        {purchasedPluginDetails.length === 0 ? (
-          <div className='text-center py-12'>
-            <p className='text-gray-600 mb-6'>You haven't purchased any plugins yet</p>
-            <Link
-              href='/plugins'
-              className='inline-block px-6 py-3 bg-black text-white font-medium rounded-lg hover:bg-gray-800 transition-colors duration-200'
-            >
-              Browse Plugins
-            </Link>
-          </div>
-        ) : (
-          <div className='space-y-6'>
-            {purchasedPluginDetails.map((plugin) => (
-              <div key={plugin.id} className='bg-white border border-gray-300 rounded-lg p-6'>
-                <div className='flex justify-between items-start mb-4'>
-                  <div>
-                    <h3 className='text-lg font-semibold text-black mb-1'>
-                      {plugin.name}
-                    </h3>
-                    <p className='text-gray-600 text-sm'>{plugin.description}</p>
-                    <div className='flex items-center gap-4 mt-2'>
-                      <span className='text-sm text-gray-500'>{plugin.version}</span>
-                      <span className='text-sm text-gray-500'>{plugin.fileSize}</span>
-                      <span className='text-sm text-gray-500'>{plugin.format}</span>
-                    </div>
-                  </div>
-                  <div className='text-right'>
-                    <span className='text-lg font-bold text-black'>{plugin.price}</span>
+      ) : (
+        <div className='space-y-6'>
+          {purchasedPluginDetails.map((plugin) => (
+            <div key={plugin.id} className='rounded-lg border border-gray-200 bg-gray-50/40 p-6'>
+              <div className='mb-5 flex items-start justify-between gap-6'>
+                <div className='min-w-0'>
+                  <h3 className='text-lg font-semibold text-black mb-1'>
+                    {plugin.name}
+                  </h3>
+                  <p className='text-gray-600 text-sm'>{plugin.description}</p>
+                  <div className='mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-500'>
+                    <span>Version {plugin.version}</span>
+                    <span>{plugin.fileSize}</span>
+                    <span>{plugin.format}</span>
+                    <span className='inline-flex items-center gap-2'>
+                      <AppleLogo />
+                      <WindowsLogo />
+                    </span>
                   </div>
                 </div>
-
-                <div className='flex gap-4'>
-                  <Link
-                    href={`/plugins/${plugin.slug}/download`}
-                    className='px-4 py-2 bg-black text-white font-medium rounded-md hover:bg-gray-800 transition-colors duration-200'
-                  >
-                    Go to Download
-                  </Link>
-                  <Link
-                    href={`/plugins/${plugin.slug}`}
-                    className='px-4 py-2 bg-white border border-gray-300 text-black font-medium rounded-md hover:border-gray-400 transition-colors duration-200'
-                  >
-                    View Details
-                  </Link>
+                <div className='shrink-0 text-right'>
+                  <span className='text-lg font-bold text-black'>{plugin.price}</span>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
-      </main>
-    </div>
+
+              <div className='grid grid-cols-1 gap-3 sm:grid-cols-3'>
+                <a
+                  href={plugin.macDownloadUrl}
+                  className='inline-flex h-10 items-center justify-center rounded-md bg-black px-4 text-sm font-medium text-white transition-opacity duration-200 ease-in-out hover:opacity-90'
+                >
+                  Download for Mac
+                </a>
+                <a
+                  href={plugin.windowsDownloadUrl}
+                  className='inline-flex h-10 items-center justify-center rounded-md border border-gray-300 bg-white px-4 text-sm font-medium text-black transition-colors duration-200 ease-in-out hover:border-gray-400'
+                >
+                  Download for Windows
+                </a>
+                <Link
+                  href={`/plugins/${plugin.slug}`}
+                  className='inline-flex h-10 items-center justify-center rounded-md border border-gray-300 bg-white px-4 text-sm font-medium text-black transition-colors duration-200 ease-in-out hover:border-gray-400'
+                >
+                  View Details
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </AccountShell>
   );
 };

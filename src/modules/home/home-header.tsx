@@ -9,6 +9,7 @@ import { BLOG_PATH, PLUGINS_PATH } from '~constants/index';
 import { LAYOUT_ID_HOME_LOGO } from '~ui/atoms/motion';
 import { ThemeToggle } from '~ui/atoms/theme/theme-toggle';
 import { AppHeader } from '~ui/molecules/app-header';
+import { AuthNavControls } from '../../components/auth/auth-nav-controls';
 import { FernLogo } from '../../components/ui/atoms/fern-logo';
 
 /* -------------------------------------------------------------------------------------------------
@@ -98,9 +99,7 @@ const HomeHeader = () => {
       className='absolute top-0 bg-transparent from-transparent to-transparent backdrop-blur-0'
       innerClassName='flex justify-between gap-x-2 pt-5 sm:pt-6'
     >
-      <Link title='Home' href={'/'}>
-        <FernLogo width={58} layoutId={LAYOUT_ID_HOME_LOGO} />
-      </Link>
+      <FernLogo width={58} layoutId={LAYOUT_ID_HOME_LOGO} title='Home' />
 
       <MotionConfig transition={{ type: 'spring', duration: 0.5, bounce: 0 }}>
         <motion.nav layout='position' className='flex items-center gap-x-4 sm:gap-x-5'>
@@ -108,10 +107,16 @@ const HomeHeader = () => {
           <NavLink href='/#process'>Process.</NavLink>
           <NavLink href={PLUGINS_PATH}>Plugins.</NavLink>
           <NavLink href={BLOG_PATH}>Insights.</NavLink>
+          <AuthNavControls
+            showUserButton={false}
+            accountClassName='group relative inline-flex items-center justify-center overflow-hidden rounded-full px-1.5 py-1 text-xs font-medium text-ctx-primary-fg-solid sm:text-sm'
+            accountLabel='Account.'
+          />
           <NavLink href='/contact' emphasize>
             Contact.
           </NavLink>
 
+          <AuthNavControls showAccountLink={false} userButtonAvatarClassName='h-7 w-7 sm:h-8 sm:w-8' />
           <ThemeToggle className='p-1 [&_svg]:h-4 [&_svg]:w-4 sm:[&_svg]:h-5 sm:[&_svg]:w-5' />
         </motion.nav>
       </MotionConfig>

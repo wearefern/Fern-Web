@@ -5,7 +5,7 @@ import { useCart } from '../../context/cart-context';
 import { PluginsHeader } from '../plugins/plugins-header';
 
 export const CartPage = () => {
-  const { items, removeFromCart, updateQuantity, getTotalPrice, clearCart } = useCart();
+  const { items, removeFromCart, getTotalPrice, clearCart } = useCart();
 
   if (items.length === 0) {
     return (

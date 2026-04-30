@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState, ReactNode } from 'react';
-import { type Plugin } from '../data/plugins-data';
+import { type Plugin } from '../modules/plugins/plugin-types';
 
 interface Order {
   id: string;

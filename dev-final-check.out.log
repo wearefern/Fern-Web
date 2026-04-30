@@ -1,0 +1,34 @@
+
+> portfolio@0.1.0 dev C:\Users\ASUS\Desktop\Fern-Web
+> next dev
+
+   ▲ Next.js 14.1.4
+   - Local:        http://localhost:3000
+   - Environments: .env.local, .env
+
+   automatically enabled Fast Refresh for 1 custom loader
+ ✓ Ready in 2.5s
+ ○ Compiling /src/middleware ...
+ ✓ Compiled /src/middleware in 752ms (186 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 9s (2265 modules)
+
+[35m
+[Clerk]:[0m You are running in keyless mode.
+You can [35mclaim your keys[0m by visiting https://dashboard.clerk.com/apps/claim?framework=nextjs&token=soa9udkbds1cj0iky2xne1y746r6w0jkisa1pgsp&return_url=http%3A%2F%2Flocalhost%3A3000%2F
+
+ ○ Compiling /plugins ...
+ ✓ Compiled /plugins in 4.3s (2256 modules)
+ ○ Compiling /cart ...
+ ✓ Compiled /cart in 622ms (2248 modules)
+ ○ Compiling /checkout ...
+ ✓ Compiled /checkout in 652ms (2255 modules)
+ ○ Compiling /account ...
+ ✓ Compiled /account in 674ms (2264 modules)
+ ○ Compiling /account/settings ...
+ ✓ Compiled /account/settings in 651ms (2271 modules)
+ ○ Compiling /account/settings/billing ...
+ ✓ Compiled /account/settings/billing in 692ms (2278 modules)
+ ○ Compiling /sign-in/[[...sign-in]] ...
+ ✓ Compiled /sign-in/[[...sign-in]] in 607ms (2284 modules)
+ ✓ Compiled /sign-up/[[...sign-up]] in 434ms (2290 modules)

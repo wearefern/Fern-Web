@@ -1,7 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-
 import { BLOG_PATH } from '~constants/index';
 
 import { ThemeToggle } from '~ui/atoms/theme/theme-toggle';
@@ -15,9 +13,7 @@ import { FernLogo } from '../../components/ui/atoms/fern-logo';
 const BlogHeader = () => {
   return (
     <AppHeader innerClassName='flex gap-x-2 justify-between'>
-      <Link title='Blog' href={BLOG_PATH}>
-        <FernLogo />
-      </Link>
+      <FernLogo href={BLOG_PATH} title='Blog' />
 
       <nav className='flex items-center gap-x-2'>
         <ThemeToggle />

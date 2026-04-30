@@ -2,13 +2,11 @@
 
 import Link from 'next/link';
 
-import { PLUGINS_PATH } from '~constants/index';
-
 import { ButtonWithVideo } from '~ui/atoms/button';
 import { ThemeToggle } from '~ui/atoms/theme/theme-toggle';
 import { AppHeader } from '~ui/molecules/app-header';
-import { FernLogo } from '../../components/ui/atoms/fern-logo';
 import { useCart } from '../../context/cart-context';
+import { AuthNavControls } from '../../components/auth/auth-nav-controls';
 import { PluginsLogo } from './plugins-logo';
 
 /* -------------------------------------------------------------------------------------------------
@@ -21,9 +19,7 @@ const PluginsHeader = () => {
 
   return (
     <AppHeader innerClassName='flex gap-x-2 justify-between'>
-      <Link title='Fern' href='/'>
-        <PluginsLogo />
-      </Link>
+      <PluginsLogo />
 
       <nav className='flex items-center gap-x-2'>
         <ButtonWithVideo videoFileName='header-button-cart' asChild>
@@ -33,9 +29,11 @@ const PluginsHeader = () => {
         </ButtonWithVideo>
 
         <ButtonWithVideo videoFileName='header-button-account' asChild>
-          <Link href='/account/downloads'>Account</Link>
+          <div>
+            <AuthNavControls showUserButton={false} />
+          </div>
         </ButtonWithVideo>
-
+        <AuthNavControls showAccountLink={false} />
         <ThemeToggle />
       </nav>
     </AppHeader>

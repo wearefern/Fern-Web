@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { type Plugin } from '../../data/plugins-data';
+import { type Plugin } from './plugin-types';
 import { useUser } from '../../context/user-context';
 import { PluginsHeader } from './plugins-header';
 import { AppleLogo, WindowsLogo } from '../../components/ui/atoms/platform-logos';

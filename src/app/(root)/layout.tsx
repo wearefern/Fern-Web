@@ -1,5 +1,6 @@
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata, Viewport } from 'next';
 import { Albert_Sans } from 'next/font/google';
 import { Inter } from 'next/font/google';
@@ -120,22 +121,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
+    <html lang='en' suppressHydrationWarning>
       <body
         className={cn(
           `${fontSans.variable} ${fontBody.variable} ${fontMono.variable}`
         )}
       >
-        <SSRQueryClientProvider>
-          <ThemeProvider>
-            <CartProvider>
-              <UserProvider>
-                {children}
-                <HomeFooter />
-              </UserProvider>
-            </CartProvider>
-          </ThemeProvider>
-        </SSRQueryClientProvider>
+        <ClerkProvider>
+          <SSRQueryClientProvider>
+            <ThemeProvider>
+              <CartProvider>
+                <UserProvider>
+                  {children}
+                  <HomeFooter />
+                </UserProvider>
+              </CartProvider>
+            </ThemeProvider>
+          </SSRQueryClientProvider>
+        </ClerkProvider>
 
         <SpeedInsights />
         <Analytics />

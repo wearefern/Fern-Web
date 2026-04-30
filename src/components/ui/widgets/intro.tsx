@@ -9,8 +9,7 @@ import { Button } from '~ui/atoms/button';
 import { LAYOUT_ID_HOME_LOGO } from '~ui/atoms/motion';
 import { Typography } from '~ui/atoms/typography';
 import { AppHeader } from '~ui/molecules/app-header';
-import { FernLogo } from '../atoms/fern-logo';
-import { PrompterHandle, PrompterRenderer } from '~ui/widgets/prompter';
+import { PrompterHandle, PrompterRenderer } from '~ui/organisms/prompter';
 import { createPrompterParts } from '~ui/organisms/prompter/index';
 import { HighlightPrompter } from '~ui/organisms/prompter/implementations';
 import { Logo } from '~ui/widgets/logo';
@@ -121,7 +120,7 @@ const Intro = ({ className, ...rest }: IntroProps) => {
   }, [cleanup, saveUserPreferenceToSkipIntro]);
 
   const partRenderer: PrompterRenderer = useCallback(
-    (part) => (
+    (part, _index, _params) => (
       <Typography variant='heading' italic>
         {part.value}
       </Typography>

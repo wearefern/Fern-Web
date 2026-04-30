@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 
 import { cn } from '~utils/style';
-import { pluginsData, type Plugin } from '../../../data/plugins-data';
+import { type Plugin } from '../plugin-types';
 
 /* -------------------------------------------------------------------------------------------------
  * Minimal Waveform Player Component
@@ -19,6 +19,12 @@ interface MinimalPlayerProps {
   duration: number;
   isActive: boolean;
 }
+
+const WAVEFORM_BARS = [
+  24, 40, 32, 56, 28, 48, 36, 64, 30, 52, 38, 44,
+  26, 58, 34, 46, 62, 28, 50, 36, 42, 54, 32, 48,
+  24, 40, 32, 56, 28, 48, 36, 64,
+];
 
 const MinimalPlayer = ({
   audioUrl,
@@ -84,7 +90,7 @@ const MinimalPlayer = ({
             display: 'flex'
           }}
         >
-          {Array.from({ length: 32 }, (_, i) => (
+          {WAVEFORM_BARS.map((barHeight, i) => (
             <div
               key={i}
               className={cn(
@@ -93,7 +99,7 @@ const MinimalPlayer = ({
               )}
               style={{
                 width: '3px',
-                height: `${Math.random() * 20 + 8}px`,
+                height: `${barHeight}px`,
                 backgroundColor: isActive && isPlaying ? '#8A8A8A' : '#8A8A8A',
                 borderRadius: '999px',
                 display: 'block',
@@ -194,8 +200,8 @@ const MinimalPluginCard = ({
   currentTime,
 }: MinimalPluginCardProps) => {
   return (
-    <Link href={`/plugins/${plugin.slug}`} className='block'>
-      <div className='bg-white border border-gray-200 rounded-lg p-6 hover:border-gray-300 transition-colors duration-200 h-full flex flex-col cursor-pointer'>
+    <div className='bg-white border border-gray-200 rounded-lg p-6 hover:border-gray-300 transition-colors duration-200 h-full flex flex-col'>
+      <Link href={`/plugins/${plugin.slug}`} className='block'>
         {/* Icon */}
         <div className='w-12 h-12 border border-gray-300 rounded-md flex items-center justify-center mb-4'>
           <div className='w-6 h-6 bg-gray-400 rounded-sm' />
@@ -222,22 +228,22 @@ const MinimalPluginCard = ({
               {plugin.category}
             </span>
           </div>
-
-          {/* Minimal Player */}
-          <div className='pt-4 border-t border-gray-100'>
-            <MinimalPlayer
-              audioUrl={plugin.audioUrl}
-              isPlaying={isPlaying}
-              onPlayPause={onPlayPause}
-              onTimeUpdate={onTimeUpdate}
-              currentTime={currentTime}
-              duration={plugin.duration}
-              isActive={isActive}
-            />
-          </div>
         </div>
+      </Link>
+
+      {/* Minimal Player */}
+      <div className='pt-4 border-t border-gray-100'>
+        <MinimalPlayer
+          audioUrl={plugin.audioUrl}
+          isPlaying={isPlaying}
+          onPlayPause={onPlayPause}
+          onTimeUpdate={onTimeUpdate}
+          currentTime={currentTime}
+          duration={plugin.duration}
+          isActive={isActive}
+        />
       </div>
-    </Link>
+    </div>
   );
 };
 
@@ -248,18 +254,38 @@ const MinimalPluginCard = ({
 const categories = ['All', 'Ambient', 'Electronic', 'Vintage', 'Cinematic', 'Lo-Fi', 'Nature'];
 
 export const PluginsSection = () => {
+  const [plugins, setPlugins] = useState<Plugin[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [activePluginId, setActivePluginId] = useState<string | null>(null);
-  const [pluginStates, setPluginStates] = useState<Record<string, { isPlaying: boolean; currentTime: number }>>(
-    pluginsData.reduce((acc: Record<string, { isPlaying: boolean; currentTime: number }>, plugin) => ({
-      ...acc,
-      [plugin.id]: { isPlaying: false, currentTime: 0 },
-    }), {})
-  );
+  const [pluginStates, setPluginStates] = useState<Record<string, { isPlaying: boolean; currentTime: number }>>({});
+
+  useEffect(() => {
+    const loadPlugins = async () => {
+      try {
+        const response = await fetch('/api/plugins', { cache: 'no-store' });
+        if (!response.ok) {
+          throw new Error('Failed to fetch plugins');
+        }
+
+        const data: Plugin[] = await response.json();
+        setPlugins(data);
+        setPluginStates(
+          data.reduce((acc: Record<string, { isPlaying: boolean; currentTime: number }>, plugin) => {
+            acc[plugin.id] = { isPlaying: false, currentTime: 0 };
+            return acc;
+          }, {})
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadPlugins();
+  }, []);
 
   const filteredPlugins = selectedCategory === 'All'
-    ? pluginsData
-    : pluginsData.filter(plugin => plugin.category === selectedCategory);
+    ? plugins
+    : plugins.filter(plugin => plugin.category === selectedCategory);
 
   const handlePlayPause = (pluginId: string) => {
     setPluginStates(prev => {

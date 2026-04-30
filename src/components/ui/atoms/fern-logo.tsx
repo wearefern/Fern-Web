@@ -5,11 +5,19 @@ interface FernLogoProps {
   className?: string;
   width?: number;
   layoutId?: string;
+  href?: string;
+  title?: string;
 }
 
-export const FernLogo = ({ className, width, layoutId }: FernLogoProps) => {
+export const FernLogo = ({
+  className,
+  width,
+  layoutId,
+  href = '/',
+  title = 'Fern',
+}: FernLogoProps) => {
   return (
-    <Link href="/" title="Fern" className={className}>
+    <Link href={href} title={title} className={className}>
       <Logo width={width} layoutId={layoutId} />
     </Link>
   );

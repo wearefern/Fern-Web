@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { HTMLMotionProps, motion } from 'framer-motion';
 import { Logo } from '~ui/widgets/logo';
 

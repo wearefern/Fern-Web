@@ -1,0 +1,10 @@
+<w> [webpack.cache.PackFileCacheStrategy] Serializing big strings (201kiB) impacts deserialization performance (consider using Buffer instead and decode when needed)
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.

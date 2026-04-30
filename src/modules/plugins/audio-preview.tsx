@@ -9,6 +9,12 @@ interface AudioPreviewProps {
   duration: number;
 }
 
+const WAVEFORM_BARS = [
+  24, 40, 32, 56, 28, 48, 36, 64, 30, 52, 38, 44,
+  26, 58, 34, 46, 62, 28, 50, 36, 42, 54, 32, 48,
+  24, 40, 32, 56, 28, 48, 36, 64,
+];
+
 export const AudioPreview = ({ pluginName, audioUrl, duration }: AudioPreviewProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -80,7 +86,7 @@ export const AudioPreview = ({ pluginName, audioUrl, duration }: AudioPreviewPro
             display: 'flex'
           }}
         >
-          {Array.from({ length: 32 }, (_, i) => (
+          {WAVEFORM_BARS.map((barHeight, i) => (
             <div
               key={i}
               className={cn(
@@ -89,7 +95,7 @@ export const AudioPreview = ({ pluginName, audioUrl, duration }: AudioPreviewPro
               )}
               style={{
                 width: '3px',
-                height: `${Math.random() * 20 + 8}px`,
+                height: `${barHeight}px`,
                 backgroundColor: isPlaying ? '#8A8A8A' : '#8A8A8A',
                 borderRadius: '999px',
                 display: 'block',

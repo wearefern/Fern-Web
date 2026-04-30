@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { type Plugin } from '../../data/plugins-data';
+import { type Plugin } from './plugin-types';
 import { PluginsHeader } from './plugins-header';
 import { AudioPreview } from './audio-preview';
 import { useCart } from '../../context/cart-context';

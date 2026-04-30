@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCart } from '../../context/cart-context';
 import { useUser } from '../../context/user-context';
@@ -11,13 +11,22 @@ export const CheckoutPage = () => {
   const { items, getTotalPrice, clearCart } = useCart();
   const { addOrder } = useUser();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isCompletingPurchase, setIsCompletingPurchase] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    cardNumber: '',
+    expiry: '',
+    cvc: '',
   });
 
-  if (items.length === 0) {
-    router.push('/cart');
+  useEffect(() => {
+    if (items.length === 0 && !isCompletingPurchase) {
+      router.push('/cart');
+    }
+  }, [items.length, isCompletingPurchase, router]);
+
+  if (items.length === 0 && !isCompletingPurchase) {
     return null;
   }
 
@@ -43,6 +52,8 @@ export const CheckoutPage = () => {
 
     // Add order to user context
     addOrder(order);
+
+    setIsCompletingPurchase(true);
 
     // Clear cart
     clearCart();
@@ -73,12 +84,12 @@ export const CheckoutPage = () => {
           <div className='lg:col-span-2'>
             <form onSubmit={handleSubmit} className='space-y-6'>
               {/* User Details */}
-              <div className='bg-white border border-gray-300 rounded-lg p-6'>
-                <h2 className='text-lg font-semibold text-black mb-4'>Your Information</h2>
+              <div className='rounded-lg border border-gray-200 bg-gray-50/40 p-6'>
+                <h2 className='text-lg font-semibold text-black mb-4'>Contact Information</h2>
                 
                 <div className='space-y-4'>
                   <div>
-                    <label htmlFor='name' className='block text-sm font-medium text-gray-700 mb-1'>
+                    <label htmlFor='name' className='mb-2 block text-sm font-medium text-gray-700'>
                       Full Name
                     </label>
                     <input
@@ -88,13 +99,13 @@ export const CheckoutPage = () => {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black'
+                      className='h-11 w-full rounded-md border border-gray-300 px-4 text-black transition-colors duration-200 ease-in-out focus:border-gray-500 focus:outline-none'
                       placeholder='John Doe'
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor='email' className='block text-sm font-medium text-gray-700 mb-1'>
+                    <label htmlFor='email' className='mb-2 block text-sm font-medium text-gray-700'>
                       Email Address
                     </label>
                     <input
@@ -104,7 +115,7 @@ export const CheckoutPage = () => {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className='w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black'
+                      className='h-11 w-full rounded-md border border-gray-300 px-4 text-black transition-colors duration-200 ease-in-out focus:border-gray-500 focus:outline-none'
                       placeholder='john@example.com'
                     />
                   </div>
@@ -112,22 +123,80 @@ export const CheckoutPage = () => {
               </div>
 
               {/* Payment Section */}
-              <div className='bg-white border border-gray-300 rounded-lg p-6'>
-                <h2 className='text-lg font-semibold text-black mb-4'>Payment</h2>
+              <div className='rounded-lg border border-gray-200 bg-gray-50/40 p-6'>
+                <h2 className='text-lg font-semibold text-black mb-4'>Payment Method</h2>
+                <div className='mb-4 border-t border-gray-200' />
                 <p className='text-gray-600 text-sm mb-4'>
                   This is a demo checkout. In production, this would integrate with a payment processor.
                 </p>
-                <div className='bg-gray-50 border border-gray-200 rounded-md p-4 text-center'>
+                <div className='space-y-4'>
+                  <div>
+                    <label htmlFor='cardNumber' className='mb-2 block text-sm font-medium text-gray-700'>
+                      Card Number
+                    </label>
+                    <input
+                      type='text'
+                      id='cardNumber'
+                      name='cardNumber'
+                      value={formData.cardNumber}
+                      onChange={handleInputChange}
+                      required
+                      className='h-11 w-full rounded-md border border-gray-300 px-4 text-black transition-colors duration-200 ease-in-out focus:border-gray-500 focus:outline-none'
+                      placeholder='1234 1234 1234 1234'
+                    />
+                  </div>
+
+                  <div className='grid grid-cols-2 gap-4'>
+                    <div>
+                      <label htmlFor='expiry' className='mb-2 block text-sm font-medium text-gray-700'>
+                        Expiry
+                      </label>
+                      <input
+                        type='text'
+                        id='expiry'
+                        name='expiry'
+                        value={formData.expiry}
+                        onChange={handleInputChange}
+                        required
+                        className='h-11 w-full rounded-md border border-gray-300 px-4 text-black transition-colors duration-200 ease-in-out focus:border-gray-500 focus:outline-none'
+                        placeholder='MM/YY'
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor='cvc' className='mb-2 block text-sm font-medium text-gray-700'>
+                        CVC
+                      </label>
+                      <input
+                        type='text'
+                        id='cvc'
+                        name='cvc'
+                        value={formData.cvc}
+                        onChange={handleInputChange}
+                        required
+                        className='h-11 w-full rounded-md border border-gray-300 px-4 text-black transition-colors duration-200 ease-in-out focus:border-gray-500 focus:outline-none'
+                        placeholder='123'
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className='mt-4 rounded-md border border-gray-200 bg-white px-4 py-5 text-center'>
                   <p className='text-gray-700 font-medium'>Demo Payment Gateway</p>
-                  <p className='text-gray-600 text-sm'>Click "Complete Purchase" to simulate payment</p>
+                  <p className='mt-1 text-xs text-gray-500'>Click "Complete Purchase" to simulate payment</p>
                 </div>
               </div>
 
               {/* Submit Button */}
               <button
                 type='submit'
-                disabled={isProcessing || !formData.name || !formData.email}
-                className='w-full px-6 py-3 bg-black text-white font-medium rounded-lg hover:bg-gray-800 transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed'
+                disabled={
+                  isProcessing ||
+                  !formData.name ||
+                  !formData.email ||
+                  !formData.cardNumber ||
+                  !formData.expiry ||
+                  !formData.cvc
+                }
+                className='flex h-11 w-full items-center justify-center rounded-lg bg-black px-6 text-white transition-opacity duration-200 ease-in-out hover:opacity-90 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:opacity-100'
               >
                 {isProcessing ? 'Processing...' : 'Complete Purchase'}
               </button>
@@ -136,25 +205,25 @@ export const CheckoutPage = () => {
 
           {/* Order Summary */}
           <div className='lg:col-span-1'>
-            <div className='bg-gray-50 rounded-lg p-6 sticky top-8'>
+            <div className='sticky top-8 rounded-lg border border-gray-200 bg-gray-50/40 p-6'>
               <h2 className='text-lg font-semibold text-black mb-4'>Order Summary</h2>
               
               <div className='space-y-3 mb-4'>
                 {items.map((item) => (
                   <div key={item.plugin.id} className='flex justify-between text-sm'>
-                    <span className='text-gray-700'>
+                    <span className='font-medium text-gray-700'>
                       {item.plugin.name} × {item.quantity}
                     </span>
-                    <span className='text-black font-medium'>
+                    <span className='text-right font-medium text-black'>
                       {item.plugin.price}
                     </span>
                   </div>
                 ))}
               </div>
               
-              <div className='border-t border-gray-300 pt-4'>
+              <div className='border-t border-gray-200 pt-4'>
                 <div className='flex justify-between items-center'>
-                  <span className='text-lg font-semibold text-black'>Total</span>
+                  <span className='text-lg font-bold text-black'>Total</span>
                   <span className='text-xl font-bold text-black'>{getTotalPrice()}</span>
                 </div>
               </div>
