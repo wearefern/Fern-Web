@@ -93,6 +93,7 @@ model Plugin {
 model Order {
   id         String      @id @default(cuid())
   userId     String      @map(name: "user_id")
+  stripeSessionId String? @unique @map(name: "stripe_session_id")
   totalCents Int         @map(name: "total_cents")
   status     String      @default("completed")
   createdAt  DateTime    @default(now()) @map(name: "created_at")

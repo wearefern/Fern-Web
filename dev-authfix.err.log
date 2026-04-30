@@ -1,0 +1,87 @@
+motion() is deprecated. Use motion.create() instead.
+motion() is deprecated. Use motion.create() instead.
+ ⨯ ./src/app/api/checkout/route.ts
+Error: 
+  [31mx[0m Expected a semicolon
+    ,-[[36;1;4mC:\Users\ASUS\Desktop\Fern-Web\src\app\api\checkout\route.ts[0m:30:1]
+ [2m30[0m |       //return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+ [2m31[0m |     }
+ [2m32[0m | 
+ [2m33[0m |     if (!stripe) {
+    : [31;1m    ^[0m
+ [2m34[0m |       return NextResponse.json({ error: 'Stripe is not configured' }, { status: 500 });
+ [2m35[0m |     }
+    `----
+
+  [31mx[0m Expected a semicolon
+    ,-[[36;1;4mC:\Users\ASUS\Desktop\Fern-Web\src\app\api\checkout\route.ts[0m:78:1]
+ [2m78[0m |     }
+ [2m79[0m | 
+ [2m80[0m |     return NextResponse.json({ url: session.url });
+ [2m81[0m |   } catch (error) {
+    : [31;1m    ^^^^^[0m
+ [2m82[0m |     console.error('Failed to create checkout session', error);
+ [2m83[0m |     return NextResponse.json({ error: 'Unable to create checkout session' }, { status: 500 });
+ [2m84[0m |   }
+    `----
+
+  [31mx[0m Return statement is not allowed here
+    ,-[[36;1;4mC:\Users\ASUS\Desktop\Fern-Web\src\app\api\checkout\route.ts[0m:80:1]
+ [2m80[0m |     return NextResponse.json({ url: session.url });
+ [2m81[0m |   } catch (error) {
+ [2m82[0m |     console.error('Failed to create checkout session', error);
+ [2m83[0m |     return NextResponse.json({ error: 'Unable to create checkout session' }, { status: 500 });
+    : [31;1m    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+ [2m84[0m |   }
+ [2m85[0m | }
+    `----
+
+  [31mx[0m Expression expected
+    ,-[[36;1;4mC:\Users\ASUS\Desktop\Fern-Web\src\app\api\checkout\route.ts[0m:82:1]
+ [2m82[0m |     console.error('Failed to create checkout session', error);
+ [2m83[0m |     return NextResponse.json({ error: 'Unable to create checkout session' }, { status: 500 });
+ [2m84[0m |   }
+ [2m85[0m | }
+    : [31;1m^[0m
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/app/api/checkout/route.ts
+ ⨯ ./src/app/api/checkout/route.ts:3:0
+Module not found: Can't resolve '@/lib/prisma'
+[0m [90m 1 |[39m [36mimport[39m [33mStripe[39m [36mfrom[39m [32m"stripe"[39m[33m;[39m[0m
+[0m [90m 2 |[39m [36mimport[39m { [33mNextResponse[39m } [36mfrom[39m [32m"next/server"[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 3 |[39m [36mimport[39m { prisma } [36mfrom[39m [32m"@/lib/prisma"[39m[33m;[39m[0m
+[0m [90m 4 |[39m[0m
+[0m [90m 5 |[39m [36mconst[39m stripe [33m=[39m [36mnew[39m [33mStripe[39m(process[33m.[39menv[33m.[39m[33mSTRIPE_SECRET_KEY[39m[33m![39m[33m,[39m {[0m
+[0m [90m 6 |[39m   apiVersion[33m:[39m [32m"2023-10-16"[39m[33m,[39m[0m
+
+https://nextjs.org/docs/messages/module-not-found
+[Error: ENOENT: no such file or directory, stat 'C:\Users\ASUS\Desktop\Fern-Web\.next\cache\webpack\server-development\2.pack.gz'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: 'C:\\Users\\ASUS\\Desktop\\Fern-Web\\.next\\cache\\webpack\\server-development\\2.pack.gz'
+}
+[Error: ENOENT: no such file or directory, stat 'C:\Users\ASUS\Desktop\Fern-Web\.next\cache\webpack\server-development\2.pack.gz'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: 'C:\\Users\\ASUS\\Desktop\\Fern-Web\\.next\\cache\\webpack\\server-development\\2.pack.gz'
+}
+ ⨯ unhandledRejection: [Error: ENOENT: no such file or directory, stat 'C:\Users\ASUS\Desktop\Fern-Web\.next\cache\webpack\server-development\2.pack.gz'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: 'C:\\Users\\ASUS\\Desktop\\Fern-Web\\.next\\cache\\webpack\\server-development\\2.pack.gz'
+}
+ ⨯ unhandledRejection: [Error: ENOENT: no such file or directory, stat 'C:\Users\ASUS\Desktop\Fern-Web\.next\cache\webpack\server-development\2.pack.gz'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'stat',
+  path: 'C:\\Users\\ASUS\\Desktop\\Fern-Web\\.next\\cache\\webpack\\server-development\\2.pack.gz'
+}
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, stat 'C:\Users\ASUS\Desktop\Fern-Web\.next\cache\webpack\server-development\2.pack.gz'

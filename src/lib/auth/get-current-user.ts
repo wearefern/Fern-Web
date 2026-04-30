@@ -1,36 +1,40 @@
-import { currentUser } from '@clerk/nextjs/server';
+import { auth, currentUser } from '@clerk/nextjs/server';
 
 import { getModelClient } from '~api/shared/model-client';
 
 export const getCurrentUser = async () => {
-  const clerkUser = await currentUser();
-  if (!clerkUser?.id) {
+  const { userId } = await auth();
+  if (!userId) {
     return null;
   }
 
   const prisma = getModelClient();
-  const email = clerkUser.primaryEmailAddress?.emailAddress ?? null;
-  const name =
-    [clerkUser.firstName, clerkUser.lastName].filter(Boolean).join(' ') ||
-    clerkUser.username ||
-    null;
+  const byClerkId = await prisma.user.findUnique({
+    where: { clerkId: userId },
+  });
+  if (byClerkId) {
+    return byClerkId;
+  }
 
-  const dbUser = await prisma.user.upsert({
-    where: { hash: `clerk:${clerkUser.id}` },
-    update: {
-      clerkId: clerkUser.id,
+  const clerkUser = await currentUser();
+  const email = clerkUser?.primaryEmailAddress?.emailAddress ?? null;
+  const name =
+    clerkUser
+      ? [clerkUser.firstName, clerkUser.lastName].filter(Boolean).join(' ') ||
+        clerkUser.username ||
+        null
+      : null;
+  const imageUrl = clerkUser?.imageUrl ?? null;
+
+  const createdUser = await prisma.user.create({
+    data: {
+      hash: `clerk:${userId}`,
+      clerkId: userId,
       email,
       name,
-      imageUrl: clerkUser.imageUrl ?? null,
-    },
-    create: {
-      hash: `clerk:${clerkUser.id}`,
-      clerkId: clerkUser.id,
-      email,
-      name,
-      imageUrl: clerkUser.imageUrl ?? null,
+      imageUrl,
     },
   });
 
-  return dbUser;
+  return createdUser;
 };

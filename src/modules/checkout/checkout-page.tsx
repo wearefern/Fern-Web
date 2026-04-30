@@ -6,16 +6,14 @@ import { useCart } from '../../context/cart-context';
 import { PluginsHeader } from '../plugins/plugins-header';
 
 export const CheckoutPage = () => {
+  const stripePublishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
   const router = useRouter();
-  const { items, getTotalPrice, clearCart } = useCart();
+  const { items, getTotalPrice } = useCart();
   const [isProcessing, setIsProcessing] = useState(false);
   const [isCompletingPurchase, setIsCompletingPurchase] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    cardNumber: '',
-    expiry: '',
-    cvc: '',
   });
 
   useEffect(() => {
@@ -28,43 +26,45 @@ export const CheckoutPage = () => {
     return null;
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleCheckout = async () => {
+    console.log('CHECKOUT CLICKED', { formData, cartItems: items });
     setIsProcessing(true);
+    if (!stripePublishableKey) {
+  setIsProcessing(false);
+  return;
+}
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: items.map((item) => ({
+            pluginId: item.plugin.id,
+            quantity: item.quantity,
+          })),
+        }),
+      });
 
-    // Simulate payment processing
-    await new Promise(resolve => setTimeout(resolve, 2000));
+      if (!res.ok) {
+        setIsProcessing(false);
+        return;
+      }
 
-    const response = await fetch('/api/orders', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        items: items.map((item) => ({
-          pluginId: item.plugin.id,
-          quantity: item.quantity,
-        })),
-      }),
-    });
+      const data = (await res.json().catch(() => null)) as { url?: string } | null;
+      if (data?.url) {
+        setIsCompletingPurchase(true);
+        window.location.href = data.url;
+        return;
+      }
 
-    if (!response.ok) {
+      console.error('No Stripe URL returned', data);
+      if (!data?.url) {
+        setIsProcessing(false);
+        return;
+      }
+    } catch {
       setIsProcessing(false);
-      return;
     }
-
-    setIsCompletingPurchase(true);
-
-    // Clear cart
-    clearCart();
-
-    // Redirect to account/downloads
-    router.push('/account/downloads');
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
   };
 
   return (
@@ -82,7 +82,7 @@ export const CheckoutPage = () => {
           <div className='lg:col-span-2'>
             <form
               onSubmit={(event) => {
-                void handleSubmit(event);
+                event.preventDefault();
               }}
               className='space-y-6'
             >
@@ -100,7 +100,12 @@ export const CheckoutPage = () => {
                       id='name'
                       name='name'
                       value={formData.name}
-                      onChange={handleInputChange}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          name: e.target.value,
+                        }))
+                      }
                       required
                       className='h-11 w-full rounded-md border border-gray-300 px-4 text-black transition-colors duration-200 ease-in-out focus:border-gray-500 focus:outline-none'
                       placeholder='John Doe'
@@ -116,7 +121,12 @@ export const CheckoutPage = () => {
                       id='email'
                       name='email'
                       value={formData.email}
-                      onChange={handleInputChange}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          email: e.target.value,
+                        }))
+                      }
                       required
                       className='h-11 w-full rounded-md border border-gray-300 px-4 text-black transition-colors duration-200 ease-in-out focus:border-gray-500 focus:outline-none'
                       placeholder='john@example.com'
@@ -130,74 +140,24 @@ export const CheckoutPage = () => {
                 <h2 className='text-lg font-semibold text-black mb-4'>Payment Method</h2>
                 <div className='mb-4 border-t border-gray-200' />
                 <p className='text-gray-600 text-sm mb-4'>
-                  This is a demo checkout. In production, this would integrate with a payment processor.
+                  You will be redirected to Stripe to complete payment securely.
                 </p>
-                <div className='space-y-4'>
-                  <div>
-                    <label htmlFor='cardNumber' className='mb-2 block text-sm font-medium text-gray-700'>
-                      Card Number
-                    </label>
-                    <input
-                      type='text'
-                      id='cardNumber'
-                      name='cardNumber'
-                      value={formData.cardNumber}
-                      onChange={handleInputChange}
-                      required
-                      className='h-11 w-full rounded-md border border-gray-300 px-4 text-black transition-colors duration-200 ease-in-out focus:border-gray-500 focus:outline-none'
-                      placeholder='1234 1234 1234 1234'
-                    />
-                  </div>
-
-                  <div className='grid grid-cols-2 gap-4'>
-                    <div>
-                      <label htmlFor='expiry' className='mb-2 block text-sm font-medium text-gray-700'>
-                        Expiry
-                      </label>
-                      <input
-                        type='text'
-                        id='expiry'
-                        name='expiry'
-                        value={formData.expiry}
-                        onChange={handleInputChange}
-                        required
-                        className='h-11 w-full rounded-md border border-gray-300 px-4 text-black transition-colors duration-200 ease-in-out focus:border-gray-500 focus:outline-none'
-                        placeholder='MM/YY'
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor='cvc' className='mb-2 block text-sm font-medium text-gray-700'>
-                        CVC
-                      </label>
-                      <input
-                        type='text'
-                        id='cvc'
-                        name='cvc'
-                        value={formData.cvc}
-                        onChange={handleInputChange}
-                        required
-                        className='h-11 w-full rounded-md border border-gray-300 px-4 text-black transition-colors duration-200 ease-in-out focus:border-gray-500 focus:outline-none'
-                        placeholder='123'
-                      />
-                    </div>
-                  </div>
-                </div>
                 <div className='mt-4 rounded-md border border-gray-200 bg-white px-4 py-5 text-center'>
-                  <p className='text-gray-700 font-medium'>Demo Payment Gateway</p>
-                  <p className='mt-1 text-xs text-gray-500'>Click &quot;Complete Purchase&quot; to simulate payment</p>
+                  <p className='text-gray-700 font-medium'>Stripe Test Mode</p>
+                  <p className='mt-1 text-xs text-gray-500'>Click &quot;Complete Purchase&quot; to continue in Stripe</p>
                 </div>
               </div>
 
               {/* Submit Button */}
               <button
-                type='submit'
+                type='button'
+                onClick={() => {
+                  void handleCheckout();
+                }}
                 disabled={
                   isProcessing ||
-                  !formData.name ||
-                  !formData.email ||
-                  !formData.cardNumber ||
-                  !formData.expiry ||
-                  !formData.cvc
+                  !formData.name.trim() ||
+                  !formData.email.trim()
                 }
                 className='flex h-11 w-full items-center justify-center rounded-lg bg-black px-6 text-white transition-opacity duration-200 ease-in-out hover:opacity-90 disabled:cursor-not-allowed disabled:bg-gray-400 disabled:opacity-100'
               >
