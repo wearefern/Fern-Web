@@ -77,12 +77,89 @@ const plugins = [
   },
 ];
 
+const tools = [
+  {
+    slug: 'project-manager-template',
+    name: 'Project Manager Template',
+    description: 'Structured project planning workspace for teams and solo operators.',
+    longDescription:
+      'A clean project management template with milestones, dependencies, priorities, and delivery checkpoints for modern teams.',
+    priceCents: 1900,
+    status: 'active',
+    category: 'Operations',
+    fileKey: 'tools/project-manager-template.zip',
+  },
+  {
+    slug: 'client-portal-starter',
+    name: 'Client Portal Starter',
+    description: 'Starter kit for client onboarding, approvals, and status updates.',
+    longDescription:
+      'A reusable starter package to launch client portals quickly with onboarding docs, approval flows, and communication templates.',
+    priceCents: 4900,
+    status: 'active',
+    category: 'Client',
+    fileKey: 'tools/client-portal-starter.zip',
+  },
+  {
+    slug: 'invoice-tracker',
+    name: 'Invoice Tracker',
+    description: 'Track invoice status, due dates, and payment follow-up in one place.',
+    longDescription:
+      'A practical invoice tracker for freelancers and agencies with aging buckets, reminders, and reconciliation fields.',
+    priceCents: 0,
+    status: 'free',
+    category: 'Finance',
+    fileKey: 'tools/invoice-tracker.zip',
+  },
+  {
+    slug: 'deployment-checklist',
+    name: 'Deployment Checklist',
+    description: 'Pre-launch and post-launch checklists for safer releases.',
+    longDescription:
+      'A release operations checklist covering QA gates, rollback plans, monitoring setup, and incident readiness.',
+    priceCents: 900,
+    status: 'active',
+    category: 'Engineering',
+    fileKey: 'tools/deployment-checklist.zip',
+  },
+  {
+    slug: 'social-media-planner',
+    name: 'Social Media Planner',
+    description: 'Editorial planning board with campaign calendar and content slots.',
+    longDescription:
+      'A social planning pack with monthly calendar, campaign tracker, and reusable post formats for consistent publishing.',
+    priceCents: 1500,
+    status: 'active',
+    category: 'Marketing',
+    fileKey: 'tools/social-media-planner.zip',
+  },
+  {
+    slug: 'event-budget-calculator',
+    name: 'Event Budget Calculator',
+    description: 'Estimate event costs, compare scenarios, and track spend.',
+    longDescription:
+      'A lightweight budget calculator for event planning with fixed/variable cost sections and vendor comparison sheets.',
+    priceCents: 0,
+    status: 'free',
+    category: 'Operations',
+    fileKey: 'tools/event-budget-calculator.zip',
+  },
+];
+
 async function main() {
   for (const plugin of plugins) {
     await prisma.plugin.upsert({
       where: { slug: plugin.slug },
       update: plugin,
       create: plugin,
+    });
+  }
+
+  for (const tool of tools) {
+    await prisma.tool.upsert({
+      where: { slug: tool.slug },
+      update: tool,
+      create: tool,
     });
   }
 }

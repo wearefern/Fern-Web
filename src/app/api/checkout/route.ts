@@ -36,14 +36,18 @@ export async function POST(req: Request) {
       },
     });
 
-    if (plugins.length === 0) {
+    const purchasablePlugins = plugins.filter(
+      (plugin) => plugin.status !== "coming_soon" && plugin.status !== "free"
+    );
+
+    if (purchasablePlugins.length === 0) {
       return NextResponse.json({ error: "No valid plugins found" }, { status: 400 });
     }
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
-      line_items: plugins.map((plugin) => ({
+      line_items: purchasablePlugins.map((plugin) => ({
         price_data: {
           currency: "usd",
           product_data: { name: plugin.name },
@@ -54,9 +58,19 @@ export async function POST(req: Request) {
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/account/downloads?checkout=success`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/cart?checkout=cancelled`,
       metadata: {
+        productType: "plugin",
         userId: user.clerkId,
-        pluginIds: plugins.map((plugin) => plugin.id).join(","),
+        pluginId: purchasablePlugins[0]?.id ?? "",
+        pluginIds: purchasablePlugins.map((plugin) => plugin.id).join(","),
       },
+    });
+
+    console.log("Creating Stripe session metadata:", {
+      productType: "plugin",
+      userId: user.clerkId,
+      pluginId: purchasablePlugins[0]?.id ?? null,
+      pluginIds: purchasablePlugins.map((plugin) => plugin.id),
+      toolId: null,
     });
 
     return NextResponse.json({ url: session.url });

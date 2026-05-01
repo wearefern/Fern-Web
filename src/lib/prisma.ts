@@ -7,7 +7,12 @@ const globalForPrisma = globalThis as unknown as {
 export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
-    log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+    // Query logging can create significant memory pressure in long dev sessions.
+    // Enable it only when explicitly requested.
+    log:
+      process.env.PRISMA_QUERY_LOGS === "true"
+        ? ["query", "error", "warn"]
+        : ["error", "warn"],
   });
 
 if (process.env.NODE_ENV !== "production") {

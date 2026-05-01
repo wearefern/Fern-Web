@@ -1,8 +1,14 @@
+import { type PluginDemoControls } from './demo-controls';
+
 export interface Plugin {
   id: string;
   slug: string;
   name: string;
   status?: string;
+  priceCents?: number;
+  previewUrl?: string;
+  fileKey?: string;
+  demoControls?: PluginDemoControls | null;
   category: string;
   description: string;
   longDescription: string;

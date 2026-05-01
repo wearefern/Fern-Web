@@ -14,7 +14,9 @@ interface MinimalPlayerProps {
   audioUrl: string;
   isPlaying: boolean;
   onPlayPause: () => void;
+  onEnded: () => void;
   onTimeUpdate: (currentTime: number) => void;
+  onDurationChange: (duration: number) => void;
   currentTime: number;
   duration: number;
   isActive: boolean;
@@ -30,12 +32,16 @@ const MinimalPlayer = ({
   audioUrl,
   isPlaying,
   onPlayPause,
+  onEnded,
   onTimeUpdate,
+  onDurationChange,
   currentTime,
   duration,
   isActive,
 }: MinimalPlayerProps) => {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const isScrubbingRef = useRef(false);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -45,18 +51,19 @@ const MinimalPlayer = ({
       onTimeUpdate(audio.currentTime);
     };
 
-    const handleEnded = () => {
-      onPlayPause();
-    };
+    const handleEnded = () => onEnded();
+    const handleLoadedMetadata = () => onDurationChange(Number.isFinite(audio.duration) ? audio.duration : 0);
 
     audio.addEventListener('timeupdate', handleTimeUpdate);
     audio.addEventListener('ended', handleEnded);
+    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
 
     return () => {
       audio.removeEventListener('timeupdate', handleTimeUpdate);
       audio.removeEventListener('ended', handleEnded);
+      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
     };
-  }, [onTimeUpdate, onPlayPause]);
+  }, [onDurationChange, onEnded, onTimeUpdate]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -68,6 +75,38 @@ const MinimalPlayer = ({
       audio.pause();
     }
   }, [isPlaying, isActive]);
+
+  const seekToPointer = (clientX: number) => {
+    const audio = audioRef.current;
+    const progressElement = progressRef.current;
+    if (!audio || !progressElement || !Number.isFinite(audio.duration) || audio.duration <= 0) return;
+
+    const rect = progressElement.getBoundingClientRect();
+    if (rect.width <= 0) return;
+    const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+    const nextTime = ratio * audio.duration;
+    audio.currentTime = nextTime;
+    onTimeUpdate(nextTime);
+  };
+
+  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    isScrubbingRef.current = true;
+    event.currentTarget.setPointerCapture(event.pointerId);
+    seekToPointer(event.clientX);
+  };
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!isScrubbingRef.current) return;
+    seekToPointer(event.clientX);
+  };
+
+  const handlePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!isScrubbingRef.current) return;
+    isScrubbingRef.current = false;
+    event.currentTarget.releasePointerCapture(event.pointerId);
+    seekToPointer(event.clientX);
+  };
 
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
   const formatTime = (time: number) => {
@@ -81,12 +120,11 @@ const MinimalPlayer = ({
       <audio ref={audioRef} src={audioUrl} preload='metadata' />
       
       {/* Waveform Row */}
-      <div className='relative w-full' style={{ marginTop: '28px', marginBottom: '24px' }}>
+      <div className='relative w-full h-[72px]' style={{ marginTop: '28px', marginBottom: '24px' }}>
         <div 
-          className='flex items-center justify-center gap-1' 
+          className='flex items-end justify-center gap-1 h-full' 
           style={{ 
             width: '100%', 
-            minHeight: '40px',
             display: 'flex'
           }}
         >
@@ -99,7 +137,7 @@ const MinimalPlayer = ({
               )}
               style={{
                 width: '3px',
-                height: `${barHeight}px`,
+                height: `${isActive && isPlaying ? Math.max(12, barHeight + Math.sin(currentTime * 8 + i) * 10) : barHeight}px`,
                 backgroundColor: isActive && isPlaying ? '#8A8A8A' : '#8A8A8A',
                 borderRadius: '999px',
                 display: 'block',
@@ -111,7 +149,7 @@ const MinimalPlayer = ({
       </div>
 
       {/* Player Controls Row */}
-      <div className='flex items-center' style={{ marginTop: '8px' }}>
+      <div className='flex items-center gap-3' style={{ marginTop: '8px' }}>
         {/* Play Button */}
         <button
           onClick={onPlayPause}
@@ -133,21 +171,17 @@ const MinimalPlayer = ({
           )} />
         </button>
         
-        {/* Progress Dot */}
-        <div
-          className='transition-all duration-100'
-          style={{
-            width: '8px',
-            height: '8px',
-            backgroundColor: '#111111',
-            borderRadius: '50%',
-            marginLeft: '12px',
-            flexShrink: '0'
-          }}
-        />
-        
         {/* Progress Line Container */}
-        <div className='flex-1' style={{ marginLeft: '12px' }}>
+        <div
+          ref={progressRef}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={() => {
+            isScrubbingRef.current = false;
+          }}
+          className='flex-1 cursor-pointer touch-none'
+        >
           {/* Progress Line */}
           <div 
             className='transition-all duration-100'
@@ -166,11 +200,24 @@ const MinimalPlayer = ({
                 backgroundColor: '#111111'
               }}
             />
+            <div
+              className='transition-all duration-100'
+              style={{
+                position: 'absolute',
+                left: `${progress}%`,
+                top: '50%',
+                width: '8px',
+                height: '8px',
+                backgroundColor: '#111111',
+                borderRadius: '50%',
+                transform: 'translate(-50%, -50%)',
+              }}
+            />
           </div>
         </div>
 
         {/* Time Display */}
-        <div className='text-sm' style={{ color: '#8A8A8A', marginLeft: '16px' }}>
+        <div className='text-sm w-[72px] text-right tabular-nums' style={{ color: '#8A8A8A' }}>
           {formatTime(currentTime)} / {formatTime(duration)}
         </div>
       </div>
@@ -187,8 +234,11 @@ interface MinimalPluginCardProps {
   isPlaying: boolean;
   isActive: boolean;
   onPlayPause: () => void;
+  onEnded: () => void;
   onTimeUpdate: (currentTime: number) => void;
+  onDurationChange: (duration: number) => void;
   currentTime: number;
+  duration: number;
 }
 
 const MinimalPluginCard = ({
@@ -196,9 +246,14 @@ const MinimalPluginCard = ({
   isPlaying,
   isActive,
   onPlayPause,
+  onEnded,
   onTimeUpdate,
+  onDurationChange,
   currentTime,
+  duration,
 }: MinimalPluginCardProps) => {
+  console.log('plugin audioUrl:', plugin.audioUrl);
+
   return (
     <div className='bg-white border border-gray-200 rounded-lg p-6 hover:border-gray-300 transition-colors duration-200 h-full flex flex-col'>
       <Link href={`/plugins/${plugin.slug}`} className='block'>
@@ -234,12 +289,14 @@ const MinimalPluginCard = ({
       {/* Minimal Player */}
       <div className='pt-4 border-t border-gray-100'>
         <MinimalPlayer
-          audioUrl={plugin.audioUrl}
+          audioUrl={plugin.audioUrl || '/audio/baby.mp3'}
           isPlaying={isPlaying}
           onPlayPause={onPlayPause}
+          onEnded={onEnded}
           onTimeUpdate={onTimeUpdate}
+          onDurationChange={onDurationChange}
           currentTime={currentTime}
-          duration={plugin.duration}
+          duration={duration || plugin.duration}
           isActive={isActive}
         />
       </div>
@@ -257,7 +314,7 @@ export const PluginsSection = () => {
   const [plugins, setPlugins] = useState<Plugin[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [activePluginId, setActivePluginId] = useState<string | null>(null);
-  const [pluginStates, setPluginStates] = useState<Record<string, { isPlaying: boolean; currentTime: number }>>({});
+  const [pluginStates, setPluginStates] = useState<Record<string, { isPlaying: boolean; currentTime: number; duration: number }>>({});
 
   useEffect(() => {
     const loadPlugins = async () => {
@@ -270,8 +327,8 @@ export const PluginsSection = () => {
         const data: Plugin[] = await response.json();
         setPlugins(data);
         setPluginStates(
-          data.reduce((acc: Record<string, { isPlaying: boolean; currentTime: number }>, plugin) => {
-            acc[plugin.id] = { isPlaying: false, currentTime: 0 };
+          data.reduce((acc: Record<string, { isPlaying: boolean; currentTime: number; duration: number }>, plugin) => {
+            acc[plugin.id] = { isPlaying: false, currentTime: 0, duration: plugin.duration };
             return acc;
           }, {})
         );
@@ -283,13 +340,25 @@ export const PluginsSection = () => {
     void loadPlugins();
   }, []);
 
+  useEffect(() => {
+    if (!plugins.length) return;
+    console.table(
+      plugins.map((p) => ({
+        name: p.name,
+        slug: p.slug,
+        previewUrl: p.previewUrl,
+        audioUrl: p.audioUrl,
+      }))
+    );
+  }, [plugins]);
+
   const filteredPlugins = selectedCategory === 'All'
     ? plugins
     : plugins.filter(plugin => plugin.category === selectedCategory);
 
   const handlePlayPause = (pluginId: string) => {
     setPluginStates(prev => {
-      const newStates: Record<string, { isPlaying: boolean; currentTime: number }> = { ...prev };
+      const newStates: Record<string, { isPlaying: boolean; currentTime: number; duration: number }> = { ...prev };
       
       Object.keys(newStates).forEach(id => {
         if (id !== pluginId && newStates[id]) {
@@ -304,7 +373,7 @@ export const PluginsSection = () => {
           isPlaying: !currentState.isPlaying,
         };
       } else {
-        newStates[pluginId] = { isPlaying: true, currentTime: 0 };
+        newStates[pluginId] = { isPlaying: true, currentTime: 0, duration: 0 };
       }
       
       return newStates;
@@ -315,15 +384,36 @@ export const PluginsSection = () => {
 
   const handleTimeUpdate = (pluginId: string, currentTime: number) => {
     setPluginStates(prev => {
-      const newStates: Record<string, { isPlaying: boolean; currentTime: number }> = { ...prev };
+      const newStates: Record<string, { isPlaying: boolean; currentTime: number; duration: number }> = { ...prev };
       const currentState = newStates[pluginId];
       if (currentState) {
         newStates[pluginId] = { ...currentState, currentTime };
       } else {
-        newStates[pluginId] = { isPlaying: false, currentTime };
+        newStates[pluginId] = { isPlaying: false, currentTime, duration: 0 };
       }
       return newStates;
     });
+  };
+
+  const handleEnded = (pluginId: string) => {
+    setPluginStates((prev) => ({
+      ...prev,
+      [pluginId]: {
+        ...(prev[pluginId] ?? { duration: 0 }),
+        isPlaying: false,
+        currentTime: 0,
+      },
+    }));
+  };
+
+  const handleDurationChange = (pluginId: string, duration: number) => {
+    setPluginStates((prev) => ({
+      ...prev,
+      [pluginId]: {
+        ...(prev[pluginId] ?? { isPlaying: false, currentTime: 0 }),
+        duration,
+      },
+    }));
   };
 
   return (
@@ -373,8 +463,11 @@ export const PluginsSection = () => {
             isPlaying={pluginStates[plugin.id]?.isPlaying || false}
             isActive={activePluginId === plugin.id}
             onPlayPause={() => handlePlayPause(plugin.id)}
+            onEnded={() => handleEnded(plugin.id)}
             onTimeUpdate={(time) => handleTimeUpdate(plugin.id, time)}
+            onDurationChange={(duration) => handleDurationChange(plugin.id, duration)}
             currentTime={pluginStates[plugin.id]?.currentTime || 0}
+            duration={pluginStates[plugin.id]?.duration || plugin.duration}
           />
         ))}
       </div>

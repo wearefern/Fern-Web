@@ -7,11 +7,24 @@ import { useCart } from '../../context/cart-context';
 import { type Plugin } from '../plugins/plugin-types';
 import { AccountShell } from './account-shell';
 
+interface DashboardOrder {
+  id: string;
+  date: string;
+  total: string;
+  items: { id: string }[];
+}
+
+interface DashboardDownload {
+  plugin: {
+    id: string;
+  };
+}
+
 export function DashboardPage() {
   const { getItemCount } = useCart();
   const [allPlugins, setAllPlugins] = useState<Plugin[]>([]);
-  const [orders, setOrders] = useState<any[]>([]);
-  const [downloads, setDownloads] = useState<any[]>([]);
+  const [orders, setOrders] = useState<DashboardOrder[]>([]);
+  const [downloads, setDownloads] = useState<DashboardDownload[]>([]);
 
   const totalOrders = orders.length;
   const totalDownloads = downloads.length;
@@ -25,12 +38,12 @@ export function DashboardPage() {
         const downloadsRes = await fetch('/api/downloads');
 
         if (ordersRes.ok) {
-          const ordersData = await ordersRes.json();
+          const ordersData = (await ordersRes.json()) as DashboardOrder[];
           setOrders(ordersData || []);
         }
 
         if (downloadsRes.ok) {
-          const downloadsData = await downloadsRes.json();
+          const downloadsData = (await downloadsRes.json()) as DashboardDownload[];
           setDownloads(downloadsData || []);
         }
       } catch (error) {
@@ -38,7 +51,7 @@ export function DashboardPage() {
       }
     };
 
-    load();
+    void load();
   }, []);
 
   useEffect(() => {

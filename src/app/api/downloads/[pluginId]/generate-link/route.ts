@@ -24,6 +24,25 @@ export async function POST(request: Request, { params }: Params) {
     }
 
     const prisma = getModelClient();
+    const paidOrder = await prisma.order.findFirst({
+      where: {
+        userId: user.clerkId,
+        status: 'PAID',
+        items: {
+          some: {
+            pluginId: params.pluginId,
+          },
+        },
+      },
+      include: {
+        items: {
+          where: { pluginId: params.pluginId },
+          take: 1,
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
     const purchase = await prisma.purchase.findUnique({
       where: {
         userId_pluginId: {
@@ -36,16 +55,40 @@ export async function POST(request: Request, { params }: Params) {
       },
     });
 
-    if (!purchase) {
+    if (!paidOrder && !purchase) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
+
+    const plugin = purchase?.plugin
+      ?? (await prisma.plugin.findUnique({ where: { id: params.pluginId } }));
+    if (!plugin) {
+      return NextResponse.json({ error: 'Plugin not found' }, { status: 404 });
+    }
+
+    const resolvedPurchase = purchase
+      ?? await prisma.purchase.upsert({
+        where: {
+          userId_pluginId: {
+            userId: user.clerkId,
+            pluginId: params.pluginId,
+          },
+        },
+        update: {
+          orderId: paidOrder?.id ?? null,
+        },
+        create: {
+          userId: user.clerkId,
+          pluginId: params.pluginId,
+          orderId: paidOrder?.id ?? null,
+        },
+      });
 
     const token = crypto.randomUUID();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
     const downloadToken = await prisma.downloadToken.create({
       data: {
-        purchaseId: purchase.id,
+        purchaseId: resolvedPurchase.id,
         token,
         expiresAt,
       },
