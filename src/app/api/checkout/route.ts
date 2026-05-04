@@ -11,7 +11,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 
 interface CheckoutItem {
+  productType?: 'plugin' | 'tool';
   pluginId?: unknown;
+  toolId?: unknown;
   slug?: unknown;
   quantity?: unknown;
 }
@@ -27,15 +29,17 @@ if (!userId) {
     const items = Array.isArray(body?.items) ? body.items : [];
     const normalizedItems = items
       .map((item) => {
+        const productType = item.productType === 'tool' ? 'tool' : 'plugin';
         const pluginId = typeof item?.pluginId === "string" ? item.pluginId : null;
+        const toolId = typeof item?.toolId === "string" ? item.toolId : null;
         const slug = typeof item?.slug === "string" ? item.slug : null;
         const quantity =
           typeof item?.quantity === "number" && Number.isFinite(item.quantity) && item.quantity > 0
             ? Math.floor(item.quantity)
             : 1;
-        return { pluginId, slug, quantity };
+        return { productType, pluginId, toolId, slug, quantity };
       })
-      .filter((item) => item.pluginId || item.slug);
+      .filter((item) => item.pluginId || item.toolId || item.slug);
 
     if (normalizedItems.length === 0) {
       return NextResponse.json({ error: "No items provided" }, { status: 400 });
@@ -43,7 +47,7 @@ if (!userId) {
 
     const identifiers = Array.from(
       new Set(
-        normalizedItems.flatMap((item) => [item.pluginId, item.slug]).filter((value): value is string => Boolean(value))
+        normalizedItems.flatMap((item) => [item.pluginId, item.toolId, item.slug]).filter((value): value is string => Boolean(value))
       )
     );
 
@@ -51,6 +55,9 @@ if (!userId) {
     for (const item of normalizedItems) {
       if (item.pluginId) {
         quantityByIdentifier.set(item.pluginId, (quantityByIdentifier.get(item.pluginId) ?? 0) + item.quantity);
+      }
+      if (item.toolId) {
+        quantityByIdentifier.set(item.toolId, (quantityByIdentifier.get(item.toolId) ?? 0) + item.quantity);
       }
       if (item.slug) {
         quantityByIdentifier.set(item.slug, (quantityByIdentifier.get(item.slug) ?? 0) + item.quantity);
@@ -60,24 +67,49 @@ if (!userId) {
     let purchasableLineItems: Array<{ id: string; slug: string; name: string; priceCents: number; quantity: number }> = [];
 
     try {
+      // Fetch plugins
       const dbPlugins = await prisma.plugin.findMany({
         where: {
           OR: [{ id: { in: identifiers } }, { slug: { in: identifiers } }],
         },
       });
 
-      purchasableLineItems = dbPlugins
-        .filter((plugin) => plugin.status !== "coming_soon" && plugin.status !== "free" && plugin.priceCents > 0)
-        .map((plugin) => ({
-          id: plugin.id,
-          slug: plugin.slug,
-          name: plugin.name,
-          priceCents: plugin.priceCents,
-          quantity:
-            quantityByIdentifier.get(plugin.id) ??
-            quantityByIdentifier.get(plugin.slug) ??
-            1,
-        }));
+      // Fetch tools
+      const dbTools = await prisma.tool.findMany({
+        where: {
+          OR: [{ id: { in: identifiers } }, { slug: { in: identifiers } }],
+        },
+      });
+
+      // Combine plugins and tools
+      const allDbItems = [
+        ...dbPlugins
+          .filter((plugin) => plugin.status !== "coming_soon" && plugin.status !== "free" && plugin.priceCents > 0)
+          .map((plugin) => ({
+            id: plugin.id,
+            slug: plugin.slug,
+            name: plugin.name,
+            priceCents: plugin.priceCents,
+            quantity:
+              quantityByIdentifier.get(plugin.id) ??
+              quantityByIdentifier.get(plugin.slug) ??
+              1,
+          })),
+        ...dbTools
+          .filter((tool) => tool.status !== "coming_soon" && tool.status !== "free" && tool.priceCents > 0)
+          .map((tool) => ({
+            id: tool.id,
+            slug: tool.slug,
+            name: tool.name,
+            priceCents: tool.priceCents,
+            quantity:
+              quantityByIdentifier.get(tool.id) ??
+              quantityByIdentifier.get(tool.slug) ??
+              1,
+          }))
+      ];
+
+      purchasableLineItems = allDbItems;
     } catch (error) {
       console.warn("Checkout DB lookup failed, using static plugin fallback:", error);
     }
@@ -127,21 +159,20 @@ if (!userId) {
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/account/downloads?checkout=success`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/cart?checkout=cancelled`,
       metadata: {
-        productType: "plugin",
+        productType: "mixed",
         userId,
         pluginId: purchasableLineItems[0]?.id ?? "",
-        pluginIds: purchasableLineItems.map((plugin) => plugin.id).join(","),
-        pluginSlugs: purchasableLineItems.map((plugin) => plugin.slug).join(","),
+        pluginIds: purchasableLineItems.map((item) => item.id).join(","),
+        pluginSlugs: purchasableLineItems.map((item) => item.slug).join(","),
       },
     });
 
     console.log("Creating Stripe session metadata:", {
-      productType: "plugin",
+      productType: "mixed",
       userId,
       pluginId: purchasableLineItems[0]?.id ?? null,
-      pluginIds: purchasableLineItems.map((plugin) => plugin.id),
-      pluginSlugs: purchasableLineItems.map((plugin) => plugin.slug),
-      toolId: null,
+      pluginIds: purchasableLineItems.map((item) => item.id),
+      pluginSlugs: purchasableLineItems.map((item) => item.slug),
     });
 
     return NextResponse.json({ url: session.url });

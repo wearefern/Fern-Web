@@ -22,6 +22,18 @@ const PluginsHeader = () => {
       <PluginsLogo />
 
       <nav className='flex items-center gap-x-2'>
+        <ButtonWithVideo videoFileName='header-button-plugins' asChild>
+          <Link href='/plugins'>
+            Plugins
+          </Link>
+        </ButtonWithVideo>
+
+        <ButtonWithVideo videoFileName='header-button-tools' asChild>
+          <Link href='/tools'>
+            Tools
+          </Link>
+        </ButtonWithVideo>
+
         <ButtonWithVideo videoFileName='header-button-cart' asChild>
           <Link href='/cart'>
             View Cart{cartCount > 0 && ` (${cartCount})`}

@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { PluginsHeader } from '~modules/plugins/plugins-header';
 import { ToolCard } from './tool-card';
 import { type Tool } from './tool-types';
+import { useCart } from '../../context/cart-context';
 
 const categories = ['All', 'Operations', 'Client', 'Finance', 'Engineering', 'Marketing'];
 
@@ -17,6 +18,7 @@ export const ToolsSection = () => {
   const [submittingId, setSubmittingId] = useState<string | null>(null);
   const [checkoutCancelled, setCheckoutCancelled] = useState(false);
   const router = useRouter();
+  const { addToCart } = useCart();
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -63,14 +65,15 @@ export const ToolsSection = () => {
         return;
       }
 
-      const response = await fetch('/api/tools/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ toolId: tool.id }),
-      });
-      const data = (await response.json().catch(() => null)) as { url?: string; error?: string } | null;
-      if (!response.ok || !data?.url) throw new Error(data?.error ?? 'Unable to create checkout session');
-      window.location.href = data.url;
+      // Add to cart instead of direct Stripe checkout
+      const result = addToCart(tool);
+      if (!result.success) {
+        setActionError(result.message);
+        return;
+      }
+      
+      // Redirect to cart after adding
+      router.push('/cart');
     } catch (error) {
       console.error(error);
       setActionError('Unable to continue. Please try again.');

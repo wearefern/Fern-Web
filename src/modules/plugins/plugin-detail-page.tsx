@@ -101,7 +101,7 @@ export const PluginDetailPage = ({ plugin, isAdmin = false }: PluginDetailPagePr
                 ? 'Get Free'
                 : plugin.status === 'coming_soon'
                 ? 'Coming Soon'
-                : 'Add to Cart'}
+                : 'Download'}
             </button>
           </div>
 

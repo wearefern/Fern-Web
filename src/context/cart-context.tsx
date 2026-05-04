@@ -1,22 +1,28 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { type Plugin } from '../modules/plugins/plugin-types';
+import { type Tool } from '../modules/tools/tool-types';
 
 interface CartItem {
-  plugin: Plugin;
+  productType: 'plugin' | 'tool';
+  id: string;
+  slug: string;
+  name: string;
+  price: string;
+  priceCents: number;
   quantity: number;
 }
 
 interface CartContextType {
   items: CartItem[];
-  addToCart: (plugin: Plugin) => { success: boolean; message: string };
-  removeFromCart: (pluginId: string) => void;
-  updateQuantity: (pluginId: string, quantity: number) => void;
+  addToCart: (product: Plugin | Tool) => { success: boolean; message: string };
+  removeFromCart: (id: string) => void;
+  updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
   getTotalPrice: () => string;
   getItemCount: () => number;
-  isPluginInCart: (pluginId: string) => boolean;
+  isProductInCart: (id: string) => boolean;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -36,35 +42,73 @@ interface CartProviderProps {
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [items, setItems] = useState<CartItem[]>([]);
 
-  const addToCart = (plugin: Plugin) => {
+  // Load cart from localStorage on mount
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    try {
+      const storedCart = localStorage.getItem('fern-cart');
+      if (storedCart) {
+        const parsedItems = JSON.parse(storedCart) as CartItem[];
+        setItems(parsedItems);
+      }
+    } catch (error) {
+      console.warn('Failed to load cart from localStorage:', error);
+    }
+  }, []);
+
+  // Save cart to localStorage whenever it changes
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    try {
+      localStorage.setItem('fern-cart', JSON.stringify(items));
+    } catch (error) {
+      console.warn('Failed to save cart to localStorage:', error);
+    }
+  }, [items]);
+
+  const addToCart = (product: Plugin | Tool) => {
     let success = true;
     let message = 'Added to cart';
     
     setItems(prevItems => {
-      const existingItem = prevItems.find(item => item.plugin.id === plugin.id);
+      const existingItem = prevItems.find(item => item.id === product.id);
       if (existingItem) {
         success = false;
-        message = 'This plugin is already in your cart.';
+        message = 'This item is already in your cart.';
         return prevItems; // Don't add duplicate
       }
-      return [...prevItems, { plugin, quantity: 1 }]; // Always quantity 1
+      
+      // Convert product to CartItem format
+      const cartItem: CartItem = {
+        productType: 'priceCents' in product ? 'tool' : 'plugin',
+        id: product.id,
+        slug: product.slug,
+        name: product.name,
+        price: 'priceCents' in product ? `$${((product.priceCents || 0) / 100).toFixed(0)}` : product.price,
+        priceCents: 'priceCents' in product ? (product.priceCents || 0) : parseInt(product.price.replace(/[^0-9]/g, '')) * 100,
+        quantity: 1,
+      };
+      
+      return [...prevItems, cartItem];
     });
     
     return { success, message };
   };
 
-  const removeFromCart = (pluginId: string) => {
-    setItems(prevItems => prevItems.filter(item => item.plugin.id !== pluginId));
+  const removeFromCart = (id: string) => {
+    setItems(prevItems => prevItems.filter(item => item.id !== id));
   };
 
-  const updateQuantity = (pluginId: string, quantity: number) => {
+  const updateQuantity = (id: string, quantity: number) => {
     if (quantity <= 0) {
-      removeFromCart(pluginId);
+      removeFromCart(id);
       return;
     }
     setItems(prevItems =>
       prevItems.map(item =>
-        item.plugin.id === pluginId
+        item.id === id
           ? { ...item, quantity }
           : item
       )
@@ -77,18 +121,17 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   const getTotalPrice = () => {
     const total = items.reduce((sum, item) => {
-      const price = parseFloat(item.plugin.price.replace('$', ''));
-      return sum + (price * item.quantity);
+      return sum + (item.priceCents * item.quantity);
     }, 0);
-    return `$${total.toFixed(2)}`;
+    return `$${(total / 100).toFixed(2)}`;
   };
 
   const getItemCount = () => {
     return items.reduce((sum, item) => sum + item.quantity, 0);
   };
 
-  const isPluginInCart = (pluginId: string) => {
-    return items.some(item => item.plugin.id === pluginId);
+  const isProductInCart = (id: string) => {
+    return items.some(item => item.id === id);
   };
 
   const value: CartContextType = {
@@ -99,7 +142,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     clearCart,
     getTotalPrice,
     getItemCount,
-    isPluginInCart,
+    isProductInCart,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
