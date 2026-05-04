@@ -198,11 +198,11 @@
 
 @layer utilities {
   .layout-padding {
-    @apply px-4 sm:px-6 lg:px-[2.75vw] 2xl:px-10;
+    @apply px-3 sm:px-4 lg:px-[2vw] 2xl:px-8;
   }
 
   .layout-width-limiter {
-    @apply mx-auto my-0 max-w-[1720px];
+    @apply mx-auto my-0 max-w-[1400px];
   }
 
   .lock-scroll {

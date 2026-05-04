@@ -10,6 +10,7 @@ interface OrderView {
   date: string;
   total: string;
   status: string;
+  type: 'plugin' | 'tool';
   items: {
     quantity: number;
     price: string;
@@ -79,13 +80,18 @@ export const OrdersPage = () => {
               </div>
 
               <div className='border-t border-gray-200 pt-4'>
-                <h4 className='font-medium text-black mb-3'>Items</h4>
+                <div className='flex items-center justify-between mb-3'>
+                  <h4 className='font-medium text-black'>Items</h4>
+                  <span className='text-xs font-medium text-gray-500 uppercase'>
+                    {order.type === 'plugin' ? 'Plugin' : 'Tool'} {order.items.length > 1 ? `(${order.items.length})` : ''}
+                  </span>
+                </div>
                 <div className='space-y-3'>
                   {order.items.map((item, index) => (
                     <div key={index} className='flex items-center justify-between gap-4'>
                       <div className='min-w-0'>
                         <Link
-                          href={`/plugins/${item.plugin.slug}`}
+                          href={order.type === 'plugin' ? `/plugins/${item.plugin.slug}` : `/tools/${item.plugin.slug}`}
                           className='text-black hover:underline font-medium'
                         >
                           {item.plugin.name}

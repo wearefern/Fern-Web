@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { type Plugin } from '../modules/plugins/plugin-types';
 import { type Tool } from '../modules/tools/tool-types';
 
@@ -68,7 +68,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     }
   }, [items]);
 
-  const addToCart = (product: Plugin | Tool) => {
+  const addToCart = useCallback((product: Plugin | Tool) => {
     let success = true;
     let message = 'Added to cart';
     
@@ -95,13 +95,13 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     });
     
     return { success, message };
-  };
+  }, []);
 
-  const removeFromCart = (id: string) => {
+  const removeFromCart = useCallback((id: string) => {
     setItems(prevItems => prevItems.filter(item => item.id !== id));
-  };
+  }, []);
 
-  const updateQuantity = (id: string, quantity: number) => {
+  const updateQuantity = useCallback((id: string, quantity: number) => {
     if (quantity <= 0) {
       removeFromCart(id);
       return;
@@ -113,26 +113,26 @@ export const CartProvider = ({ children }: CartProviderProps) => {
           : item
       )
     );
-  };
+  }, [removeFromCart]);
 
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     setItems([]);
-  };
+  }, []);
 
-  const getTotalPrice = () => {
+  const getTotalPrice = useCallback(() => {
     const total = items.reduce((sum, item) => {
       return sum + (item.priceCents * item.quantity);
     }, 0);
     return `$${(total / 100).toFixed(2)}`;
-  };
+  }, [items]);
 
-  const getItemCount = () => {
+  const getItemCount = useCallback(() => {
     return items.reduce((sum, item) => sum + item.quantity, 0);
-  };
+  }, [items]);
 
-  const isProductInCart = (id: string) => {
+  const isProductInCart = useCallback((id: string) => {
     return items.some(item => item.id === id);
-  };
+  }, [items]);
 
   const value: CartContextType = {
     items,

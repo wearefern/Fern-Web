@@ -21,6 +21,7 @@ export function AdminPluginsPage() {
   const [plugins, setPlugins] = useState<AdminPlugin[]>([]);
   const [loading, setLoading] = useState(true);
   const [controlErrors, setControlErrors] = useState<Record<string, string>>({});
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -87,6 +88,48 @@ export function AdminPluginsPage() {
     }
   };
 
+  const handleFileUpload = async (pluginId: string, file: File) => {
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('type', 'plugin');
+
+      const response = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Upload failed');
+      }
+
+      const result = await response.json();
+      
+      // Update the plugin's fileKey
+      setPlugins(prev => prev.map(plugin => 
+        plugin.id === pluginId 
+          ? { ...plugin, fileKey: result.path }
+          : plugin
+      ));
+
+      // Also update on server
+      await fetch(`/api/admin/plugins/${pluginId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fileKey: result.path,
+        }),
+      });
+
+    } catch (error) {
+      console.error('Upload error:', error);
+      alert('Upload failed. Please try again.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
   return (
     <AccountShell
       title='Admin Plugins'
@@ -107,6 +150,22 @@ export function AdminPluginsPage() {
               <input className='border border-gray-300 rounded px-3 py-2' type='number' value={plugin.priceCents} onChange={(e) => setPlugins((prev) => prev.map((item) => item.id === plugin.id ? { ...item, priceCents: Number(e.target.value) } : item))} />
               <input className='border border-gray-300 rounded px-3 py-2' placeholder='/audio/baby.mp3 (no public prefix)' value={plugin.previewUrl ?? ''} onChange={(e) => setPlugins((prev) => prev.map((item) => item.id === plugin.id ? { ...item, previewUrl: e.target.value } : item))} />
               <input className='border border-gray-300 rounded px-3 py-2' placeholder='File key' value={plugin.fileKey ?? ''} onChange={(e) => setPlugins((prev) => prev.map((item) => item.id === plugin.id ? { ...item, fileKey: e.target.value } : item))} />
+            <div className='mt-2'>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>Upload ZIP File:</label>
+              <input
+                type='file'
+                accept='.zip'
+                disabled={uploading}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    void handleFileUpload(plugin.id, file);
+                  }
+                }}
+                className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-black file:text-white hover:file:bg-gray-700'
+              />
+              {uploading && <p className='mt-1 text-sm text-gray-600'>Uploading...</p>}
+            </div>
             </div>
             <textarea className='mt-3 w-full border border-gray-300 rounded px-3 py-2' value={plugin.description ?? ''} onChange={(e) => setPlugins((prev) => prev.map((item) => item.id === plugin.id ? { ...item, description: e.target.value } : item))} />
             <textarea

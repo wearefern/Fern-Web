@@ -41,20 +41,19 @@ export const CartPage = () => {
         {/* Cart Items */}
         <div className='space-y-4 mb-8'>
           {items.map((item) => (
-            <div key={item.plugin.id} className='bg-white border border-gray-300 rounded-lg p-6'>
+            <div key={item.id} className='bg-white border border-gray-300 rounded-lg p-6'>
               <div className='flex justify-between items-start'>
                 <div className='flex-1'>
-                  <Link href={`/plugins/${item.plugin.slug}`} className='text-lg font-medium text-black hover:underline mb-2 block'>
-                    {item.plugin.name}
+                  <Link href={`/${item.productType === 'tool' ? 'tools' : 'plugins'}/${item.slug}`} className='text-lg font-medium text-black hover:underline mb-2 block'>
+                    {item.name}
                   </Link>
-                  <p className='text-gray-600 text-sm mb-2'>{item.plugin.description}</p>
-                  <p className='text-black font-medium'>{item.plugin.price}</p>
+                  <p className='text-black font-medium'>{item.price}</p>
                 </div>
                 
                 <div className='flex items-center gap-4 ml-6'>
                   {/* Remove Button */}
                   <button
-                    onClick={() => removeFromCart(item.plugin.id)}
+                    onClick={() => removeFromCart(item.id)}
                     className='text-gray-500 hover:text-red-600 text-sm'
                   >
                     Remove

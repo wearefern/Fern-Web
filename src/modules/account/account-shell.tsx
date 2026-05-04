@@ -49,6 +49,7 @@ export const AccountShell = ({ title, subtitle, children }: AccountShellProps) =
         ? [
             ...baseNavItems,
             { href: '/account/admin/plugins', label: 'Admin Plugins' },
+            { href: '/account/admin/tools', label: 'Admin Tools' },
             { href: '/account/admin/downloads', label: 'Total Downloads' },
           ]
         : baseNavItems,

@@ -17,7 +17,9 @@ export async function GET() {
     }
 
     const prisma = getModelClient();
-    const orders = await prisma.order.findMany({
+    
+    // Get plugin orders
+    const pluginOrders = await prisma.order.findMany({
       where: { userId: user.clerkId },
       orderBy: { createdAt: 'desc' },
       include: {
@@ -29,11 +31,22 @@ export async function GET() {
       },
     });
 
-    const mapped = orders.map((order) => ({
+    // Get tool orders
+    const toolOrders = await prisma.toolOrder.findMany({
+      where: { userId: user.clerkId },
+      orderBy: { createdAt: 'desc' },
+      include: {
+        tool: true,
+      },
+    });
+
+    // Map plugin orders
+    const mappedPluginOrders = pluginOrders.map((order) => ({
       id: order.id,
       date: order.createdAt.toISOString(),
       total: centsToPrice(order.totalCents),
       status: order.status,
+      type: 'plugin' as const,
       items: order.items.map((item) => ({
         quantity: item.quantity,
         price: centsToPrice(item.unitPriceCents * item.quantity),
@@ -46,7 +59,31 @@ export async function GET() {
       })),
     }));
 
-    return NextResponse.json(mapped);
+    // Map tool orders
+    const mappedToolOrders = toolOrders.map((order) => ({
+      id: order.id,
+      date: order.createdAt.toISOString(),
+      total: centsToPrice(order.amountCents),
+      status: order.status,
+      type: 'tool' as const,
+      items: [{
+        quantity: 1,
+        price: centsToPrice(order.amountCents),
+        plugin: {
+          id: order.tool.id,
+          name: order.tool.name,
+          slug: order.tool.slug,
+          category: order.tool.category || 'Tool',
+        },
+      }],
+    }));
+
+    // Combine and sort by date
+    const allOrders = [...mappedPluginOrders, ...mappedToolOrders].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+
+    return NextResponse.json(allOrders);
   } catch (error) {
     console.error('Failed to load orders', error);
     return NextResponse.json({ error: 'Unable to load orders' }, { status: 500 });

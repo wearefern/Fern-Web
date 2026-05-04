@@ -24,7 +24,7 @@ const PluginsHeader = () => {
       <nav className='flex items-center gap-x-2'>
         <ButtonWithVideo videoFileName='header-button-plugins' asChild>
           <Link href='/plugins'>
-            Plugins
+            Products
           </Link>
         </ButtonWithVideo>
 
