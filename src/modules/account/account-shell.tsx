@@ -46,7 +46,11 @@ export const AccountShell = ({ title, subtitle, children }: AccountShellProps) =
   const navItems = useMemo(
     () =>
       isAdmin
-        ? [...baseNavItems, { href: '/account/admin/plugins', label: 'Admin Plugins' }]
+        ? [
+            ...baseNavItems,
+            { href: '/account/admin/plugins', label: 'Admin Plugins' },
+            { href: '/account/admin/downloads', label: 'Total Downloads' },
+          ]
         : baseNavItems,
     [isAdmin]
   );
