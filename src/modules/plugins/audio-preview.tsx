@@ -7,6 +7,9 @@ interface AudioPreviewProps {
   pluginName: string;
   audioUrl: string;
   duration: number;
+  pluginId?: string;
+  isAdmin?: boolean;
+  initialControls?: Record<string, number> | null;
 }
 
 const WAVEFORM_BARS = [
@@ -15,9 +18,22 @@ const WAVEFORM_BARS = [
   24, 40, 32, 56, 28, 48, 36, 64,
 ];
 
-export const AudioPreview = ({ pluginName, audioUrl, duration }: AudioPreviewProps) => {
+export const AudioPreview = ({
+  pluginName,
+  audioUrl,
+  duration,
+  pluginId,
+  isAdmin = false,
+  initialControls,
+}: AudioPreviewProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+  const [controls, setControls] = useState<Record<string, number>>({
+    mix: initialControls?.mix ?? 50,
+    tone: initialControls?.tone ?? 50,
+    drive: initialControls?.drive ?? 50,
+  });
+  const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
@@ -62,6 +78,25 @@ export const AudioPreview = ({ pluginName, audioUrl, duration }: AudioPreviewPro
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  const savePluginSettings = async () => {
+    if (!isAdmin || !pluginId) return;
+    setSaveState('saving');
+    try {
+      const response = await fetch(`/api/admin/plugins/${pluginId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ demoControls: controls }),
+      });
+      if (!response.ok) {
+        throw new Error('Unable to save');
+      }
+      setSaveState('saved');
+    } catch (error) {
+      console.error(error);
+      setSaveState('error');
+    }
   };
 
   return (
@@ -171,6 +206,47 @@ export const AudioPreview = ({ pluginName, audioUrl, duration }: AudioPreviewPro
           {formatTime(currentTime)} / {formatTime(duration)}
         </div>
       </div>
+
+      <div className='mt-8 space-y-4'>
+        {Object.entries(controls).map(([key, value]) => (
+          <label key={key} className='block'>
+            <div className='mb-1 flex items-center justify-between text-sm text-gray-600'>
+              <span className='capitalize'>{key}</span>
+              <span>{value}</span>
+            </div>
+            <input
+              type='range'
+              min={0}
+              max={100}
+              value={value}
+              onChange={(event) =>
+                setControls((prev) => ({
+                  ...prev,
+                  [key]: Number(event.target.value),
+                }))
+              }
+              className='w-full'
+            />
+          </label>
+        ))}
+      </div>
+
+      {isAdmin ? (
+        <div className='mt-6'>
+          <button
+            onClick={() => void savePluginSettings()}
+            className='px-4 py-2 rounded-md bg-black text-white text-sm font-medium hover:opacity-90'
+          >
+            Save Plugin Settings
+          </button>
+          {saveState === 'saved' ? (
+            <p className='mt-2 text-sm text-green-600'>Settings saved.</p>
+          ) : null}
+          {saveState === 'error' ? (
+            <p className='mt-2 text-sm text-red-600'>Unable to save settings.</p>
+          ) : null}
+        </div>
+      ) : null}
     </div>
   );
 };

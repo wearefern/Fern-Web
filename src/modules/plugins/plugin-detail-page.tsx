@@ -4,20 +4,23 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { type Plugin } from './plugin-types';
 import { PluginsHeader } from './plugins-header';
-import { AudioPreview } from './audio-preview';
+import { PluginAudioDemo } from './plugin-audio-demo';
 import { useCart } from '../../context/cart-context';
 
 interface PluginDetailPageProps {
   plugin: Plugin;
+  isAdmin?: boolean;
 }
 
-export const PluginDetailPage = ({ plugin }: PluginDetailPageProps) => {
+export const PluginDetailPage = ({ plugin, isAdmin = false }: PluginDetailPageProps) => {
   const router = useRouter();
   const [cartMessage, setCartMessage] = useState('');
   const [showCartMessage, setShowCartMessage] = useState(false);
+  const [actionError, setActionError] = useState<string | null>(null);
   const { addToCart } = useCart();
 
   const handleAddToCart = () => {
+    setActionError(null);
     if (plugin.status === 'coming_soon') {
       return;
     }
@@ -38,6 +41,7 @@ export const PluginDetailPage = ({ plugin }: PluginDetailPageProps) => {
         })
         .catch((error) => {
           console.error(error);
+          setActionError('Unable to get free plugin right now.');
         });
       return;
     }
@@ -94,7 +98,7 @@ export const PluginDetailPage = ({ plugin }: PluginDetailPageProps) => {
               className='px-6 py-3 bg-black text-white font-medium rounded-lg hover:bg-gray-800 transition-colors duration-200'
             >
               {plugin.status === 'free'
-                ? 'Get for Free'
+                ? 'Get Free'
                 : plugin.status === 'coming_soon'
                 ? 'Coming Soon'
                 : 'Add to Cart'}
@@ -107,6 +111,7 @@ export const PluginDetailPage = ({ plugin }: PluginDetailPageProps) => {
               {cartMessage}
             </div>
           )}
+          {actionError ? <div className='text-sm text-red-600 mt-1'>{actionError}</div> : null}
         </div>
 
         {/* Features Section */}
@@ -170,10 +175,16 @@ export const PluginDetailPage = ({ plugin }: PluginDetailPageProps) => {
 
         {/* Audio Preview Section */}
         <section className='mb-16' id='audio-preview'>
-          <AudioPreview
-            pluginName={plugin.name}
-            audioUrl={plugin.audioUrl}
-            duration={plugin.duration}
+          <PluginAudioDemo
+            plugin={{
+              id: plugin.id,
+              name: plugin.name,
+              slug: plugin.slug,
+              previewUrl: plugin.previewUrl,
+              demoControls: plugin.demoControls,
+              status: plugin.status,
+            }}
+            isAdmin={isAdmin}
           />
         </section>
 

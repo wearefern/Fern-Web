@@ -4,19 +4,55 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import { useCart } from '../../context/cart-context';
-import { useUser } from '../../context/user-context';
 import { type Plugin } from '../plugins/plugin-types';
 import { AccountShell } from './account-shell';
 
+interface DashboardOrder {
+  id: string;
+  date: string;
+  total: string;
+  items: { id: string }[];
+}
+
+interface DashboardDownload {
+  plugin: {
+    id: string;
+  };
+}
+
 export function DashboardPage() {
-  const { orders, purchasedPlugins } = useUser();
   const { getItemCount } = useCart();
   const [allPlugins, setAllPlugins] = useState<Plugin[]>([]);
+  const [orders, setOrders] = useState<DashboardOrder[]>([]);
+  const [downloads, setDownloads] = useState<DashboardDownload[]>([]);
 
-  const totalOrders = orders?.length ?? 0;
-  const totalDownloads = purchasedPlugins?.length ?? 0;
+  const totalOrders = orders.length;
+  const totalDownloads = downloads.length;
   const cartItems = getItemCount?.() ?? 0;
-  const latestOrder = orders?.[0];
+  const latestOrder = orders[0];
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const ordersRes = await fetch('/api/orders');
+        const downloadsRes = await fetch('/api/downloads');
+
+        if (ordersRes.ok) {
+          const ordersData = (await ordersRes.json()) as DashboardOrder[];
+          setOrders(ordersData || []);
+        }
+
+        if (downloadsRes.ok) {
+          const downloadsData = (await downloadsRes.json()) as DashboardDownload[];
+          setDownloads(downloadsData || []);
+        }
+      } catch (error) {
+        console.error('Failed to load dashboard data', error);
+      }
+    };
+
+    void load();
+  }, []);
 
   useEffect(() => {
     void fetch('/api/account/me', { cache: 'no-store' }).catch((error) => {
@@ -42,7 +78,7 @@ export function DashboardPage() {
   }, []);
 
   const recentDownloads = allPlugins
-    .filter((plugin) => purchasedPlugins.includes(plugin.id))
+    .filter((plugin) => downloads.some((download) => download.plugin.id === plugin.id))
     .slice(0, 3);
 
   const recentActivity = latestOrder

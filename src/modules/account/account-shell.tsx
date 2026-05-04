@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 
 import { PluginsHeader } from '~modules/plugins/plugins-header';
 import { cn } from '~utils/style';
@@ -13,10 +13,11 @@ interface AccountShellProps {
   children: ReactNode;
 }
 
-const navItems = [
+const baseNavItems = [
   { href: '/account', label: 'Dashboard' },
   { href: '/account/orders', label: 'Orders' },
   { href: '/account/downloads', label: 'Downloads' },
+  { href: '/account/tools/downloads', label: 'Tool Downloads' },
   { href: '/account/settings', label: 'Settings' },
   { href: '/account/settings/profile', label: 'Profile' },
   { href: '/account/settings/billing', label: 'Billing' },
@@ -25,6 +26,30 @@ const navItems = [
 
 export const AccountShell = ({ title, subtitle, children }: AccountShellProps) => {
   const pathname = usePathname();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const loadRole = async () => {
+      try {
+        const response = await fetch('/api/account/me', { cache: 'no-store' });
+        if (!response.ok) return;
+        const user = (await response.json()) as { role?: string };
+        setIsAdmin(user.role === 'ADMIN');
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    void loadRole();
+  }, []);
+
+  const navItems = useMemo(
+    () =>
+      isAdmin
+        ? [...baseNavItems, { href: '/account/admin/plugins', label: 'Admin Plugins' }]
+        : baseNavItems,
+    [isAdmin]
+  );
 
   return (
     <div className='min-h-screen bg-white'>

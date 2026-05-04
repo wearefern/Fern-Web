@@ -8,6 +8,7 @@ import { AccountShell } from './account-shell';
 
 export const DownloadsPage = () => {
   const [purchasedPluginDetails, setPurchasedPluginDetails] = useState<Plugin[]>([]);
+  const [downloadError, setDownloadError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadDownloads = async () => {
@@ -27,6 +28,37 @@ export const DownloadsPage = () => {
     void loadDownloads();
   }, []);
 
+  const handleDownload = async (pluginId: string, platform: 'MAC' | 'WINDOWS') => {
+    setDownloadError(null);
+    try {
+      const res = await fetch(`/api/downloads/${pluginId}/generate-link`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ platform }),
+      });
+
+      const data = (await res.json().catch(() => null)) as { url?: string; error?: string } | null;
+
+      if (!res.ok) {
+        console.error('Download failed', data);
+        setDownloadError('Unable to generate download link.');
+        return;
+      }
+
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        console.error('Download failed', data);
+        setDownloadError('Unable to generate download link.');
+      }
+    } catch (error) {
+      console.error('Unable to generate download link.', error);
+      setDownloadError('Unable to generate download link.');
+    }
+  };
+
   return (
     <AccountShell
       title='Your Downloads'
@@ -44,6 +76,7 @@ export const DownloadsPage = () => {
         </div>
       ) : (
         <div className='space-y-6'>
+          {downloadError ? <p className='text-sm text-red-600'>{downloadError}</p> : null}
           {purchasedPluginDetails.map((plugin) => (
             <div key={plugin.id} className='rounded-lg border border-gray-200 bg-gray-50/40 p-6'>
               <div className='mb-5 flex items-start justify-between gap-6'>
@@ -68,18 +101,24 @@ export const DownloadsPage = () => {
               </div>
 
               <div className='grid grid-cols-1 gap-3 sm:grid-cols-3'>
-                <a
-                  href={plugin.macDownloadUrl}
+                <button
+                  type='button'
+                  onClick={() => {
+                    void handleDownload(plugin.id, 'MAC');
+                  }}
                   className='inline-flex h-10 items-center justify-center rounded-md bg-black px-4 text-sm font-medium text-white transition-opacity duration-200 ease-in-out hover:opacity-90'
                 >
                   Download for Mac
-                </a>
-                <a
-                  href={plugin.windowsDownloadUrl}
+                </button>
+                <button
+                  type='button'
+                  onClick={() => {
+                    void handleDownload(plugin.id, 'WINDOWS');
+                  }}
                   className='inline-flex h-10 items-center justify-center rounded-md border border-gray-300 bg-white px-4 text-sm font-medium text-black transition-colors duration-200 ease-in-out hover:border-gray-400'
                 >
                   Download for Windows
-                </a>
+                </button>
                 <Link
                   href={`/plugins/${plugin.slug}`}
                   className='inline-flex h-10 items-center justify-center rounded-md border border-gray-300 bg-white px-4 text-sm font-medium text-black transition-colors duration-200 ease-in-out hover:border-gray-400'

@@ -14,6 +14,7 @@ model User {
   email              String?
   name               String?
   imageUrl           String?              @map(name: "image_url")
+  role               String               @default("USER")
   createdAt          DateTime             @default(now()) @map(name: "created_at")
   updatedAt          DateTime             @updatedAt @map(name: "updated_at")
   ContentInteraction ContentInteraction[]
@@ -81,6 +82,7 @@ model Plugin {
   status      String
   previewUrl  String?
   fileKey     String?
+  demoControls Json?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -151,4 +153,73 @@ model DownloadToken {
 
   @@index([purchaseId])
   @@map(name: "download_tokens")
+}
+
+model Tool {
+  id              String   @id @default(cuid())
+  name            String
+  slug            String   @unique
+  description     String?
+  longDescription String?
+  priceCents      Int
+  status          String
+  category        String?
+  previewImageUrl String?
+  fileKey         String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  orders          ToolOrder[]
+  downloads       ToolDownload[]
+  downloadTokens  ToolDownloadToken[]
+
+  @@map(name: "tools")
+}
+
+model ToolOrder {
+  id                    String   @id @default(cuid())
+  userId                String
+  toolId                String
+  amountCents           Int
+  status                String
+  stripeSessionId       String?  @unique
+  stripePaymentIntentId String?
+  createdAt             DateTime @default(now())
+
+  tool Tool @relation(fields: [toolId], references: [id], onDelete: Restrict)
+
+  @@unique([userId, toolId])
+  @@index([userId])
+  @@index([toolId])
+  @@map(name: "tool_orders")
+}
+
+model ToolDownload {
+  id           String   @id @default(cuid())
+  userId       String
+  toolId       String
+  downloadedAt DateTime @default(now())
+  ipAddress    String?
+
+  tool Tool @relation(fields: [toolId], references: [id], onDelete: Restrict)
+
+  @@index([userId])
+  @@index([toolId])
+  @@map(name: "tool_downloads")
+}
+
+model ToolDownloadToken {
+  id        String    @id @default(cuid())
+  toolId    String
+  userId    String
+  token     String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  tool Tool @relation(fields: [toolId], references: [id], onDelete: Cascade)
+
+  @@index([toolId])
+  @@index([userId])
+  @@map(name: "tool_download_tokens")
 }

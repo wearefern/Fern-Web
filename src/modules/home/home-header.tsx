@@ -107,11 +107,7 @@ const HomeHeader = () => {
           <NavLink href='/#process'>Process.</NavLink>
           <NavLink href={PLUGINS_PATH}>Plugins.</NavLink>
           <NavLink href={BLOG_PATH}>Insights.</NavLink>
-          <AuthNavControls
-            showUserButton={false}
-            accountClassName='group relative inline-flex items-center justify-center overflow-hidden rounded-full px-1.5 py-1 text-xs font-medium text-ctx-primary-fg-solid sm:text-sm'
-            accountLabel='Account.'
-          />
+          <NavLink href='/tools'>Tools.</NavLink>
           <NavLink href='/contact' emphasize>
             Contact.
           </NavLink>
