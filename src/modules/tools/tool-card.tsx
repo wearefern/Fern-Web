@@ -52,7 +52,7 @@ export const ToolCard = ({ tool, onPrimaryAction, actionLoading = false }: ToolC
       </Link>
 
       {/* Action Button */}
-      <div className='pt-4 border-t border-gray-100 mt-4'>
+      <div className='mt-auto pt-4 border-t border-gray-100'>
         <button
           type='button'
           onClick={() => onPrimaryAction?.(tool)}

@@ -39,8 +39,9 @@ export const CheckoutPage = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           items: items.map((item) => ({
-            pluginId: item.plugin.id,
+            id: item.id,
             quantity: item.quantity,
+            productType: item.productType,
           })),
         }),
       });
@@ -173,12 +174,12 @@ export const CheckoutPage = () => {
               
               <div className='space-y-3 mb-4'>
                 {items.map((item) => (
-                  <div key={item.plugin.id} className='flex justify-between text-sm'>
+                  <div key={item.id} className='flex justify-between text-sm'>
                     <span className='font-medium text-gray-700'>
-                      {item.plugin.name} × {item.quantity}
+                      {item.name} × {item.quantity}
                     </span>
                     <span className='text-right font-medium text-black'>
-                      {item.plugin.price}
+                      {item.price}
                     </span>
                   </div>
                 ))}

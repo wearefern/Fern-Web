@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { PluginsHeader } from '~modules/plugins/plugins-header';
+import { useCart } from '../../context/cart-context';
 import { type Tool, formatToolPrice } from './tool-types';
 
 interface ToolDetailPageProps {
@@ -12,6 +13,7 @@ interface ToolDetailPageProps {
 
 export const ToolDetailPage = ({ tool }: ToolDetailPageProps) => {
   const router = useRouter();
+  const { addToCart } = useCart();
   const [error, setError] = useState<string | null>(null);
 
   const handleAction = async () => {
@@ -30,14 +32,15 @@ export const ToolDetailPage = ({ tool }: ToolDetailPageProps) => {
         return;
       }
 
-      const response = await fetch('/api/tools/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ toolId: tool.id }),
-      });
-      const data = (await response.json().catch(() => null)) as { url?: string; error?: string } | null;
-      if (!response.ok || !data?.url) throw new Error(data?.error ?? 'Unable to checkout');
-      window.location.href = data.url;
+      // Add tool to cart
+      const result = addToCart(tool);
+      if (!result.success) {
+        setError(result.message);
+        return;
+      }
+      
+      // Redirect to cart
+      router.push('/cart');
     } catch (err) {
       console.error(err);
       setError('Unable to continue right now. Please try again.');
@@ -70,7 +73,7 @@ export const ToolDetailPage = ({ tool }: ToolDetailPageProps) => {
             disabled={tool.status === 'coming_soon'}
             className='px-6 py-3 bg-black text-white font-medium rounded-lg hover:bg-gray-800 transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed'
           >
-            {tool.status === 'free' ? 'Get Free' : tool.status === 'coming_soon' ? 'Coming Soon' : 'Buy Tool'}
+            {tool.status === 'free' ? 'Get Free' : tool.status === 'coming_soon' ? 'Coming Soon' : 'Download'}
           </button>
           {error ? <p className='text-sm text-red-600 mt-3'>{error}</p> : null}
         </div>

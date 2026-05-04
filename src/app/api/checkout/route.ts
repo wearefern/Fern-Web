@@ -30,14 +30,22 @@ if (!userId) {
     const normalizedItems = items
       .map((item) => {
         const productType = item.productType === 'tool' ? 'tool' : 'plugin';
-        const pluginId = typeof item?.pluginId === "string" ? item.pluginId : null;
-        const toolId = typeof item?.toolId === "string" ? item.toolId : null;
-        const slug = typeof item?.slug === "string" ? item.slug : null;
+
+const id = typeof (item as any)?.id === "string" ? (item as any).id : null;
+const pluginId = typeof item?.pluginId === "string" ? item.pluginId : null;
+const toolId = typeof item?.toolId === "string" ? item.toolId : null;
+const slug = typeof item?.slug === "string" ? item.slug : null;
         const quantity =
           typeof item?.quantity === "number" && Number.isFinite(item.quantity) && item.quantity > 0
             ? Math.floor(item.quantity)
             : 1;
-        return { productType, pluginId, toolId, slug, quantity };
+        return {
+  productType,
+  pluginId: pluginId ?? (productType === "plugin" ? id : null),
+  toolId: toolId ?? (productType === "tool" ? id : null),
+  slug,
+  quantity,
+};
       })
       .filter((item) => item.pluginId || item.toolId || item.slug);
 

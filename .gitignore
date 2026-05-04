@@ -21,3 +21,24 @@ Thumbs.db
 
 # clerk configuration (can include secrets)
 /.clerk/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Build and development
+*.tsbuildinfo
+*.log
+dev*.log
+
+# Upload directories and files
+public/downloads/**/*.zip
+public/downloads/plugins/
+public/downloads/tools/
+uploads/
+storage/
+
+# Temporary files
+*.tmp
+*.temp

@@ -287,7 +287,7 @@ const MinimalPluginCard = ({
       </Link>
 
       {/* Minimal Player */}
-      <div className='pt-4 border-t border-gray-100'>
+      <div className='mt-auto pt-4 border-t border-gray-100'>
         <MinimalPlayer
           audioUrl={plugin.audioUrl || '/audio/baby.mp3'}
           isPlaying={isPlaying}
