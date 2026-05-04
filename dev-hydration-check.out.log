@@ -1,0 +1,37 @@
+
+> portfolio@0.1.0 dev C:\Users\ASUS\Desktop\Fern-Web
+> next dev
+
+   ▲ Next.js 14.1.4
+   - Local:        http://localhost:3001
+   - Environments: .env.local, .env
+
+   automatically enabled Fast Refresh for 1 custom loader
+ ✓ Ready in 4.2s
+ ✓ Compiled /src/middleware in 390ms (186 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 10.3s (2265 modules)
+
+[35m
+[Clerk]:[0m You are running in keyless mode.
+You can [35mclaim your keys[0m by visiting https://dashboard.clerk.com/apps/claim?framework=nextjs&token=soa9udkbds1cj0iky2xne1y746r6w0jkisa1pgsp&return_url=http%3A%2F%2Flocalhost%3A3001%2F
+
+ ○ Compiling /plugins ...
+ ✓ Compiled /plugins in 5.3s (2256 modules)
+ ○ Compiling /cart ...
+ ✓ Compiled /cart in 613ms (2248 modules)
+ ○ Compiling /checkout ...
+ ✓ Compiled /checkout in 606ms (2255 modules)
+ ○ Compiling /account ...
+ ✓ Compiled /account in 508ms (2264 modules)
+ ○ Compiling /account/settings ...
+ ✓ Compiled /account/settings in 759ms (2271 modules)
+ ○ Compiling /account/settings/billing ...
+ ✓ Compiled /account/settings/billing in 694ms (2278 modules)
+ ○ Compiling /sign-in/[[...sign-in]] ...
+ ✓ Compiled /sign-in/[[...sign-in]] in 788ms (2284 modules)
+ ○ Compiling /sign-up/[[...sign-up]] ...
+ ✓ Compiled /sign-up/[[...sign-up]] in 558ms (2290 modules)
+ ✓ Compiled in 2.6s (2260 modules)
+ ✓ Compiled in 984ms (2260 modules)
+ ELIFECYCLE  Command failed with exit code 4294967295.

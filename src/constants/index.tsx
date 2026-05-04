@@ -9,6 +9,8 @@ export const BLOG_PATH = '/blog';
 export const BLOG_PATH_WITH_CATEGORY = (category: ContentType) =>
   `${BLOG_PATH}?content=${category}`;
 
+export const PLUGINS_PATH = '/plugins';
+
 export const SOCIALS = {
   mail: {
     url: 'hello@fern.so',
@@ -16,7 +18,7 @@ export const SOCIALS = {
   },
   linkedin: {
     url: 'https://www.linkedin.com/company/fern-software',
-    handle: 'company/fern-software',
+    handle: 'fern-software',
   },
   github: {
     url: 'https://github.com/fern-software',

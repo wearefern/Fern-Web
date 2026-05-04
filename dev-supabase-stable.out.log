@@ -1,0 +1,48 @@
+
+> portfolio@0.1.0 dev C:\Users\ASUS\Desktop\Fern-Web
+> next dev
+
+   ▲ Next.js 14.1.4
+   - Local:        http://localhost:3000
+   - Environments: .env.local, .env
+
+   automatically enabled Fast Refresh for 1 custom loader
+ ✓ Ready in 2.6s
+ ✓ Compiled /src/middleware in 350ms (186 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 9.8s (2265 modules)
+
+[35m
+[Clerk]:[0m You are running in keyless mode.
+You can [35mclaim your keys[0m by visiting https://dashboard.clerk.com/apps/claim?framework=nextjs&token=soa9udkbds1cj0iky2xne1y746r6w0jkisa1pgsp&return_url=http%3A%2F%2Flocalhost%3A3000%2F
+
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 1232ms (2243 modules)
+ ○ Compiling /account ...
+ ✓ Compiled /account in 1013ms (2241 modules)
+ ✓ Compiled /api/account/me in 313ms (1244 modules)
+ ✓ Compiled (1266 modules)
+ ○ Compiling /account/downloads ...
+ ✓ Compiled /account/downloads in 1035ms (2254 modules)
+ ○ Compiling /api/downloads ...
+ ✓ Compiled /api/downloads in 697ms (1271 modules)
+ ✓ Compiled in 306ms (1025 modules)
+ ✓ Compiled /api/plugins in 264ms (1273 modules)
+ ✓ Compiled in 0ms (1277 modules)
+ ✓ Compiled in 1ms (1277 modules)
+ ✓ Compiled in 0ms (1277 modules)
+ ✓ Compiled in 540ms (2287 modules)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 2.1s (2460 modules)
+ ✓ Compiled in 863ms (2460 modules)
+ ✓ Compiled in 2.1s (2423 modules)
+ ✓ Compiled in 293ms (1144 modules)
+ ✓ Compiled in 481ms (1144 modules)
+ ✓ Compiled in 322ms (1144 modules)
+ ✓ Compiled in 273ms (1144 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 588ms (2413 modules)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 833ms (2415 modules)
+ ✓ Compiled in 347ms (1147 modules)
+   Reload env: .env.local

@@ -417,3 +417,44 @@ motion() is deprecated. Use motion.create() instead.
 <w>  at file dependencies C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
 <w>  at file C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
 <w>  at resolve commonjs C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, lstat 'C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\.next\server\app'
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving '../../../../.next/server/app/not-found' in C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server for build dependencies doesn't lead to expected result 'C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\.next\server\app\not-found.js', but to 'Error: Can't resolve '../../../../.next/server/app/not-found' in 'C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server'' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ../../../../.next/server/app/not-found (expected C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\.next\server\app\not-found.js)
+<w>  at file dependencies C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\require.js
+<w>  at file C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\require.js
+<w>  at file dependencies C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\load-components.js
+<w>  at file C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\load-components.js
+<w>  at file dependencies C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\utils.js
+<w>  at file C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\utils.js
+<w>  at file dependencies C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\worker.js
+<w>  at file C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\worker.js
+<w>  at file dependencies C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w>  at file C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w>  at resolve commonjs C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving '../../../../.next/server/app/api/contents/[slug]/route' in C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server for build dependencies doesn't lead to expected result 'C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\.next\server\app\api\contents\[slug]\route.js', but to 'Error: Can't resolve '../../../../.next/server/app/api/contents/[slug]/route' in 'C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server'' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ../../../../.next/server/app/api/contents/[slug]/route (expected C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\.next\server\app\api\contents\[slug]\route.js)
+<w>  at file dependencies C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\require.js
+<w>  at file C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\require.js
+<w>  at file dependencies C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\load-components.js
+<w>  at file C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\load-components.js
+<w>  at file dependencies C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\utils.js
+<w>  at file C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\utils.js
+<w>  at file dependencies C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\worker.js
+<w>  at file C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\worker.js
+<w>  at file dependencies C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w>  at file C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w>  at resolve commonjs C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Resolving '../../../../.next/server/app/api/contents/[slug]/views/route' in C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server for build dependencies doesn't lead to expected result 'C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\.next\server\app\api\contents\[slug]\views\route.js', but to 'Error: Can't resolve '../../../../.next/server/app/api/contents/[slug]/views/route' in 'C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server'' instead. Resolving dependencies are ignored for this path.
+<w>  at resolve commonjs file ../../../../.next/server/app/api/contents/[slug]/views/route (expected C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\.next\server\app\api\contents\[slug]\views\route.js)
+<w>  at file dependencies C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\require.js
+<w>  at file C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\require.js
+<w>  at file dependencies C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\load-components.js
+<w>  at file C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\server\load-components.js
+<w>  at file dependencies C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\utils.js
+<w>  at file C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\utils.js
+<w>  at file dependencies C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\worker.js
+<w>  at file C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\worker.js
+<w>  at file dependencies C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w>  at file C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w>  at resolve commonjs C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\node_modules\next\dist\build\webpack\loaders\next-route-loader\index.js
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: ENOENT: no such file or directory, rename 'C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\.next\cache\webpack\client-development\0.pack.gz_' -> 'C:\Users\ASUS\Desktop\PRD VIVA\todoapp\Fern-Web\.next\cache\webpack\client-development\0.pack.gz'
