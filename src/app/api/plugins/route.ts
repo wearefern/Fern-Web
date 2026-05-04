@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { getModelClient } from '../shared/model-client';
 import { mapDBPluginToUIPlugin } from './plugin-mapper';
+import { getAllPlugins } from '../../../data/plugins-data';
 
 export async function GET() {
   try {
@@ -14,10 +15,7 @@ export async function GET() {
 
     return NextResponse.json(plugins.map(mapDBPluginToUIPlugin));
   } catch (error) {
-    console.error('Failed to load plugins', error);
-    return NextResponse.json(
-      { error: 'Unable to load plugins' },
-      { status: 500 }
-    );
+    console.error('Failed to load plugins from database, using static fallback', error);
+    return NextResponse.json(getAllPlugins());
   }
 }

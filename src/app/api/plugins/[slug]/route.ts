@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { getModelClient } from '../../shared/model-client';
 import { mapDBPluginToUIPlugin } from '../plugin-mapper';
+import { getPluginBySlug } from '../../../../data/plugins-data';
 
 interface Params {
   params: {
@@ -17,15 +18,20 @@ export async function GET(_request: Request, { params }: Params) {
     });
 
     if (!plugin) {
-      return NextResponse.json({ error: 'Plugin not found' }, { status: 404 });
+      const staticPlugin = getPluginBySlug(params.slug);
+      if (!staticPlugin) {
+        return NextResponse.json({ error: 'Plugin not found' }, { status: 404 });
+      }
+      return NextResponse.json(staticPlugin);
     }
 
     return NextResponse.json(mapDBPluginToUIPlugin(plugin));
   } catch (error) {
-    console.error('Failed to load plugin by slug', error);
-    return NextResponse.json(
-      { error: 'Unable to load plugin' },
-      { status: 500 }
-    );
+    console.error('Failed to load plugin by slug from database, using static fallback', error);
+    const staticPlugin = getPluginBySlug(params.slug);
+    if (!staticPlugin) {
+      return NextResponse.json({ error: 'Plugin not found' }, { status: 404 });
+    }
+    return NextResponse.json(staticPlugin);
   }
 }
