@@ -128,7 +128,7 @@ if (!userId) {
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/cart?checkout=cancelled`,
       metadata: {
         productType: "plugin",
-        userId: user.clerkId,
+        userId,
         pluginId: purchasableLineItems[0]?.id ?? "",
         pluginIds: purchasableLineItems.map((plugin) => plugin.id).join(","),
         pluginSlugs: purchasableLineItems.map((plugin) => plugin.slug).join(","),
@@ -137,7 +137,7 @@ if (!userId) {
 
     console.log("Creating Stripe session metadata:", {
       productType: "plugin",
-      userId: user.clerkId,
+      userId,
       pluginId: purchasableLineItems[0]?.id ?? null,
       pluginIds: purchasableLineItems.map((plugin) => plugin.id),
       pluginSlugs: purchasableLineItems.map((plugin) => plugin.slug),
