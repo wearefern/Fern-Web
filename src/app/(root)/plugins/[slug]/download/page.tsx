@@ -4,6 +4,8 @@ import { getRequestOrigin } from '~lib/server/get-request-origin';
 import { PluginDownloadPage } from '~modules/plugins/plugin-download-page';
 import { Plugin } from '~modules/plugins/plugin-types';
 
+export const dynamic = 'force-dynamic';
+
 interface PluginDownloadProps {
   params: {
     slug: string;

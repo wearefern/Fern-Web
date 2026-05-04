@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server';
 import { getModelClient } from '../../shared/model-client';
 import { getCurrentUser } from '~lib/auth/get-current-user';
 
+export const dynamic = 'force-dynamic';
+
 interface BillingPayload {
   fullName?: unknown;
   billingEmail?: unknown;
