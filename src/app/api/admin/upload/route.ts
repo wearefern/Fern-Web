@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+
+export const runtime = 'nodejs';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { r2, R2_BUCKET } from '~lib/r2';
 import { getCurrentUser } from '~lib/auth/get-current-user';

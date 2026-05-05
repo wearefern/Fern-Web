@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+
+export const runtime = 'nodejs';
 import { readFile } from 'fs/promises';
 import { join, normalize } from 'path';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';

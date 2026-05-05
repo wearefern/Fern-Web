@@ -6,6 +6,7 @@ import { prisma } from "~lib/prisma";
 import { pluginsData } from "../../../data/plugins-data";
 
 export const dynamic = "force-dynamic";
+export const runtime = 'nodejs';
 
 // Lazy initialization of Stripe to avoid build-time errors
 let stripeInstance: StripeType | null = null;

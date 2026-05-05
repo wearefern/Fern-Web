@@ -1,0 +1,20 @@
+# Exclude large static files from serverless functions
+public/videos/
+public/audio/
+public/sfx/
+public/galleries/
+public/content/articles/
+public/content/talks/
+public/downloads/
+
+# Exclude development files
+node_modules/
+.next/
+.git/
+
+# Exclude build artifacts
+dist/
+build/
+
+# Exclude Storybook
+storybook-static/
