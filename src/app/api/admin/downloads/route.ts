@@ -67,7 +67,7 @@ export async function GET() {
     const userMap = new Map(
       users
         .filter((user) => Boolean(user.clerkId))
-        .map((user) => [user.clerkId as string, { name: user.name, email: user.email }])
+        .map((user) => [user.clerkId!, { name: user.name, email: user.email }])
     );
 
     const toolDownloadCountMap = new Map<string, number>();

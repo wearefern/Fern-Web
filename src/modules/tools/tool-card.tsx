@@ -10,7 +10,7 @@ interface ToolCardProps {
 }
 
 export const ToolCard = ({ tool, onPrimaryAction, actionLoading = false }: ToolCardProps) => {
-  const { addToCart, isProductInCart } = useCart();
+  const { isProductInCart } = useCart();
   const isInCart = isProductInCart(tool.id);
   
   const label =

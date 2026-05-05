@@ -97,13 +97,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const body = (await request.json().catch(() => null)) as CreateOrderPayload | null;
-    if (!body || typeof body !== 'object' || !Array.isArray(body.items)) {
+    const body = await request.json().catch(() => null) as unknown;
+    if (!body || typeof body !== 'object' || !Array.isArray((body as CreateOrderPayload).items)) {
       return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
     }
 
     const prisma = getModelClient();
-    const inputItems = body.items as { pluginId: string; quantity: number }[];
+    const inputItems = (body as CreateOrderPayload).items ?? [];
     const pluginIds = inputItems.map((item) => String(item.pluginId));
     const plugins = await prisma.plugin.findMany({
       where: { id: { in: pluginIds } },
@@ -134,7 +134,7 @@ export async function POST(request: Request) {
     // Sequential writes - no transaction
     const order = await prisma.order.create({
       data: {
-        userId: user.clerkId!,
+        userId: user.clerkId,
         totalCents,
         status: 'completed',
       },
@@ -153,7 +153,7 @@ export async function POST(request: Request) {
       await prisma.purchase.upsert({
         where: {
           userId_pluginId: {
-            userId: user.clerkId!,
+            userId: user.clerkId,
             pluginId: item.pluginId,
           },
         },
@@ -161,7 +161,7 @@ export async function POST(request: Request) {
           orderId: order.id,
         },
         create: {
-          userId: user.clerkId!,
+          userId: user.clerkId,
           pluginId: item.pluginId,
           orderId: order.id,
         },

@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useUser } from '@clerk/nextjs';
 
@@ -123,7 +124,7 @@ export const SettingsProfilePage = () => {
           <h2 className='text-lg font-semibold text-black mb-4'>Profile preview</h2>
           <div className='flex flex-col items-center justify-center gap-4 rounded-xl border border-gray-200 bg-white p-4'>
             {imageUrl ? (
-              <img src={imageUrl} alt='Profile' className='h-24 w-24 rounded-full object-cover' />
+              <Image src={imageUrl} alt='Profile' width={96} height={96} className='rounded-full object-cover' />
             ) : (
               <div className='flex h-24 w-24 items-center justify-center rounded-full bg-gray-200 text-sm text-gray-600'>No image</div>
             )}

@@ -1,16 +1,28 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import type { Stripe as StripeType } from "stripe";
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "~lib/prisma";
 import { pluginsData } from "../../../data/plugins-data";
 
 export const dynamic = "force-dynamic";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2026-04-22.dahlia",
-});
+// Lazy initialization of Stripe to avoid build-time errors
+let stripeInstance: StripeType | null = null;
+function getStripe(): StripeType {
+  if (!stripeInstance) {
+    if (!process.env.STRIPE_SECRET_KEY) {
+      throw new Error("STRIPE_SECRET_KEY is not configured");
+    }
+    stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: "2026-04-22.dahlia",
+    });
+  }
+  return stripeInstance;
+}
 
 interface CheckoutItem {
+  id?: unknown;
   productType?: 'plugin' | 'tool';
   pluginId?: unknown;
   toolId?: unknown;
@@ -18,36 +30,43 @@ interface CheckoutItem {
   quantity?: unknown;
 }
 
+interface NormalizedCheckoutItem {
+  productType: 'plugin' | 'tool';
+  pluginId: string | null;
+  toolId: string | null;
+  slug: string | null;
+  quantity: number;
+}
+
 export async function POST(req: Request) {
   try {
-   const { userId } = await auth();;
+    const { userId } = await auth();
 
-if (!userId) {
-  return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-}
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const body = (await req.json().catch(() => null)) as { items?: CheckoutItem[] } | null;
     const items = Array.isArray(body?.items) ? body.items : [];
     const normalizedItems = items
-      .map((item) => {
+      .map((item): NormalizedCheckoutItem => {
         const productType = item.productType === 'tool' ? 'tool' : 'plugin';
-
-const id = typeof (item as any)?.id === "string" ? (item as any).id : null;
-const pluginId = typeof item?.pluginId === "string" ? item.pluginId : null;
-const toolId = typeof item?.toolId === "string" ? item.toolId : null;
-const slug = typeof item?.slug === "string" ? item.slug : null;
+        const id = typeof item.id === "string" ? item.id : null;
+        const pluginId = typeof item.pluginId === "string" ? item.pluginId : null;
+        const toolId = typeof item.toolId === "string" ? item.toolId : null;
+        const slug = typeof item.slug === "string" ? item.slug : null;
         const quantity =
-          typeof item?.quantity === "number" && Number.isFinite(item.quantity) && item.quantity > 0
+          typeof item.quantity === "number" && Number.isFinite(item.quantity) && item.quantity > 0
             ? Math.floor(item.quantity)
             : 1;
         return {
-  productType,
-  pluginId: pluginId ?? (productType === "plugin" ? id : null),
-  toolId: toolId ?? (productType === "tool" ? id : null),
-  slug,
-  quantity,
-};
+          productType,
+          pluginId: pluginId ?? (productType === "plugin" ? id : null),
+          toolId: toolId ?? (productType === "tool" ? id : null),
+          slug,
+          quantity,
+        };
       })
-      .filter((item) => item.pluginId || item.toolId || item.slug);
+      .filter((item: NormalizedCheckoutItem) => item.pluginId || item.toolId || item.slug);
 
     if (normalizedItems.length === 0) {
       return NextResponse.json({ error: "No items provided" }, { status: 400 });
@@ -72,7 +91,7 @@ const slug = typeof item?.slug === "string" ? item.slug : null;
       }
     }
 
-    let purchasableLineItems: Array<{ id: string; slug: string; name: string; priceCents: number; quantity: number }> = [];
+    let purchasableLineItems: { id: string; slug: string; name: string; priceCents: number; quantity: number }[] = [];
 
     try {
       // Fetch plugins
@@ -153,7 +172,7 @@ const slug = typeof item?.slug === "string" ? item.slug : null;
       return NextResponse.json({ error: "No valid plugins found" }, { status: 400 });
     }
 
-    const session = await stripe.checkout.sessions.create({
+    const session = await getStripe().checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
       line_items: purchasableLineItems.map((plugin) => ({
