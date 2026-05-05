@@ -65,6 +65,11 @@ export async function POST(request: Request, { params }: Params) {
       return NextResponse.json({ error: 'Plugin not found' }, { status: 404 });
     }
 
+    // Check if plugin has fileKey for actual downloadable file
+    if (!plugin.fileKey) {
+      return NextResponse.json({ error: 'Download unavailable' }, { status: 400 });
+    }
+
     const resolvedPurchase = purchase
       ?? await prisma.purchase.upsert({
         where: {
