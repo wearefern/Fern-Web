@@ -1,13 +1,8 @@
-.pnpm-store
+# Exclude pnpm store from serverless functions
 .pnpm-store/
-**/.pnpm-store/**
-node_modules
-node_modules/
-.next
-.next/
-.git
-.git/
+node_modules/.pnpm/
 
+# Exclude large static files
 public/videos/
 public/audio/
 public/sfx/
@@ -15,3 +10,8 @@ public/galleries/
 public/content/articles/
 public/content/talks/
 public/downloads/
+
+# Exclude development files
+node_modules/
+.next/
+.git/
