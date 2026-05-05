@@ -5,12 +5,22 @@ import Stripe from "stripe";
 import { prisma } from "~lib/prisma";
 
 export const dynamic = "force-dynamic";
-export const runtime = 'nodejs';
+export const runtime = "nodejs";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-06-20",
-});
+// ✅ Stripe lazy init (outside handler)
+function getStripe() {
+  const key = process.env.STRIPE_SECRET_KEY;
 
+  if (!key) {
+    throw new Error("STRIPE_SECRET_KEY is missing");
+  }
+
+  return new Stripe(key, {
+    apiVersion: "2026-04-22.dahlia",
+  });
+}
+
+// utils
 function csv(value?: string | null): string[] {
   if (!value) return [];
 
@@ -31,6 +41,8 @@ function metadataList(
 
 export async function POST(req: Request) {
   console.log("WEBHOOK START");
+
+  const stripe = getStripe(); // ✅ FIX: initialize here
 
   const body = await req.text();
   const signature = headers().get("stripe-signature");
@@ -72,15 +84,6 @@ export async function POST(req: Request) {
   const toolIds = metadataList(session.metadata, "toolId", "toolIds");
   const toolSlugs = metadataList(session.metadata, "toolSlug", "toolSlugs");
 
-  console.log("SESSION ID:", stripeSessionId);
-  console.log("PAYMENT INTENT:", stripePaymentIntentId);
-  console.log("USER ID:", userId);
-  console.log("PRODUCT TYPE:", productType);
-  console.log("PLUGIN IDS:", pluginIds);
-  console.log("PLUGIN SLUGS:", pluginSlugs);
-  console.log("TOOL IDS:", toolIds);
-  console.log("TOOL SLUGS:", toolSlugs);
-
   if (!userId) {
     console.error("WEBHOOK ERROR: Missing userId metadata");
     return NextResponse.json({ received: false }, { status: 400 });
@@ -107,19 +110,24 @@ export async function POST(req: Request) {
       });
 
       if (existingPluginOrder || existingToolOrder) {
-        console.log("WEBHOOK SKIPPED: Stripe session already processed");
+        console.log("WEBHOOK SKIPPED: Already processed");
         return;
       }
 
       const shouldProcessPlugins =
-        productType === "plugin" || productType === "mixed" || pluginIds.length > 0 || pluginSlugs.length > 0;
+        productType === "plugin" ||
+        productType === "mixed" ||
+        pluginIds.length > 0 ||
+        pluginSlugs.length > 0;
 
       const shouldProcessTools =
-        productType === "tool" || productType === "mixed" || toolIds.length > 0 || toolSlugs.length > 0;
+        productType === "tool" ||
+        productType === "mixed" ||
+        toolIds.length > 0 ||
+        toolSlugs.length > 0;
 
+      // -------- Plugins --------
       if (shouldProcessPlugins) {
-        console.log("FETCHING PLUGINS...");
-
         const plugins = await tx.plugin.findMany({
           where: {
             OR: [
@@ -129,21 +137,11 @@ export async function POST(req: Request) {
           },
         });
 
-        console.log("FOUND PLUGINS:", plugins.length);
-
-        if ((pluginIds.length > 0 || pluginSlugs.length > 0) && plugins.length === 0) {
-          throw new Error(
-            `Plugin lookup failed. pluginIds=${pluginIds.join(",")} pluginSlugs=${pluginSlugs.join(",")}`
-          );
-        }
-
         if (plugins.length > 0) {
           const totalCents =
             typeof session.amount_total === "number"
               ? session.amount_total
-              : plugins.reduce((sum, plugin) => sum + plugin.priceCents, 0);
-
-          console.log("CREATING ORDER...");
+              : plugins.reduce((sum, p) => sum + p.priceCents, 0);
 
           const order = await tx.order.create({
             data: {
@@ -154,8 +152,6 @@ export async function POST(req: Request) {
             },
           });
 
-          console.log("ORDER CREATED:", order.id);
-
           await tx.orderItem.createMany({
             data: plugins.map((plugin) => ({
               orderId: order.id,
@@ -165,19 +161,12 @@ export async function POST(req: Request) {
             })),
           });
 
-          console.log("ORDER ITEMS CREATED:", plugins.length);
-
           for (const plugin of plugins) {
             await tx.purchase.upsert({
               where: {
-                userId_pluginId: {
-                  userId,
-                  pluginId: plugin.id,
-                },
+                userId_pluginId: { userId, pluginId: plugin.id },
               },
-              update: {
-                orderId: order.id,
-              },
+              update: { orderId: order.id },
               create: {
                 userId,
                 pluginId: plugin.id,
@@ -185,14 +174,11 @@ export async function POST(req: Request) {
               },
             });
           }
-
-          console.log("PURCHASES CREATED:", plugins.length);
         }
       }
 
+      // -------- Tools --------
       if (shouldProcessTools) {
-        console.log("FETCHING TOOLS...");
-
         const tools = await tx.tool.findMany({
           where: {
             OR: [
@@ -202,21 +188,10 @@ export async function POST(req: Request) {
           },
         });
 
-        console.log("FOUND TOOLS:", tools.length);
-
-        if ((toolIds.length > 0 || toolSlugs.length > 0) && tools.length === 0) {
-          throw new Error(
-            `Tool lookup failed. toolIds=${toolIds.join(",")} toolSlugs=${toolSlugs.join(",")}`
-          );
-        }
-
         for (const tool of tools) {
           await tx.toolOrder.upsert({
             where: {
-              userId_toolId: {
-                userId,
-                toolId: tool.id,
-              },
+              userId_toolId: { userId, toolId: tool.id },
             },
             update: {
               status: "paid",
@@ -234,8 +209,6 @@ export async function POST(req: Request) {
             },
           });
         }
-
-        console.log("TOOL ORDERS CREATED:", tools.length);
       }
     });
 
@@ -244,7 +217,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("WEBHOOK PROCESSING FAILED:", error);
     return NextResponse.json(
-      { received: false, error: "Processing failed" },
+      { received: false },
       { status: 500 }
     );
   }
