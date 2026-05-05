@@ -131,45 +131,44 @@ export async function POST(request: Request) {
 
     const totalCents = normalizedItems.reduce((sum, item) => sum + item.lineTotal, 0);
 
-    const created = await prisma.$transaction(async (tx) => {
-      const order = await tx.order.create({
-        data: {
-          userId: user.clerkId!,
-          totalCents,
-          status: 'completed',
-        },
-      });
+    // Sequential writes - no transaction
+    const order = await prisma.order.create({
+      data: {
+        userId: user.clerkId!,
+        totalCents,
+        status: 'completed',
+      },
+    });
 
-      await tx.orderItem.createMany({
-        data: normalizedItems.map((item) => ({
-          orderId: order.id,
-          pluginId: item.pluginId,
-          quantity: item.quantity,
-          unitPriceCents: item.unitPriceCents,
-        })),
-      });
+    await prisma.orderItem.createMany({
+      data: normalizedItems.map((item) => ({
+        orderId: order.id,
+        pluginId: item.pluginId,
+        quantity: item.quantity,
+        unitPriceCents: item.unitPriceCents,
+      })),
+    });
 
-      for (const item of normalizedItems) {
-        await tx.purchase.upsert({
-          where: {
-            userId_pluginId: {
-              userId: user.clerkId!,
-              pluginId: item.pluginId,
-            },
-          },
-          update: {
-            orderId: order.id,
-          },
-          create: {
+    for (const item of normalizedItems) {
+      await prisma.purchase.upsert({
+        where: {
+          userId_pluginId: {
             userId: user.clerkId!,
             pluginId: item.pluginId,
-            orderId: order.id,
           },
-        });
-      }
+        },
+        update: {
+          orderId: order.id,
+        },
+        create: {
+          userId: user.clerkId!,
+          pluginId: item.pluginId,
+          orderId: order.id,
+        },
+      });
+    }
 
-      return order;
-    });
+    const created = order;
 
     return NextResponse.json({
       id: created.id,
