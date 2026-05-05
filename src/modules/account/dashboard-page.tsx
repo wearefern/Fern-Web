@@ -15,9 +15,16 @@ interface DashboardOrder {
 }
 
 interface DashboardDownload {
-  plugin: {
+  id: string;
+  createdAt: string;
+  type: 'plugin' | 'tool';
+  plugin?: {
     id: string;
   };
+  tool?: {
+    id: string;
+  };
+  fileKey?: string | null;
 }
 
 export function DashboardPage() {
@@ -78,7 +85,11 @@ export function DashboardPage() {
   }, []);
 
   const recentDownloads = allPlugins
-    .filter((plugin) => downloads.some((download) => download.plugin.id === plugin.id))
+    .filter((plugin) => 
+      downloads.some((download) => 
+        download.type === 'plugin' && download.plugin?.id === plugin.id
+      )
+    )
     .slice(0, 3);
 
   const recentActivity = latestOrder

@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readFile } from 'fs/promises';
 import { join, normalize } from 'path';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { GetObjectCommand } from '@aws-sdk/client-s3';
 
 import { getModelClient } from '../../../shared/model-client';
+import { r2, R2_BUCKET } from '~lib/r2';
 
 // Helper to normalize and validate fileKey for security
 function normalizeFileKey(fileKey: string): string | null {
@@ -75,34 +78,53 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid file path' }, { status: 404 });
     }
 
-    // Construct full file path
-    const fullPath = join(process.cwd(), 'public', normalizedFileKey);
-    
     // Security check
     if (!isValidDownloadPath(normalizedFileKey)) {
       console.error('Path traversal attempt:', normalizedFileKey);
       return NextResponse.json({ error: 'Invalid file path' }, { status: 403 });
     }
 
+    // Backward compatibility: if fileKey starts with '/downloads', serve from local disk
+    if (fileKey.startsWith('/downloads/')) {
+      console.warn("Using local fallback - not production safe. FileKey:", fileKey);
+      try {
+        // Construct full file path for local files
+        const fullPath = join(process.cwd(), 'public', normalizedFileKey);
+        
+        // Read file from disk
+        const fileBuffer = await readFile(fullPath);
+        
+        // Extract filename from fileKey for Content-Disposition
+        const filename = normalizedFileKey.split('/').pop() || 'download.zip';
+        
+        // Set proper headers for ZIP download
+        const headers = new Headers({
+          'Content-Type': 'application/zip',
+            'Content-Disposition': `attachment; filename="${filename}"`,
+            'Content-Length': fileBuffer.length.toString(),
+            'Cache-Control': 'no-cache',
+        });
+        
+        return new NextResponse(fileBuffer, { headers });
+      } catch (error) {
+        console.error('File read error:', error);
+        return NextResponse.json({ error: 'File not found' }, { status: 404 });
+      }
+    }
+
+    // R2: Generate signed URL for new uploads
     try {
-      // Read file from disk
-      const fileBuffer = await readFile(fullPath);
-      
-      // Extract filename from fileKey for Content-Disposition
-      const filename = normalizedFileKey.split('/').pop() || 'download.zip';
-      
-      // Set proper headers for ZIP download
-      const headers = new Headers({
-        'Content-Type': 'application/zip',
-        'Content-Disposition': `attachment; filename="${filename}"`,
-        'Content-Length': fileBuffer.length.toString(),
-        'Cache-Control': 'no-cache',
+      const command = new GetObjectCommand({
+        Bucket: R2_BUCKET,
+        Key: normalizedFileKey,
       });
       
-      return new NextResponse(fileBuffer, { headers });
+      const url = await getSignedUrl(r2, command, { expiresIn: 60 });
+      
+      return NextResponse.redirect(url);
     } catch (error) {
-      console.error('File read error:', error);
-      return NextResponse.json({ error: 'File not found' }, { status: 404 });
+      console.error('R2 signed URL error:', error);
+      return NextResponse.json({ error: 'Unable to generate download link' }, { status: 500 });
     }
   } catch (error) {
     console.error('Failed to process tool download', error);

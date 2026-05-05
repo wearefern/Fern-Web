@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
-import { join } from 'path';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { r2, R2_BUCKET } from '~lib/r2';
 import { getCurrentUser } from '~lib/auth/get-current-user';
 
 export async function POST(req: Request) {
@@ -30,16 +30,26 @@ export async function POST(req: Request) {
     // Generate unique filename
     const timestamp = Date.now();
     const filename = `${timestamp}-${file.name}`;
-    const uploadDir = join(process.cwd(), 'public', 'downloads', type + 's');
-    const filepath = join(uploadDir, filename);
+    const key = `${type}s/${filename}`;
 
-    // Save file
+    // Upload to R2
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    await writeFile(filepath, buffer);
+    
+    try {
+      await r2.send(new PutObjectCommand({
+        Bucket: R2_BUCKET,
+        Key: key,
+        Body: buffer,
+        ContentType: 'application/zip',
+      }));
+    } catch (error) {
+      console.error('R2 upload error:', error);
+      return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
+    }
 
-    // Return the relative path for storage in database
-    const relativePath = `/downloads/${type}s/${filename}`;
+    // Return key for storage in database
+    const relativePath = key;
 
     return NextResponse.json({ 
       success: true,
