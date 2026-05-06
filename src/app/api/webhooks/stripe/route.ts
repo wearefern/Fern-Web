@@ -31,13 +31,30 @@ function csv(value?: string | null): string[] {
     .filter((v, i, arr) => arr.indexOf(v) === i);
 }
 
+function getSessionMetadata(
+  session: any
+): Record<string, string> | null {
+  if (!session.metadata) return null;
+  
+  // Ensure all metadata values are strings
+  const metadata: Record<string, string> = {};
+  for (const [key, value] of Object.entries(session.metadata as Record<string, unknown>)) {
+    if (typeof value === 'string') {
+      metadata[key] = value;
+    }
+  }
+  return metadata;
+}
+
 function metadataList(
-  metadata: Stripe.Metadata | null | undefined,
+  metadata: Record<string, string> | null | undefined,
   singular: string,
   plural: string
 ): string[] {
   return csv(
-    [metadata?.[singular], metadata?.[plural]].filter(Boolean).join(',')
+    [metadata?.[singular], metadata?.[plural]]
+      .filter(Boolean)
+      .join(',')
   );
 }
 
@@ -60,7 +77,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ received: false }, { status: 500 });
   }
 
-  let event: Stripe.Event;
+  let event: any;
 
   try {
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
@@ -69,28 +86,37 @@ export async function POST(req: Request) {
     return NextResponse.json({ received: false }, { status: 400 });
   }
 
+  console.log('WEBHOOK EVENT TYPE:', event.type);
+
   if (event.type !== 'checkout.session.completed') {
+    console.log('WEBHOOK SKIPPED: Not checkout.session.completed');
     return NextResponse.json({ received: true });
   }
 
-  const session = event.data.object as Stripe.Checkout.Session;
+  const session = event.data.object;
 
   const stripeSessionId = session.id;
   const stripePaymentIntentId =
     typeof session.payment_intent === 'string' ? session.payment_intent : null;
 
-  const userId = session.metadata?.userId ?? null;
-  const productType = session.metadata?.productType ?? 'plugin';
+  const metadata = getSessionMetadata(session);
+  const userId = metadata?.userId ?? null;
+  const productType = metadata?.productType ?? 'plugin';
 
-  const pluginIds = metadataList(session.metadata, 'pluginId', 'pluginIds');
-  const pluginSlugs = metadataList(
-    session.metadata,
-    'pluginSlug',
-    'pluginSlugs'
-  );
+  const pluginIds = metadataList(metadata, 'pluginId', 'pluginIds');
+  const pluginSlugs = metadataList(metadata, 'pluginSlug', 'pluginSlugs');
+  const toolIds = metadataList(metadata, 'toolId', 'toolIds');
+  const toolSlugs = metadataList(metadata, 'toolSlug', 'toolSlugs');
 
-  const toolIds = metadataList(session.metadata, 'toolId', 'toolIds');
-  const toolSlugs = metadataList(session.metadata, 'toolSlug', 'toolSlugs');
+  console.log('WEBHOOK SESSION DATA:', {
+    sessionId: stripeSessionId,
+    userId,
+    productType,
+    pluginIds,
+    pluginSlugs,
+    toolIds,
+    toolSlugs,
+  });
 
   if (!userId) {
     console.error('WEBHOOK ERROR: Missing userId metadata');

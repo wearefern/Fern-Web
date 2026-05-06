@@ -185,7 +185,7 @@ export async function POST(req: Request) {
         .filter(
           (plugin) =>
             identifiers.includes(String(plugin.id)) ||
-            identifiers.includes(String(plugin.slug))
+            identifiers.includes(plugin.slug)
         )
         .map((plugin) => {
           const normalizedPrice = plugin.price.replace(/[^0-9.]/g, '');
@@ -215,34 +215,69 @@ export async function POST(req: Request) {
       );
     }
 
+    // Determine product type and collect metadata
+    const hasPlugins = purchasableLineItems.some((item) =>
+      normalizedItems.find(
+        (ni) => (ni.slug === item.slug || ni.pluginId === item.id) && ni.productType === 'plugin'
+      )
+    );
+    const hasTools = purchasableLineItems.some((item) =>
+      normalizedItems.find(
+        (ni) => (ni.slug === item.slug || ni.toolId === item.id) && ni.productType === 'tool'
+      )
+    );
+
+    const productType = hasPlugins && hasTools ? 'mixed' : hasTools ? 'tool' : 'plugin';
+
+    const pluginItems = purchasableLineItems.filter((item) =>
+      normalizedItems.find(
+        (ni) => (ni.slug === item.slug || ni.pluginId === item.id) && ni.productType === 'plugin'
+      )
+    );
+    const toolItems = purchasableLineItems.filter((item) =>
+      normalizedItems.find(
+        (ni) => (ni.slug === item.slug || ni.toolId === item.id) && ni.productType === 'tool'
+      )
+    );
+
+    const metadata: Record<string, string> = {
+      productType,
+      userId,
+    };
+
+    if (pluginItems.length > 0) {
+      metadata.pluginIds = pluginItems.map((item) => item.id).join(',');
+      metadata.pluginSlugs = pluginItems.map((item) => item.slug).join(',');
+    }
+
+    if (toolItems.length > 0) {
+      metadata.toolIds = toolItems.map((item) => item.id).join(',');
+      metadata.toolSlugs = toolItems.map((item) => item.slug).join(',');
+    }
+
     const session = await getStripe().checkout.sessions.create({
       mode: 'payment',
       payment_method_types: ['card'],
-      line_items: purchasableLineItems.map((plugin) => ({
+      line_items: purchasableLineItems.map((item) => ({
         price_data: {
           currency: 'usd',
-          product_data: { name: plugin.name },
-          unit_amount: plugin.priceCents,
+          product_data: { name: item.name },
+          unit_amount: item.priceCents,
         },
-        quantity: plugin.quantity,
+        quantity: item.quantity,
       })),
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/account/downloads?checkout=success`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/cart?checkout=cancelled`,
-      metadata: {
-        productType: 'mixed',
-        userId,
-        pluginId: purchasableLineItems[0]?.id ?? '',
-        pluginIds: purchasableLineItems.map((item) => item.id).join(','),
-        pluginSlugs: purchasableLineItems.map((item) => item.slug).join(','),
-      },
+      metadata,
     });
 
     console.log('Creating Stripe session metadata:', {
-      productType: 'mixed',
+      productType,
       userId,
-      pluginId: purchasableLineItems[0]?.id ?? null,
-      pluginIds: purchasableLineItems.map((item) => item.id),
-      pluginSlugs: purchasableLineItems.map((item) => item.slug),
+      pluginIds: metadata.pluginIds,
+      pluginSlugs: metadata.pluginSlugs,
+      toolIds: metadata.toolIds,
+      toolSlugs: metadata.toolSlugs,
     });
 
     return NextResponse.json({ url: session.url });
