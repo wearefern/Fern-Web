@@ -91,37 +91,48 @@ export function AdminPluginsPage() {
   const handleFileUpload = async (pluginId: string, file: File) => {
     setUploading(true);
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('type', 'plugin');
-
-      const response = await fetch('/api/admin/upload', {
+      // Step 1: Get signed upload URL from R2
+      const urlResponse = await fetch('/api/admin/upload-url', {
         method: 'POST',
-        body: formData,
-      });
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fileName: file.name,
+          contentType: file.type,
+          fileType: 'plugin',
+        }),
+      } as RequestInit);
 
-      if (!response.ok) {
-        throw new Error('Upload failed');
+      if (!urlResponse.ok) {
+        throw new Error('Failed to get upload URL');
       }
 
-      const result = await response.json();
-      
-      // Update the plugin's fileKey
-      setPlugins(prev => prev.map(plugin => 
-        plugin.id === pluginId 
-          ? { ...plugin, fileKey: result.path }
-          : plugin
-      ));
+      const data: { uploadUrl: string; fileKey: string } = await urlResponse.json();
+      const { uploadUrl, fileKey } = data;
+
+      // Step 2: Upload file directly to R2
+      const uploadResponse = await fetch(uploadUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type },
+        body: file,
+      } as RequestInit);
+
+      if (!uploadResponse.ok) {
+        throw new Error('Failed to upload file');
+      }
+
+      // Step 3: Update plugin record with fileKey
+      setPlugins((prev) =>
+        prev.map((plugin) =>
+          plugin.id === pluginId ? { ...plugin, fileKey } : plugin
+        )
+      );
 
       // Also update on server
       await fetch(`/api/admin/plugins/${pluginId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          fileKey: result.path,
-        }),
+        body: JSON.stringify({ fileKey }),
       });
-
     } catch (error) {
       console.error('Upload error:', error);
       alert('Upload failed. Please try again.');

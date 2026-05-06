@@ -119,25 +119,39 @@ export function AdminToolsPage() {
   const handleFileUpload = async (toolId: string, file: File) => {
     setUploading(true);
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('type', 'tool');
-
-      const response = await fetch('/api/admin/upload', {
+      // Step 1: Get signed upload URL from R2
+      const urlResponse = await fetch('/api/admin/upload-url', {
         method: 'POST',
-        body: formData,
-      });
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fileName: file.name,
+          contentType: file.type,
+          fileType: 'tool',
+        }),
+      } as RequestInit);
 
-      if (!response.ok) {
-        throw new Error('Upload failed');
+      if (!urlResponse.ok) {
+        throw new Error('Failed to get upload URL');
       }
 
-      const result = await response.json();
-      
-      // Update the tool's fileKey
+      const data: { uploadUrl: string; fileKey: string } = await urlResponse.json();
+      const { uploadUrl, fileKey } = data;
+
+      // Step 2: Upload file directly to R2
+      const uploadResponse = await fetch(uploadUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type },
+        body: file,
+      } as RequestInit);
+
+      if (!uploadResponse.ok) {
+        throw new Error('Failed to upload file');
+      }
+
+      // Step 3: Update tool record with fileKey
       setTools(prev => prev.map(tool => 
         tool.id === toolId 
-          ? { ...tool, fileKey: result.path }
+          ? { ...tool, fileKey }
           : tool
       ));
 
@@ -145,9 +159,7 @@ export function AdminToolsPage() {
       await fetch(`/api/admin/tools/${toolId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          fileKey: result.path,
-        }),
+        body: JSON.stringify({ fileKey }),
       });
 
     } catch (error) {

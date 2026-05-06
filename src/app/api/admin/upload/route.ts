@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
+import { getCurrentUser } from '~lib/auth/get-current-user';
 
 export const runtime = 'nodejs';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { r2, R2_BUCKET } from '~lib/r2';
-import { getCurrentUser } from '~lib/auth/get-current-user';
 
 export async function POST(req: Request) {
   try {
@@ -12,57 +10,39 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const formData = await req.formData();
-    const file = formData.get('file') as File;
-    const type = formData.get('type') as string; // 'plugin' or 'tool'
-
-    if (!file) {
-      return NextResponse.json({ error: 'No file provided' }, { status: 400 });
+    const body = await req.json().catch(() => null);
+    if (!body || typeof body !== 'object') {
+      return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
     }
 
-    if (!type || !['plugin', 'tool'].includes(type)) {
-      return NextResponse.json({ error: 'Invalid type specified' }, { status: 400 });
+    const { fileKey, entityType, entityId } = body as {
+      fileKey?: string;
+      entityType?: 'plugin' | 'tool';
+      entityId?: string;
+    };
+
+    if (!fileKey || !entityType || !entityId) {
+      return NextResponse.json({ error: 'fileKey, entityType, and entityId are required' }, { status: 400 });
     }
 
-    // Validate file type (ZIP files)
-    if (!file.name.toLowerCase().endsWith('.zip')) {
-      return NextResponse.json({ error: 'Only ZIP files are allowed' }, { status: 400 });
-    }
-
-    // Generate unique filename
-    const timestamp = Date.now();
-    const filename = `${timestamp}-${file.name}`;
-    const key = `${type}s/${filename}`;
-
-    // Upload to R2
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    
-    try {
-      await r2.send(new PutObjectCommand({
-        Bucket: R2_BUCKET,
-        Key: key,
-        Body: buffer,
-        ContentType: 'application/zip',
-      }));
-    } catch (error) {
-      console.error('R2 upload error:', error);
-      return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
-    }
-
-    // Return key for storage in database
-    const relativePath = key;
-
-    return NextResponse.json({ 
-      success: true,
-      filename,
-      path: relativePath,
-      size: file.size,
-      type: file.type
+    // Update entity with fileKey
+    const endpoint = entityType === 'tool' ? 'tools' : 'plugins';
+    const response = await fetch(`/api/admin/${endpoint}/${entityId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fileKey }),
     });
 
-  } catch (error) {
-    console.error('Upload error:', error);
-    return NextResponse.json({ error: 'Upload failed' }, { status: 500 });
+    if (!response.ok) {
+      return NextResponse.json({ error: 'Failed to update entity' }, { status: 500 });
+    }
+
+    return NextResponse.json({
+      message: 'FileKey updated successfully',
+      fileKey,
+    });
+  } catch (error: unknown) {
+    console.error('FileKey update error:', error);
+    return NextResponse.json({ error: 'FileKey update failed' }, { status: 500 });
   }
 }
