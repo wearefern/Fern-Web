@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
@@ -8,7 +7,7 @@ import { prisma } from '~lib/prisma';
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-function getStripe() {
+function getStripe(): Stripe {
   const key = process.env.STRIPE_SECRET_KEY;
 
   if (!key) {
@@ -32,13 +31,14 @@ function csv(value?: string | null): string[] {
 }
 
 function getSessionMetadata(
-  session: any
+  session: Stripe.Checkout.Session
 ): Record<string, string> | null {
   if (!session.metadata) return null;
   
   // Ensure all metadata values are strings
   const metadata: Record<string, string> = {};
-  for (const [key, value] of Object.entries(session.metadata as Record<string, unknown>)) {
+  const entries = Object.entries(session.metadata) as [string, string][];
+  for (const [key, value] of entries) {
     if (typeof value === 'string') {
       metadata[key] = value;
     }
@@ -77,7 +77,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ received: false }, { status: 500 });
   }
 
-  let event: any;
+  let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
@@ -134,7 +134,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx: any) => {
       const existingPluginOrder = await tx.order.findFirst({
         where: { stripeSessionId },
       });
@@ -169,7 +169,7 @@ export async function POST(req: Request) {
               pluginSlugs.length > 0
                 ? { slug: { in: pluginSlugs } }
                 : undefined,
-            ].filter(Boolean) as any,
+            ].filter((condition): condition is { id: { in: string[] } } | { slug: { in: string[] } } => condition !== undefined),
           },
         });
 
@@ -177,7 +177,7 @@ export async function POST(req: Request) {
           const totalCents =
             typeof session.amount_total === 'number'
               ? session.amount_total
-              : plugins.reduce((sum, p) => sum + p.priceCents, 0);
+              : plugins.reduce((sum: number, p: any) => sum + p.priceCents, 0);
 
           const order = await tx.order.create({
             data: {
@@ -189,7 +189,7 @@ export async function POST(req: Request) {
           });
 
           await tx.orderItem.createMany({
-            data: plugins.map((plugin) => ({
+            data: plugins.map((plugin: any) => ({
               orderId: order.id,
               pluginId: plugin.id,
               quantity: 1,
@@ -220,7 +220,7 @@ export async function POST(req: Request) {
             OR: [
               toolIds.length > 0 ? { id: { in: toolIds } } : undefined,
               toolSlugs.length > 0 ? { slug: { in: toolSlugs } } : undefined,
-            ].filter(Boolean) as any,
+            ].filter((condition): condition is { id: { in: string[] } } | { slug: { in: string[] } } => condition !== undefined),
           },
         });
 

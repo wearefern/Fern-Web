@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import { ButtonWithVideo } from '~ui/atoms/button';
+import { Button } from '~ui/atoms/button';
 import { ThemeToggle } from '~ui/atoms/theme/theme-toggle';
 import { AppHeader } from '~ui/molecules/app-header';
 import { useCart } from '../../context/cart-context';
@@ -22,29 +22,29 @@ const PluginsHeader = () => {
       <PluginsLogo />
 
       <nav className='flex items-center gap-x-2'>
-        <ButtonWithVideo videoFileName='header-button-plugins' asChild>
+        <Button asChild>
           <Link href='/plugins'>
             Products
           </Link>
-        </ButtonWithVideo>
+        </Button>
 
-        <ButtonWithVideo videoFileName='header-button-tools' asChild>
+        <Button asChild>
           <Link href='/tools'>
             Tools
           </Link>
-        </ButtonWithVideo>
+        </Button>
 
-        <ButtonWithVideo videoFileName='header-button-cart' asChild>
+        <Button asChild>
           <Link href='/cart'>
             View Cart{cartCount > 0 && ` (${cartCount})`}
           </Link>
-        </ButtonWithVideo>
+        </Button>
 
-        <ButtonWithVideo videoFileName='header-button-account' asChild>
+        <Button asChild>
           <div>
             <AuthNavControls showUserButton={false} />
           </div>
-        </ButtonWithVideo>
+        </Button>
         <AuthNavControls showAccountLink={false} />
         <ThemeToggle />
       </nav>

@@ -132,8 +132,10 @@ export default function RootLayout({
             <ThemeProvider>
               <CartProvider>
                 <UserProvider>
-                  {children}
-                  <HomeFooter />
+                  <div className='mx-auto w-full max-w-[80vw] px-4 sm:px-6 lg:px-8'>
+                    {children}
+                    <HomeFooter />
+                  </div>
                 </UserProvider>
               </CartProvider>
             </ThemeProvider>
