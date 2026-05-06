@@ -32,6 +32,8 @@ const nextConfig = {
         'public/content/articles/**/*',
         'public/content/talks/**/*',
         'public/downloads/**/*',
+        '.next/cache/**/*',
+        '.next/cache/webpack/**/*',
       ],
     },
   },

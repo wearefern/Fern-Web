@@ -17,4 +17,6 @@ public/downloads/**/*
 
 node_modules/
 .next/
+.next/cache/
+.next/cache/**/*
 .git/
