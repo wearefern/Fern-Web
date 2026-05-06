@@ -1,25 +1,25 @@
-import { NextResponse } from "next/server";
-import Stripe from "stripe";
-import type { Stripe as StripeType } from "stripe";
-import { auth } from "@clerk/nextjs/server";
-import { prisma } from "~lib/prisma";
-import { pluginsData } from "../../../data/plugins-data";
+import { auth } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
+import Stripe from 'stripe';
+import type { Stripe as StripeType } from 'stripe';
 
-export const dynamic = "force-dynamic";
+import { prisma } from '~lib/prisma';
+
+import { pluginsData } from '../../../data/plugins-data';
+
+export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-// Lazy initialization of Stripe to avoid build-time errors
-let stripeInstance: StripeType | null = null;
 function getStripe(): StripeType {
-  if (!stripeInstance) {
-    if (!process.env.STRIPE_SECRET_KEY) {
-      throw new Error("STRIPE_SECRET_KEY is not configured");
-    }
-    stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2026-04-22.dahlia",
-    });
+  const key = process.env.STRIPE_SECRET_KEY;
+
+  if (!key) {
+    throw new Error('STRIPE_SECRET_KEY is missing');
   }
-  return stripeInstance;
+
+  return new Stripe(key, {
+    apiVersion: '2026-04-22.dahlia',
+  });
 }
 
 interface CheckoutItem {
@@ -44,55 +44,80 @@ export async function POST(req: Request) {
     const { userId } = await auth();
 
     if (!userId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-    const body = (await req.json().catch(() => null)) as { items?: CheckoutItem[] } | null;
+    const body = (await req.json().catch(() => null)) as {
+      items?: CheckoutItem[];
+    } | null;
     const items = Array.isArray(body?.items) ? body.items : [];
     const normalizedItems = items
       .map((item): NormalizedCheckoutItem => {
         const productType = item.productType === 'tool' ? 'tool' : 'plugin';
-        const id = typeof item.id === "string" ? item.id : null;
-        const pluginId = typeof item.pluginId === "string" ? item.pluginId : null;
-        const toolId = typeof item.toolId === "string" ? item.toolId : null;
-        const slug = typeof item.slug === "string" ? item.slug : null;
+        const id = typeof item.id === 'string' ? item.id : null;
+        const pluginId =
+          typeof item.pluginId === 'string' ? item.pluginId : null;
+        const toolId = typeof item.toolId === 'string' ? item.toolId : null;
+        const slug = typeof item.slug === 'string' ? item.slug : null;
         const quantity =
-          typeof item.quantity === "number" && Number.isFinite(item.quantity) && item.quantity > 0
+          typeof item.quantity === 'number' &&
+          Number.isFinite(item.quantity) &&
+          item.quantity > 0
             ? Math.floor(item.quantity)
             : 1;
         return {
           productType,
-          pluginId: pluginId ?? (productType === "plugin" ? id : null),
-          toolId: toolId ?? (productType === "tool" ? id : null),
+          pluginId: pluginId ?? (productType === 'plugin' ? id : null),
+          toolId: toolId ?? (productType === 'tool' ? id : null),
           slug,
           quantity,
         };
       })
-      .filter((item: NormalizedCheckoutItem) => item.pluginId || item.toolId || item.slug);
+      .filter(
+        (item: NormalizedCheckoutItem) =>
+          item.pluginId || item.toolId || item.slug
+      );
 
     if (normalizedItems.length === 0) {
-      return NextResponse.json({ error: "No items provided" }, { status: 400 });
+      return NextResponse.json({ error: 'No items provided' }, { status: 400 });
     }
 
     const identifiers = Array.from(
       new Set(
-        normalizedItems.flatMap((item) => [item.pluginId, item.toolId, item.slug]).filter((value): value is string => Boolean(value))
+        normalizedItems
+          .flatMap((item) => [item.pluginId, item.toolId, item.slug])
+          .filter((value): value is string => Boolean(value))
       )
     );
 
     const quantityByIdentifier = new Map<string, number>();
     for (const item of normalizedItems) {
       if (item.pluginId) {
-        quantityByIdentifier.set(item.pluginId, (quantityByIdentifier.get(item.pluginId) ?? 0) + item.quantity);
+        quantityByIdentifier.set(
+          item.pluginId,
+          (quantityByIdentifier.get(item.pluginId) ?? 0) + item.quantity
+        );
       }
       if (item.toolId) {
-        quantityByIdentifier.set(item.toolId, (quantityByIdentifier.get(item.toolId) ?? 0) + item.quantity);
+        quantityByIdentifier.set(
+          item.toolId,
+          (quantityByIdentifier.get(item.toolId) ?? 0) + item.quantity
+        );
       }
       if (item.slug) {
-        quantityByIdentifier.set(item.slug, (quantityByIdentifier.get(item.slug) ?? 0) + item.quantity);
+        quantityByIdentifier.set(
+          item.slug,
+          (quantityByIdentifier.get(item.slug) ?? 0) + item.quantity
+        );
       }
     }
 
-    let purchasableLineItems: { id: string; slug: string; name: string; priceCents: number; quantity: number }[] = [];
+    let purchasableLineItems: {
+      id: string;
+      slug: string;
+      name: string;
+      priceCents: number;
+      quantity: number;
+    }[] = [];
 
     try {
       // Fetch plugins
@@ -112,7 +137,12 @@ export async function POST(req: Request) {
       // Combine plugins and tools
       const allDbItems = [
         ...dbPlugins
-          .filter((plugin) => plugin.status !== "coming_soon" && plugin.status !== "free" && plugin.priceCents > 0)
+          .filter(
+            (plugin) =>
+              plugin.status !== 'coming_soon' &&
+              plugin.status !== 'free' &&
+              plugin.priceCents > 0
+          )
           .map((plugin) => ({
             id: plugin.id,
             slug: plugin.slug,
@@ -124,7 +154,12 @@ export async function POST(req: Request) {
               1,
           })),
         ...dbTools
-          .filter((tool) => tool.status !== "coming_soon" && tool.status !== "free" && tool.priceCents > 0)
+          .filter(
+            (tool) =>
+              tool.status !== 'coming_soon' &&
+              tool.status !== 'free' &&
+              tool.priceCents > 0
+          )
           .map((tool) => ({
             id: tool.id,
             slug: tool.slug,
@@ -134,51 +169,58 @@ export async function POST(req: Request) {
               quantityByIdentifier.get(tool.id) ??
               quantityByIdentifier.get(tool.slug) ??
               1,
-          }))
+          })),
       ];
 
       purchasableLineItems = allDbItems;
     } catch (error) {
-      console.warn("Checkout DB lookup failed, using static plugin fallback:", error);
+      console.warn(
+        'Checkout DB lookup failed, using static plugin fallback:',
+        error
+      );
     }
 
-   if (purchasableLineItems.length === 0) {
-  purchasableLineItems = pluginsData
-    .filter((plugin) =>
-      identifiers.includes(String(plugin.id)) ||
-      identifiers.includes(String(plugin.slug))
-    )
-    .map((plugin) => {
-      const normalizedPrice = plugin.price.replace(/[^0-9.]/g, "");
-      const priceDollars = Number.parseFloat(normalizedPrice);
-      const priceCents = Number.isFinite(priceDollars)
-        ? Math.round(priceDollars * 100)
-        : 0;
+    if (purchasableLineItems.length === 0) {
+      purchasableLineItems = pluginsData
+        .filter(
+          (plugin) =>
+            identifiers.includes(String(plugin.id)) ||
+            identifiers.includes(String(plugin.slug))
+        )
+        .map((plugin) => {
+          const normalizedPrice = plugin.price.replace(/[^0-9.]/g, '');
+          const priceDollars = Number.parseFloat(normalizedPrice);
+          const priceCents = Number.isFinite(priceDollars)
+            ? Math.round(priceDollars * 100)
+            : 0;
 
-      return {
-        id: String(plugin.id),
-        slug: plugin.slug,
-        name: plugin.name,
-        priceCents,
-        quantity:
-          quantityByIdentifier.get(String(plugin.id)) ??
-          quantityByIdentifier.get(plugin.slug) ??
-          1,
-      };
-    })
-    .filter((plugin) => plugin.priceCents > 0);
-}
+          return {
+            id: String(plugin.id),
+            slug: plugin.slug,
+            name: plugin.name,
+            priceCents,
+            quantity:
+              quantityByIdentifier.get(String(plugin.id)) ??
+              quantityByIdentifier.get(plugin.slug) ??
+              1,
+          };
+        })
+        .filter((plugin) => plugin.priceCents > 0);
+    }
 
     if (purchasableLineItems.length === 0) {
-      return NextResponse.json({ error: "No valid plugins found" }, { status: 400 });
+      return NextResponse.json(
+        { error: 'No valid plugins found' },
+        { status: 400 }
+      );
     }
 
     const session = await getStripe().checkout.sessions.create({
-      mode: "payment",
-      payment_method_types: ["card"],
+      mode: 'payment',
+      payment_method_types: ['card'],
       line_items: purchasableLineItems.map((plugin) => ({
         price_data: {
-          currency: "usd",
+          currency: 'usd',
           product_data: { name: plugin.name },
           unit_amount: plugin.priceCents,
         },
@@ -187,16 +229,16 @@ export async function POST(req: Request) {
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/account/downloads?checkout=success`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/cart?checkout=cancelled`,
       metadata: {
-        productType: "mixed",
+        productType: 'mixed',
         userId,
-        pluginId: purchasableLineItems[0]?.id ?? "",
-        pluginIds: purchasableLineItems.map((item) => item.id).join(","),
-        pluginSlugs: purchasableLineItems.map((item) => item.slug).join(","),
+        pluginId: purchasableLineItems[0]?.id ?? '',
+        pluginIds: purchasableLineItems.map((item) => item.id).join(','),
+        pluginSlugs: purchasableLineItems.map((item) => item.slug).join(','),
       },
     });
 
-    console.log("Creating Stripe session metadata:", {
-      productType: "mixed",
+    console.log('Creating Stripe session metadata:', {
+      productType: 'mixed',
       userId,
       pluginId: purchasableLineItems[0]?.id ?? null,
       pluginIds: purchasableLineItems.map((item) => item.id),
@@ -205,7 +247,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ url: session.url });
   } catch (error) {
-    console.error("Checkout error:", error);
-    return NextResponse.json({ error: "Checkout failed" }, { status: 500 });
+    console.error('Checkout error:', error);
+    return NextResponse.json({ error: 'Checkout failed' }, { status: 500 });
   }
 }

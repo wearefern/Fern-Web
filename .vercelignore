@@ -1,17 +1,20 @@
-# Exclude pnpm store from serverless functions
-.pnpm-store/
-node_modules/.pnpm/
+.pnpm-store/**/*
+**/.pnpm-store/**/*
+node_modules/.cache/**/*
+.git/**/*
+.agents/**/*
+.clerk/**/*
+.env
+.env.*
 
-# Exclude large static files
-public/videos/
-public/audio/
-public/sfx/
-public/galleries/
-public/content/articles/
-public/content/talks/
-public/downloads/
+public/videos/**/*
+public/audio/**/*
+public/sfx/**/*
+public/galleries/**/*
+public/content/articles/**/*
+public/content/talks/**/*
+public/downloads/**/*
 
-# Exclude development files
 node_modules/
 .next/
 .git/

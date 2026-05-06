@@ -1,22 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { headers } from "next/headers";
-import { NextResponse } from "next/server";
-import Stripe from "stripe";
-import { prisma } from "~lib/prisma";
+import { headers } from 'next/headers';
+import { NextResponse } from 'next/server';
+import Stripe from 'stripe';
 
-export const dynamic = "force-dynamic";
-export const runtime = "nodejs";
+import { prisma } from '~lib/prisma';
 
-// ✅ Stripe lazy init (outside handler)
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 function getStripe() {
   const key = process.env.STRIPE_SECRET_KEY;
 
   if (!key) {
-    throw new Error("STRIPE_SECRET_KEY is missing");
+    throw new Error('STRIPE_SECRET_KEY is missing');
   }
 
   return new Stripe(key, {
-    apiVersion: "2026-04-22.dahlia",
+    apiVersion: '2026-04-22.dahlia',
   });
 }
 
@@ -25,7 +25,7 @@ function csv(value?: string | null): string[] {
   if (!value) return [];
 
   return value
-    .split(",")
+    .split(',')
     .map((v) => v.trim())
     .filter(Boolean)
     .filter((v, i, arr) => arr.indexOf(v) === i);
@@ -36,36 +36,40 @@ function metadataList(
   singular: string,
   plural: string
 ): string[] {
-  return csv([metadata?.[singular], metadata?.[plural]].filter(Boolean).join(","));
+  return csv(
+    [metadata?.[singular], metadata?.[plural]].filter(Boolean).join(',')
+  );
 }
 
 export async function POST(req: Request) {
-  console.log("WEBHOOK START");
+  console.log('WEBHOOK START');
 
-  const stripe = getStripe(); // ✅ FIX: initialize here
+  const stripe = getStripe();
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
   const body = await req.text();
-  const signature = headers().get("stripe-signature");
+  const signature = headers().get('stripe-signature');
 
   if (!signature) {
-    console.error("WEBHOOK ERROR: Missing Stripe signature");
+    console.error('WEBHOOK ERROR: Missing Stripe signature');
     return NextResponse.json({ received: false }, { status: 400 });
+  }
+
+  if (!webhookSecret) {
+    console.error('WEBHOOK ERROR: Missing Stripe webhook secret');
+    return NextResponse.json({ received: false }, { status: 500 });
   }
 
   let event: Stripe.Event;
 
   try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    );
+    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
   } catch (error) {
-    console.error("WEBHOOK ERROR: Signature verification failed", error);
+    console.error('WEBHOOK ERROR: Signature verification failed', error);
     return NextResponse.json({ received: false }, { status: 400 });
   }
 
-  if (event.type !== "checkout.session.completed") {
+  if (event.type !== 'checkout.session.completed') {
     return NextResponse.json({ received: true });
   }
 
@@ -73,19 +77,23 @@ export async function POST(req: Request) {
 
   const stripeSessionId = session.id;
   const stripePaymentIntentId =
-    typeof session.payment_intent === "string" ? session.payment_intent : null;
+    typeof session.payment_intent === 'string' ? session.payment_intent : null;
 
   const userId = session.metadata?.userId ?? null;
-  const productType = session.metadata?.productType ?? "plugin";
+  const productType = session.metadata?.productType ?? 'plugin';
 
-  const pluginIds = metadataList(session.metadata, "pluginId", "pluginIds");
-  const pluginSlugs = metadataList(session.metadata, "pluginSlug", "pluginSlugs");
+  const pluginIds = metadataList(session.metadata, 'pluginId', 'pluginIds');
+  const pluginSlugs = metadataList(
+    session.metadata,
+    'pluginSlug',
+    'pluginSlugs'
+  );
 
-  const toolIds = metadataList(session.metadata, "toolId", "toolIds");
-  const toolSlugs = metadataList(session.metadata, "toolSlug", "toolSlugs");
+  const toolIds = metadataList(session.metadata, 'toolId', 'toolIds');
+  const toolSlugs = metadataList(session.metadata, 'toolSlug', 'toolSlugs');
 
   if (!userId) {
-    console.error("WEBHOOK ERROR: Missing userId metadata");
+    console.error('WEBHOOK ERROR: Missing userId metadata');
     return NextResponse.json({ received: false }, { status: 400 });
   }
 
@@ -95,7 +103,7 @@ export async function POST(req: Request) {
     toolIds.length === 0 &&
     toolSlugs.length === 0
   ) {
-    console.error("WEBHOOK ERROR: No product metadata found");
+    console.error('WEBHOOK ERROR: No product metadata found');
     return NextResponse.json({ received: false }, { status: 400 });
   }
 
@@ -110,19 +118,19 @@ export async function POST(req: Request) {
       });
 
       if (existingPluginOrder || existingToolOrder) {
-        console.log("WEBHOOK SKIPPED: Already processed");
+        console.log('WEBHOOK SKIPPED: Already processed');
         return;
       }
 
       const shouldProcessPlugins =
-        productType === "plugin" ||
-        productType === "mixed" ||
+        productType === 'plugin' ||
+        productType === 'mixed' ||
         pluginIds.length > 0 ||
         pluginSlugs.length > 0;
 
       const shouldProcessTools =
-        productType === "tool" ||
-        productType === "mixed" ||
+        productType === 'tool' ||
+        productType === 'mixed' ||
         toolIds.length > 0 ||
         toolSlugs.length > 0;
 
@@ -132,14 +140,16 @@ export async function POST(req: Request) {
           where: {
             OR: [
               pluginIds.length > 0 ? { id: { in: pluginIds } } : undefined,
-              pluginSlugs.length > 0 ? { slug: { in: pluginSlugs } } : undefined,
+              pluginSlugs.length > 0
+                ? { slug: { in: pluginSlugs } }
+                : undefined,
             ].filter(Boolean) as any,
           },
         });
 
         if (plugins.length > 0) {
           const totalCents =
-            typeof session.amount_total === "number"
+            typeof session.amount_total === 'number'
               ? session.amount_total
               : plugins.reduce((sum, p) => sum + p.priceCents, 0);
 
@@ -147,7 +157,7 @@ export async function POST(req: Request) {
             data: {
               userId,
               stripeSessionId,
-              status: "PAID",
+              status: 'PAID',
               totalCents,
             },
           });
@@ -194,7 +204,7 @@ export async function POST(req: Request) {
               userId_toolId: { userId, toolId: tool.id },
             },
             update: {
-              status: "paid",
+              status: 'paid',
               stripeSessionId,
               stripePaymentIntentId,
               amountCents: tool.priceCents,
@@ -202,7 +212,7 @@ export async function POST(req: Request) {
             create: {
               userId,
               toolId: tool.id,
-              status: "paid",
+              status: 'paid',
               stripeSessionId,
               stripePaymentIntentId,
               amountCents: tool.priceCents,
@@ -212,13 +222,10 @@ export async function POST(req: Request) {
       }
     });
 
-    console.log("WEBHOOK SUCCESS");
+    console.log('WEBHOOK SUCCESS');
     return NextResponse.json({ received: true });
   } catch (error) {
-    console.error("WEBHOOK PROCESSING FAILED:", error);
-    return NextResponse.json(
-      { received: false },
-      { status: 500 }
-    );
+    console.error('WEBHOOK PROCESSING FAILED:', error);
+    return NextResponse.json({ received: false }, { status: 500 });
   }
 }

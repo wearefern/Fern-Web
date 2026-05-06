@@ -1,4 +1,4 @@
-import createMDX from "@next/mdx";
+import createMDX from '@next/mdx';
 
 /** @type {import("next").NextConfig} */
 const nextConfig = {
@@ -12,21 +12,26 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
 
-  pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'mdx'],
 
   experimental: {
     outputFileTracingExcludes: {
-      "*": [
-        ".pnpm-store/**/*",
-        "**/.pnpm-store/**/*",
-        "node_modules/.cache/**/*",
-        "public/videos/**/*",
-        "public/audio/**/*",
-        "public/sfx/**/*",
-        "public/galleries/**/*",
-        "public/content/articles/**/*",
-        "public/content/talks/**/*",
-        "public/downloads/**/*",
+      '/**': [
+        '.pnpm-store/**/*',
+        '**/.pnpm-store/**/*',
+        'node_modules/.cache/**/*',
+        '.git/**/*',
+        '.agents/**/*',
+        '.clerk/**/*',
+        '.env',
+        '.env.*',
+        'public/videos/**/*',
+        'public/audio/**/*',
+        'public/sfx/**/*',
+        'public/galleries/**/*',
+        'public/content/articles/**/*',
+        'public/content/talks/**/*',
+        'public/downloads/**/*',
       ],
     },
   },
@@ -40,9 +45,9 @@ const nextConfig = {
 
     config.module.rules.push({
       test: /\.(mp3)$/,
-      type: "asset/resource",
+      type: 'asset/resource',
       generator: {
-        filename: "static/chunks/[path][name].[hash][ext]",
+        filename: 'static/chunks/[path][name].[hash][ext]',
       },
     });
 
@@ -52,10 +57,10 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "vsupu83zlkfucch6.public.blob.vercel-storage.com",
-        port: "",
-        pathname: "/content/**",
+        protocol: 'https',
+        hostname: 'vsupu83zlkfucch6.public.blob.vercel-storage.com',
+        port: '',
+        pathname: '/content/**',
       },
     ],
   },
