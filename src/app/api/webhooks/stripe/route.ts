@@ -1,6 +1,7 @@
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { Prisma } from '@prisma/client';
 
 import { prisma } from '~lib/prisma';
 
@@ -34,10 +35,10 @@ function getSessionMetadata(
   session: Stripe.Checkout.Session
 ): Record<string, string> | null {
   if (!session.metadata) return null;
-  
+
   // Ensure all metadata values are strings
   const metadata: Record<string, string> = {};
-  const entries = Object.entries(session.metadata) as [string, string][];
+  const entries = Object.entries(session.metadata);
   for (const [key, value] of entries) {
     if (typeof value === 'string') {
       metadata[key] = value;
@@ -108,15 +109,11 @@ export async function POST(req: Request) {
   const toolIds = metadataList(metadata, 'toolId', 'toolIds');
   const toolSlugs = metadataList(metadata, 'toolSlug', 'toolSlugs');
 
-  console.log('WEBHOOK SESSION DATA:', {
-    sessionId: stripeSessionId,
-    userId,
-    productType,
-    pluginIds,
-    pluginSlugs,
-    toolIds,
-    toolSlugs,
-  });
+  console.log('WEBHOOK SESSION ID:', stripeSessionId);
+  console.log('WEBHOOK USER ID:', userId);
+  console.log('WEBHOOK PRODUCT TYPE:', productType);
+  console.log('WEBHOOK TOOL IDS:', toolIds);
+  console.log('WEBHOOK PLUGIN IDS:', pluginIds);
 
   if (!userId) {
     console.error('WEBHOOK ERROR: Missing userId metadata');
@@ -134,7 +131,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    await prisma.$transaction(async (tx: any) => {
+    await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       const existingPluginOrder = await tx.order.findFirst({
         where: { stripeSessionId },
       });
@@ -177,7 +174,7 @@ export async function POST(req: Request) {
           const totalCents =
             typeof session.amount_total === 'number'
               ? session.amount_total
-              : plugins.reduce((sum: number, p: any) => sum + p.priceCents, 0);
+              : plugins.reduce((sum: number, p: { priceCents: number }) => sum + p.priceCents, 0);
 
           const order = await tx.order.create({
             data: {
@@ -189,7 +186,7 @@ export async function POST(req: Request) {
           });
 
           await tx.orderItem.createMany({
-            data: plugins.map((plugin: any) => ({
+            data: plugins.map((plugin: { id: string; priceCents: number }) => ({
               orderId: order.id,
               pluginId: plugin.id,
               quantity: 1,
@@ -210,6 +207,7 @@ export async function POST(req: Request) {
               },
             });
           }
+          console.log('WEBHOOK DB WRITE SUCCESS: Created plugin order and purchases');
         }
       }
 
@@ -245,13 +243,14 @@ export async function POST(req: Request) {
             },
           });
         }
+        console.log('WEBHOOK DB WRITE SUCCESS: Created/upserted tool orders');
       }
     });
 
     console.log('WEBHOOK SUCCESS');
     return NextResponse.json({ received: true });
   } catch (error) {
-    console.error('WEBHOOK PROCESSING FAILED:', error);
+    console.error('WEBHOOK DB WRITE FAILED:', error);
     return NextResponse.json({ received: false }, { status: 500 });
   }
 }

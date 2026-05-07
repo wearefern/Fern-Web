@@ -91,6 +91,8 @@ export function AdminPluginsPage() {
   const handleFileUpload = async (pluginId: string, file: File) => {
     setUploading(true);
     try {
+      console.log('ADMIN UPLOAD START: pluginId:', pluginId, 'file:', file.name);
+
       // Step 1: Get signed upload URL from R2
       const urlResponse = await fetch('/api/admin/upload-url', {
         method: 'POST',
@@ -108,6 +110,7 @@ export function AdminPluginsPage() {
 
       const data: { uploadUrl: string; fileKey: string } = await urlResponse.json();
       const { uploadUrl, fileKey } = data;
+      console.log('ADMIN UPLOAD: Got fileKey:', fileKey);
 
       // Step 2: Upload file directly to R2
       const uploadResponse = await fetch(uploadUrl, {
@@ -119,22 +122,32 @@ export function AdminPluginsPage() {
       if (!uploadResponse.ok) {
         throw new Error('Failed to upload file');
       }
+      console.log('ADMIN UPLOAD: File uploaded to R2 successfully');
 
       // Step 3: Update plugin record with fileKey
-      setPlugins((prev) =>
-        prev.map((plugin) =>
-          plugin.id === pluginId ? { ...plugin, fileKey } : plugin
-        )
-      );
-
-      // Also update on server
-      await fetch(`/api/admin/plugins/${pluginId}`, {
+      const patchResponse = await fetch(`/api/admin/plugins/${pluginId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ fileKey }),
       });
+
+      if (!patchResponse.ok) {
+        const errorText = await patchResponse.text();
+        console.error('ADMIN UPLOAD FILEKEY SAVE FAILED:', errorText);
+        throw new Error('Failed to save fileKey to database');
+      }
+
+      console.log('ADMIN UPLOAD FILEKEY SAVED: pluginId:', pluginId, 'fileKey:', fileKey);
+
+      // Reload plugins from server to verify persistence
+      const reloadResponse = await fetch('/api/admin/plugins', { cache: 'no-store' });
+      if (reloadResponse.ok) {
+        const reloadedData = (await reloadResponse.json()) as AdminPlugin[];
+        setPlugins(reloadedData);
+        console.log('ADMIN UPLOAD: Reloaded plugins from server, fileKey persisted');
+      }
     } catch (error) {
-      console.error('Upload error:', error);
+      console.error('ADMIN UPLOAD ERROR:', error);
       alert('Upload failed. Please try again.');
     } finally {
       setUploading(false);

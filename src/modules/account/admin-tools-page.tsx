@@ -119,6 +119,8 @@ export function AdminToolsPage() {
   const handleFileUpload = async (toolId: string, file: File) => {
     setUploading(true);
     try {
+      console.log('ADMIN UPLOAD START: toolId:', toolId, 'file:', file.name);
+
       // Step 1: Get signed upload URL from R2
       const urlResponse = await fetch('/api/admin/upload-url', {
         method: 'POST',
@@ -136,6 +138,7 @@ export function AdminToolsPage() {
 
       const data: { uploadUrl: string; fileKey: string } = await urlResponse.json();
       const { uploadUrl, fileKey } = data;
+      console.log('ADMIN UPLOAD: Got fileKey:', fileKey);
 
       // Step 2: Upload file directly to R2
       const uploadResponse = await fetch(uploadUrl, {
@@ -147,23 +150,32 @@ export function AdminToolsPage() {
       if (!uploadResponse.ok) {
         throw new Error('Failed to upload file');
       }
+      console.log('ADMIN UPLOAD: File uploaded to R2 successfully');
 
       // Step 3: Update tool record with fileKey
-      setTools(prev => prev.map(tool => 
-        tool.id === toolId 
-          ? { ...tool, fileKey }
-          : tool
-      ));
-
-      // Also update on server
-      await fetch(`/api/admin/tools/${toolId}`, {
+      const patchResponse = await fetch(`/api/admin/tools/${toolId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ fileKey }),
       });
 
+      if (!patchResponse.ok) {
+        const errorText = await patchResponse.text();
+        console.error('ADMIN UPLOAD FILEKEY SAVE FAILED:', errorText);
+        throw new Error('Failed to save fileKey to database');
+      }
+
+      console.log('ADMIN UPLOAD FILEKEY SAVED: toolId:', toolId, 'fileKey:', fileKey);
+
+      // Reload tools from server to verify persistence
+      const reloadResponse = await fetch('/api/admin/tools', { cache: 'no-store' });
+      if (reloadResponse.ok) {
+        const reloadedData = (await reloadResponse.json()) as AdminTool[];
+        setTools(reloadedData);
+        console.log('ADMIN UPLOAD: Reloaded tools from server, fileKey persisted');
+      }
     } catch (error) {
-      console.error('Upload error:', error);
+      console.error('ADMIN UPLOAD ERROR:', error);
       alert('Upload failed. Please try again.');
     } finally {
       setUploading(false);

@@ -255,6 +255,15 @@ export async function POST(req: Request) {
       metadata.toolSlugs = toolItems.map((item) => item.slug).join(',');
     }
 
+    console.log('CHECKOUT METADATA SENT:', {
+      productType,
+      userId,
+      pluginIds: metadata.pluginIds,
+      pluginSlugs: metadata.pluginSlugs,
+      toolIds: metadata.toolIds,
+      toolSlugs: metadata.toolSlugs,
+    });
+
     const session = await getStripe().checkout.sessions.create({
       mode: 'payment',
       payment_method_types: ['card'],
@@ -269,15 +278,6 @@ export async function POST(req: Request) {
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/account/downloads?checkout=success`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/cart?checkout=cancelled`,
       metadata,
-    });
-
-    console.log('Creating Stripe session metadata:', {
-      productType,
-      userId,
-      pluginIds: metadata.pluginIds,
-      pluginSlugs: metadata.pluginSlugs,
-      toolIds: metadata.toolIds,
-      toolSlugs: metadata.toolSlugs,
     });
 
     return NextResponse.json({ url: session.url });
