@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { Prisma } from '@prisma/client';
 
-import { prisma } from '~lib/prisma';
+import { getModelClient } from '~api/shared/model-client';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -101,6 +101,13 @@ export async function POST(req: Request) {
   const stripePaymentIntentId =
     typeof session.payment_intent === 'string' ? session.payment_intent : null;
 
+  console.log('WEBHOOK SESSION:', {
+    sessionId: session.id,
+    metadata: session.metadata,
+    paymentStatus: session.payment_status,
+    amountTotal: session.amount_total,
+  });
+
   const metadata = getSessionMetadata(session);
   const userId = metadata?.userId ?? null;
   const productType = metadata?.productType ?? 'plugin';
@@ -110,11 +117,14 @@ export async function POST(req: Request) {
   const toolIds = metadataList(metadata, 'toolId', 'toolIds');
   const toolSlugs = metadataList(metadata, 'toolSlug', 'toolSlugs');
 
-  console.log('WEBHOOK SESSION ID:', stripeSessionId);
-  console.log('WEBHOOK USER ID:', userId);
-  console.log('WEBHOOK PRODUCT TYPE:', productType);
-  console.log('WEBHOOK TOOL IDS:', toolIds);
-  console.log('WEBHOOK PLUGIN IDS:', pluginIds);
+  console.log('PARSED METADATA:', {
+    userId,
+    productType,
+    pluginIds,
+    pluginSlugs,
+    toolIds,
+    toolSlugs,
+  });
 
   if (!userId) {
     console.error('WEBHOOK ERROR: Missing userId metadata');
@@ -132,6 +142,7 @@ export async function POST(req: Request) {
   }
 
   try {
+    const prisma = getModelClient();
     await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       const existingPluginOrder = await tx.order.findFirst({
         where: { stripeSessionId },
@@ -185,6 +196,7 @@ export async function POST(req: Request) {
               totalCents,
             },
           });
+          console.log('ORDER CREATED:', { orderId: order.id, userId, stripeSessionId, totalCents });
 
           await tx.orderItem.createMany({
             data: plugins.map((plugin: { id: string; priceCents: number }) => ({
@@ -194,6 +206,7 @@ export async function POST(req: Request) {
               unitPriceCents: plugin.priceCents,
             })),
           });
+          console.log('ORDER ITEM CREATED:', { orderId: order.id, count: plugins.length });
 
           for (const plugin of plugins) {
             await tx.purchase.upsert({
@@ -207,6 +220,7 @@ export async function POST(req: Request) {
                 orderId: order.id,
               },
             });
+            console.log('PURCHASE UPSERTED:', { userId, pluginId: plugin.id, orderId: order.id });
           }
           console.log('WEBHOOK DB WRITE SUCCESS: Created plugin order and purchases');
         }
@@ -243,6 +257,7 @@ export async function POST(req: Request) {
               amountCents: tool.priceCents,
             },
           });
+          console.log('TOOL ORDER UPSERTED:', { userId, toolId: tool.id, stripeSessionId, amountCents: tool.priceCents });
         }
         console.log('WEBHOOK DB WRITE SUCCESS: Created/upserted tool orders');
       }

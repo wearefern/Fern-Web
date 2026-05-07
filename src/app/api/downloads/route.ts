@@ -28,7 +28,7 @@ export async function GET() {
     const paidOrders = await prisma.order.findMany({
       where: {
         userId: user.clerkId,
-        status: 'PAID',
+        status: 'completed',
       },
       include: {
         items: {

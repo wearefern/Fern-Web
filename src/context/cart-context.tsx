@@ -117,6 +117,10 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   const clearCart = useCallback(() => {
     setItems([]);
+    // Explicitly remove from localStorage to ensure complete clearing
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('fern-cart');
+    }
   }, []);
 
   const getTotalPrice = useCallback(() => {
