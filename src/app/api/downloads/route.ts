@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { getModelClient } from '../shared/model-client';
 import { getCurrentUser } from '~lib/auth/get-current-user';
+import { mapDBPluginToUIPlugin } from '~api/plugins/plugin-mapper';
 
 export const dynamic = 'force-dynamic';
 
@@ -24,6 +25,8 @@ export async function GET() {
     const prisma = getModelClient();
     const items: DownloadableItem[] = [];
 
+    console.log('DOWNLOADS API USER ID:', user.clerkId);
+
     // Get plugin orders and purchases
     const paidOrders = await prisma.order.findMany({
       where: {
@@ -40,11 +43,15 @@ export async function GET() {
       orderBy: { createdAt: 'desc' },
     });
 
+    console.log('DOWNLOADS API PLUGIN ORDERS FOUND:', paidOrders.length);
+
     const purchaseFallback = await prisma.purchase.findMany({
       where: { userId: user.clerkId },
       include: { plugin: true },
       orderBy: { createdAt: 'desc' },
     });
+
+    console.log('DOWNLOADS API PURCHASES FOUND:', purchaseFallback.length);
 
     const pluginMap = new Map<string, DownloadableItem>();
 
@@ -52,11 +59,12 @@ export async function GET() {
       order.items.forEach((item) => {
         const pluginId = String(item.pluginId);
         if (!pluginMap.has(pluginId)) {
+          const mappedPlugin = mapDBPluginToUIPlugin(item.plugin);
           pluginMap.set(pluginId, {
             id: `${order.id}:${pluginId}`,
             createdAt: order.createdAt.toISOString(),
             type: 'plugin',
-            plugin: item.plugin,
+            plugin: mappedPlugin,
             fileKey: item.plugin.fileKey,
           });
         }
@@ -66,11 +74,12 @@ export async function GET() {
     purchaseFallback.forEach((purchase) => {
       const pluginId = String(purchase.pluginId);
       if (!pluginMap.has(pluginId)) {
+        const mappedPlugin = mapDBPluginToUIPlugin(purchase.plugin);
         pluginMap.set(pluginId, {
           id: purchase.id,
           createdAt: purchase.createdAt.toISOString(),
           type: 'plugin',
-          plugin: purchase.plugin,
+          plugin: mappedPlugin,
           fileKey: purchase.plugin.fileKey,
         });
       }
@@ -102,6 +111,12 @@ export async function GET() {
 
     // Sort by creation date (newest first)
     items.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+    console.log('DOWNLOADS API TOTAL ITEMS:', items.length);
+    console.log('DOWNLOADS API ITEMS BY TYPE:', {
+      plugins: items.filter(i => i.type === 'plugin').length,
+      tools: items.filter(i => i.type === 'tool').length,
+    });
 
     return NextResponse.json(items);
   } catch (error) {

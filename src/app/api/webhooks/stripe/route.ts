@@ -196,7 +196,7 @@ export async function POST(req: Request) {
               totalCents,
             },
           });
-          console.log('ORDER CREATED:', { orderId: order.id, userId, stripeSessionId, totalCents });
+          console.log('WEBHOOK PLUGIN ORDER CREATED:', { orderId: order.id, userId, stripeSessionId, totalCents });
 
           await tx.orderItem.createMany({
             data: plugins.map((plugin: { id: string; priceCents: number }) => ({
@@ -206,7 +206,7 @@ export async function POST(req: Request) {
               unitPriceCents: plugin.priceCents,
             })),
           });
-          console.log('ORDER ITEM CREATED:', { orderId: order.id, count: plugins.length });
+          console.log('WEBHOOK ORDER ITEMS CREATED:', { orderId: order.id, count: plugins.length });
 
           for (const plugin of plugins) {
             await tx.purchase.upsert({
@@ -220,9 +220,11 @@ export async function POST(req: Request) {
                 orderId: order.id,
               },
             });
-            console.log('PURCHASE UPSERTED:', { userId, pluginId: plugin.id, orderId: order.id });
+            console.log('WEBHOOK PURCHASE UPSERTED:', { userId, pluginId: plugin.id, orderId: order.id });
           }
           console.log('WEBHOOK DB WRITE SUCCESS: Created plugin order and purchases');
+        } else {
+          console.log('WEBHOOK PLUGIN LOOKUP FAILED: No plugins found for IDs:', { pluginIds, pluginSlugs });
         }
       }
 
