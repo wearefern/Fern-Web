@@ -2,9 +2,11 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { type Plugin } from '../plugins/plugin-types';
 import { AppleLogo, WindowsLogo } from '../../components/ui/atoms/platform-logos';
 import { AccountShell } from './account-shell';
+import { useCart } from '../../context/cart-context';
 
 interface DownloadableItem {
   id: string;
@@ -26,6 +28,19 @@ interface DownloadableItem {
 export const DownloadsPage = () => {
   const [downloadableItems, setDownloadableItems] = useState<DownloadableItem[]>([]);
   const [downloadError, setDownloadError] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const { clearCart } = useCart();
+
+  // Clear cart on successful checkout
+  useEffect(() => {
+    const checkoutStatus = searchParams.get('checkout');
+    if (checkoutStatus === 'success') {
+      clearCart();
+      // Remove query param to prevent repeated clears
+      router.replace('/account/downloads', { scroll: false });
+    }
+  }, [searchParams, clearCart, router]);
 
   useEffect(() => {
     const loadDownloads = async () => {

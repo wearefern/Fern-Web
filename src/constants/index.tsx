@@ -3,7 +3,7 @@ import { ContentType } from '~lib/content/provider';
 export const BASE_URL =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
-    : 'https://fern.so';
+    : process.env.NEXT_PUBLIC_APP_URL || 'https://fern-web-cyan.vercel.app';
 
 export const BLOG_PATH = '/blog';
 export const BLOG_PATH_WITH_CATEGORY = (category: ContentType) =>

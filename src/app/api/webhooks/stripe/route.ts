@@ -183,7 +183,7 @@ export async function POST(req: Request) {
             data: {
               userId,
               stripeSessionId,
-              status: 'PAID',
+              status: 'completed',
               totalCents,
             },
           });
