@@ -38,7 +38,8 @@ function getSessionMetadata(
 
   // Ensure all metadata values are strings
   const metadata: Record<string, string> = {};
-  const entries = Object.entries(session.metadata);
+  const rawMetadata = session.metadata ?? {};
+  const entries = Object.entries(rawMetadata as Record<string, string>);
   for (const [key, value] of entries) {
     if (typeof value === 'string') {
       metadata[key] = value;

@@ -44,12 +44,12 @@ export async function GET() {
     const mappedPluginOrders = pluginOrders.map((order) => ({
       id: order.id,
       date: order.createdAt.toISOString(),
-      total: centsToPrice(order.totalCents),
+      total: centsToPrice(Number(order.totalCents)),
       status: order.status,
       type: 'plugin' as const,
       items: order.items.map((item) => ({
         quantity: item.quantity,
-        price: centsToPrice(item.unitPriceCents * item.quantity),
+        price: centsToPrice(Number(item.unitPriceCents) * item.quantity),
         plugin: {
           id: item.plugin.id,
           name: item.plugin.name,
@@ -63,12 +63,12 @@ export async function GET() {
     const mappedToolOrders = toolOrders.map((order) => ({
       id: order.id,
       date: order.createdAt.toISOString(),
-      total: centsToPrice(order.amountCents),
+      total: centsToPrice(Number(order.amountCents)),
       status: order.status,
       type: 'tool' as const,
       items: [{
         quantity: 1,
-        price: centsToPrice(order.amountCents),
+        price: centsToPrice(Number(order.amountCents)),
         plugin: {
           id: order.tool.id,
           name: order.tool.name,
@@ -108,7 +108,7 @@ export async function POST(request: Request) {
     const plugins = await prisma.plugin.findMany({
       where: { id: { in: pluginIds } },
     });
-    const pluginById = new Map(plugins.map((plugin) => [plugin.id, plugin]));
+    const pluginById = new Map(plugins.map((plugin) => [plugin.id, plugin] as const));
 
     const normalizedItems = inputItems
       .map((item) => {
@@ -172,7 +172,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       id: created.id,
-      total: centsToPrice(created.totalCents),
+      total: centsToPrice(Number(created.totalCents)),
       status: created.status,
     });
   } catch (error) {

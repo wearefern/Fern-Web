@@ -35,7 +35,7 @@ export const mapDBPluginToUIPlugin = (plugin: DBPlugin): Plugin => {
 
   const details =
     pluginsData.find((item) => item.slug === plugin.slug) ?? fallbackPlugin;
-  const normalizedPreviewUrl = normalizePreviewUrl(plugin.previewUrl);
+  const normalizedPreviewUrl = normalizePreviewUrl(String(plugin.previewUrl));
 
   return {
     id: plugin.id,
@@ -45,11 +45,11 @@ export const mapDBPluginToUIPlugin = (plugin: DBPlugin): Plugin => {
     priceCents: plugin.priceCents,
     previewUrl: normalizedPreviewUrl,
     fileKey: plugin.fileKey ?? undefined,
-    demoControls: getPluginDemoControls(plugin.slug, plugin.demoControls),
+    demoControls: getPluginDemoControls(String(plugin.slug), plugin.demoControls),
     category: details.category,
     description: plugin.description ?? details.description,
     longDescription: details.longDescription,
-    price: formatPrice(plugin.priceCents, plugin.status),
+    price: formatPrice(Number(plugin.priceCents), String(plugin.status)),
     duration: details.duration,
     audioUrl: normalizedPreviewUrl ?? details.audioUrl,
     format: details.format,

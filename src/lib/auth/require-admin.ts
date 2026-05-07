@@ -1,4 +1,5 @@
 import { getCurrentUser } from './get-current-user';
+import { type User } from '@prisma/client';
 
 export class AdminAccessError extends Error {
   status: number;
@@ -9,7 +10,7 @@ export class AdminAccessError extends Error {
   }
 }
 
-export const requireAdmin = async () => {
+export const requireAdmin = async (): Promise<User> => {
   const user = await getCurrentUser();
 
   if (!user) {

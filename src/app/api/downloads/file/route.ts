@@ -82,7 +82,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Normalize and validate fileKey
-    const normalizedFileKey = normalizeFileKey(fileKey);
+    const normalizedFileKey = normalizeFileKey(String(fileKey));
     if (!normalizedFileKey) {
       console.error('Invalid fileKey format:', fileKey);
       return NextResponse.json({ error: 'Invalid file path' }, { status: 404 });

@@ -40,11 +40,11 @@ export async function GET(_request: Request, { params }: Params) {
     return NextResponse.json({
       id: order.id,
       date: order.createdAt.toISOString(),
-      total: centsToPrice(order.totalCents),
+      total: centsToPrice(Number(order.totalCents)),
       status: order.status,
       items: order.items.map((item) => ({
         quantity: item.quantity,
-        price: centsToPrice(item.unitPriceCents * item.quantity),
+        price: centsToPrice(Number(item.unitPriceCents) * item.quantity),
         plugin: {
           id: item.plugin.id,
           name: item.plugin.name,

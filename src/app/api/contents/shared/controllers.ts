@@ -29,13 +29,12 @@ export const createContentController = (client: ModelClient) => ({
       },
     });
 
-    const allStatistics = contentInteractions.map(
+    const allStatistics: GlobalContentStatistics[] = contentInteractions.map(
       (next) => ({
         slug: next.contentSlug,
         views: next._count.seen ?? 0,
         likes: next._sum.likes ?? 0,
-      }),
-      {}
+      })
     );
 
     return allStatistics;
@@ -52,7 +51,7 @@ export const createContentController = (client: ModelClient) => ({
 
     const views = contentInteractions.length;
     const likes = contentInteractions.reduce(
-      (sum, next) => sum + next.likes,
+      (sum: number, next) => sum + (next.likes ?? 0),
       0
     );
     const userTotalLikes =
@@ -75,7 +74,7 @@ export const createContentController = (client: ModelClient) => ({
     userHash: string,
     contentSlug: string
   ): Promise<ContentInteraction> {
-    return await client.contentInteraction.upsert({
+    const result = await client.contentInteraction.upsert({
       where: {
         interactionRelation: {
           userHash,
@@ -100,6 +99,7 @@ export const createContentController = (client: ModelClient) => ({
       },
       update: { seen: true },
     });
+    return result;
   },
 
   async grantLikes(
@@ -109,7 +109,7 @@ export const createContentController = (client: ModelClient) => ({
   ): Promise<ContentInteraction> {
     const totalAmount = Math.min(LIKES_PER_USER_LIMIT, userTotalLikes);
 
-    return await client.contentInteraction.upsert({
+    const result = await client.contentInteraction.upsert({
       where: {
         interactionRelation: {
           userHash,
@@ -134,5 +134,6 @@ export const createContentController = (client: ModelClient) => ({
       },
       update: { seen: true, likes: totalAmount },
     });
+    return result;
   },
 });

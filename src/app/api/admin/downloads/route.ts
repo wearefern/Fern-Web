@@ -48,8 +48,8 @@ export async function GET() {
     ]);
 
     const userIds = new Set<string>();
-    for (const purchase of pluginPurchases) userIds.add(purchase.userId);
-    for (const order of toolOrders) userIds.add(order.userId);
+    for (const purchase of pluginPurchases) userIds.add(String(purchase.userId));
+    for (const order of toolOrders) userIds.add(String(order.userId));
 
     const users = await prisma.user.findMany({
       where: {
@@ -64,10 +64,10 @@ export async function GET() {
       },
     });
 
-    const userMap = new Map(
+    const userMap = new Map<string, { name: string | null; email: string | null }>(
       users
         .filter((user) => Boolean(user.clerkId))
-        .map((user) => [user.clerkId!, { name: user.name, email: user.email }])
+        .map((user) => [user.clerkId!, { name: user.name, email: user.email }] as const)
     );
 
     const toolDownloadCountMap = new Map<string, number>();

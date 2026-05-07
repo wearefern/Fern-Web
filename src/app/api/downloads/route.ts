@@ -50,9 +50,10 @@ export async function GET() {
 
     paidOrders.forEach((order) => {
       order.items.forEach((item) => {
-        if (!pluginMap.has(item.pluginId)) {
-          pluginMap.set(item.pluginId, {
-            id: `${order.id}:${item.pluginId}`,
+        const pluginId = String(item.pluginId);
+        if (!pluginMap.has(pluginId)) {
+          pluginMap.set(pluginId, {
+            id: `${order.id}:${pluginId}`,
             createdAt: order.createdAt.toISOString(),
             type: 'plugin',
             plugin: item.plugin,
@@ -63,8 +64,9 @@ export async function GET() {
     });
 
     purchaseFallback.forEach((purchase) => {
-      if (!pluginMap.has(purchase.pluginId)) {
-        pluginMap.set(purchase.pluginId, {
+      const pluginId = String(purchase.pluginId);
+      if (!pluginMap.has(pluginId)) {
+        pluginMap.set(pluginId, {
           id: purchase.id,
           createdAt: purchase.createdAt.toISOString(),
           type: 'plugin',
