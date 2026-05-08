@@ -9,7 +9,6 @@ import {
 } from 'framer-motion';
 import Link from 'next/link';
 import { PropsWithChildren, useRef, useState } from 'react';
-import { PRODUCTS_BY_FERN_URL } from '~constants/index';
 
 import { Button, ButtonWithVideo } from '~ui/atoms/button';
 import { Card } from '~ui/atoms/card';
@@ -153,10 +152,8 @@ const partners = [
 
 const productsByFern = {
   name: 'Products by Fern',
-  href: PRODUCTS_BY_FERN_URL,
+  href: '/plugins',
 };
-
-/* -----------------------------------------------------------------------------------------------*/
 
 const ArtistsHeadline = () => (
   <SectionHeadline disablePadding inverse>

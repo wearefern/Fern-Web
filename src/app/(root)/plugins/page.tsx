@@ -1,5 +1,5 @@
-import { ComingSoon } from '~modules/coming-soon';
+import { Plugins } from '~modules/plugins';
 
 export default function PluginsPage() {
-  return <ComingSoon title="Products" />;
+  return <Plugins />;
 }

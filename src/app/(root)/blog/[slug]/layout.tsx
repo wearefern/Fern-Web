@@ -55,7 +55,7 @@ export default function ContentLayout({
   return (
     <>
       <div className='layout-width-limiter layout-padding pt-6'>
-        <Button variant='outline' className='rounded-lg px-4 py-2 text-sm' asChild>
+        <Button className='rounded-xl px-6 py-3 text-sm font-medium' asChild>
           <Link href='/'>← Back to Home</Link>
         </Button>
       </div>

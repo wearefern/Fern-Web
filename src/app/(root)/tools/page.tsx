@@ -1,5 +1,5 @@
-import { ComingSoon } from '~modules/coming-soon';
+import { ToolsSection } from '~modules/tools/tools-section';
 
 export default function ToolsPage() {
-  return <ComingSoon title="Tools" />;
+  return <ToolsSection />;
 }

@@ -21,7 +21,7 @@ export default async function InsightDetailPage({
 }) {
   const content = await getContentEntry(params.slug);
 
-  if (!content || !content.published) {
+  if (!content?.published) {
     return notFound();
   }
 

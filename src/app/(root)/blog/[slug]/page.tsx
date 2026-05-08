@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 
-export default async function ContentPage({
+export default function ContentPage({
   params,
 }: {
   params: { slug: string };
