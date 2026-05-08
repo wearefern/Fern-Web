@@ -13,6 +13,7 @@ import { BASE_URL } from '~constants/index';
 import '~styles/globals.css';
 
 import { ThemeProvider } from '~ui/atoms/theme/theme-provider';
+import { ProductsFloatingButton } from '~ui/atoms/products-floating-button';
 import { HomeFooter } from '~modules/home/home-footer';
 import { CartProvider } from '../../context/cart-context';
 import { UserProvider } from '../../context/user-context';
@@ -136,6 +137,7 @@ export default function RootLayout({
                     {children}
                     <HomeFooter />
                   </div>
+                  <ProductsFloatingButton />
                 </UserProvider>
               </CartProvider>
             </ThemeProvider>

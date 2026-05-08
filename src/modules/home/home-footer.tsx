@@ -7,7 +7,7 @@ import { SectionFooter } from '~ui/molecules/section/section-footer';
  * -----------------------------------------------------------------------------------------------*/
 
 const HomeFooter = () => {
-  return <SectionFooter></SectionFooter>;
+  return <SectionFooter />;
 };
 
 HomeFooter.displayName = 'HomeFooter';
