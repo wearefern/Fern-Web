@@ -2,6 +2,7 @@
 
 import { MotionConfig, motion } from 'framer-motion';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
 
 import { BLOG_PATH } from '~constants/index';
@@ -93,6 +94,9 @@ const NavLink = ({ href, children, emphasize }: NavLinkProps) => (
 );
 
 const HomeHeader = () => {
+  const pathname = usePathname();
+  const isInsightsPage = pathname?.startsWith(BLOG_PATH) || pathname?.startsWith('/insights');
+
   return (
     <AppHeader
       mode='dynamic'
@@ -103,6 +107,9 @@ const HomeHeader = () => {
 
       <MotionConfig transition={{ type: 'spring', duration: 0.5, bounce: 0 }}>
         <motion.nav layout='position' className='flex items-center gap-x-2.5 sm:gap-x-3'>
+          {isInsightsPage && (
+            <NavLink href='/'>← Back to Home</NavLink>
+          )}
           <div className='hidden sm:block'>
             <NavLink href='/#projects'>Services.</NavLink>
           </div>
