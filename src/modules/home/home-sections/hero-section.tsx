@@ -6,7 +6,7 @@ import { Typography } from '~ui/atoms/typography';
 
 export const HeroSection = () => {
   return (
-    <section className='layout-width-limiter layout-padding relative flex min-h-screen w-full items-start overflow-hidden pt-[22vh] sm:pt-[24vh]'>
+    <section className='layout-width-limiter layout-padding relative flex w-full items-start overflow-hidden pt-[140px] sm:pt-[160px]'>
       <motion.div
         aria-hidden='true'
         animate={{
