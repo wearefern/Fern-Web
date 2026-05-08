@@ -51,7 +51,7 @@ const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
         return;
       }
 
-      const MIN_SCROLL_OFFSET_COMPACT_VIEW = 120;
+      const MIN_SCROLL_OFFSET_COMPACT_VIEW = 100;
       const MIN_SCROLL_OFFSET_NORMAL_VIEW = 300;
 
       const previous = scrollY.getPrevious() ?? 0;
@@ -86,12 +86,13 @@ const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
         ref={ref}
         variants={{
           compact: {
-            padding: '0.5rem 0',
-            background: 'rgba(var(--ctx-primary-bg), 0.8)',
-            backdropFilter: 'blur(8px)',
-            borderRadius: '0.5rem',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
-            margin: '0.75rem auto',
+            padding: '0.75rem 1.5rem',
+            background: 'rgba(var(--ctx-primary-bg), 0.85)',
+            backdropFilter: 'blur(12px)',
+            borderRadius: '999px',
+            boxShadow: '0 1px 6px rgba(0, 0, 0, 0.04)',
+            maxWidth: 'min(92vw, 800px)',
+            margin: '1rem auto',
           },
           normal: {
             padding: '2.5rem 0',
@@ -99,13 +100,14 @@ const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
             backdropFilter: 'none',
             borderRadius: '0',
             boxShadow: 'none',
+            maxWidth: '100%',
             margin: '0',
           },
         }}
         initial='normal'
         animate={mounted && compact ? 'compact' : 'normal'}
         transition={{
-          duration: 0.5,
+          duration: 0.6,
           ease: [0.22, 1, 0.36, 1],
         }}
         className={cn(
@@ -116,7 +118,7 @@ const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
       >
         <div
           className={cn(
-            'layout-width-limiter layout-padding flex w-full items-center',
+            'flex w-full items-center',
             innerClassName
           )}
         >

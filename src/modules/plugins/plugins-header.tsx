@@ -23,28 +23,11 @@ const PluginsHeader = () => {
 
       <nav className='flex items-center gap-x-1.5 sm:gap-x-2'>
         <Button className='px-2.5 py-1 text-xs sm:text-sm' asChild>
-          <Link href='/plugins'>
-            Products
-          </Link>
-        </Button>
-
-        <Button className='px-2.5 py-1 text-xs sm:text-sm' asChild>
-          <Link href='/tools'>
-            Tools
-          </Link>
-        </Button>
-
-        <Button className='px-2.5 py-1 text-xs sm:text-sm' asChild>
           <Link href='/cart'>
             View Cart{cartCount > 0 && ` (${cartCount})`}
           </Link>
         </Button>
 
-        <Button className='px-2.5 py-1 text-xs sm:text-sm' asChild>
-          <div>
-            <AuthNavControls showUserButton={false} />
-          </div>
-        </Button>
         <AuthNavControls showAccountLink={false} />
         <ThemeToggle />
       </nav>
