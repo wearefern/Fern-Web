@@ -26,9 +26,9 @@ const NavLink = ({ href, children, emphasize }: NavLinkProps) => (
   <motion.div whileHover='hover' initial='rest' animate='rest' className='relative'>
     <Link
       href={href}
-      className={`group relative inline-flex items-center justify-center overflow-hidden rounded-full px-1.5 py-1 text-xs font-medium sm:text-sm ${
+      className={`group relative inline-flex items-center justify-center overflow-hidden rounded-full px-1.5 py-0.5 text-xs font-medium sm:py-1 sm:text-sm ${
         emphasize
-          ? 'min-w-[5.75rem] border border-ctx-primary-fg-decorative/80 px-3 py-1.5 text-ctx-primary-fg-solid'
+          ? 'min-w-[5.25rem] border border-ctx-primary-fg-decorative/80 px-2.5 py-1 text-ctx-primary-fg-solid'
           : 'text-ctx-primary-fg-solid'
       }`}
     >
@@ -95,16 +95,20 @@ const NavLink = ({ href, children, emphasize }: NavLinkProps) => (
 const HomeHeader = () => {
   return (
     <AppHeader
-      mode='compact'
-      className='absolute top-0 bg-transparent from-transparent to-transparent backdrop-blur-0'
-      innerClassName='flex justify-between gap-x-2 pt-5 sm:pt-6'
+      mode='dynamic'
+      className='top-0'
+      innerClassName='flex justify-between gap-x-2 py-0.5'
     >
-      <FernLogo width={58} layoutId={LAYOUT_ID_HOME_LOGO} title='Home' />
+      <FernLogo layoutId={LAYOUT_ID_HOME_LOGO} title='Home' />
 
       <MotionConfig transition={{ type: 'spring', duration: 0.5, bounce: 0 }}>
-        <motion.nav layout='position' className='flex items-center gap-x-4 sm:gap-x-5'>
-          <NavLink href='/#projects'>Services.</NavLink>
-          <NavLink href='/#process'>Process.</NavLink>
+        <motion.nav layout='position' className='flex items-center gap-x-2.5 sm:gap-x-3'>
+          <div className='hidden sm:block'>
+            <NavLink href='/#projects'>Services.</NavLink>
+          </div>
+          <div className='hidden sm:block'>
+            <NavLink href='/#process'>Process.</NavLink>
+          </div>
           <NavLink href={BLOG_PATH}>Insights.</NavLink>
           <NavLink href='/contact' emphasize>
             Contact.

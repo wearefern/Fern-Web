@@ -9,8 +9,7 @@ import {
 } from 'framer-motion';
 import Link from 'next/link';
 import { PropsWithChildren, useRef, useState } from 'react';
-
-import { useElementGeometry } from '~hooks/use-element-geometry';
+import { PRODUCTS_BY_FERN_URL } from '~constants/index';
 
 import { Button, ButtonWithVideo } from '~ui/atoms/button';
 import { Card } from '~ui/atoms/card';
@@ -26,28 +25,12 @@ import { Logo } from '~ui/widgets/logo';
  * SectionFooter
  * -----------------------------------------------------------------------------------------------*/
 
-const INITIAL_BACKGROUND_SIZE = 48;
-// The background shape is a circle. In a circle, the diagonal is equivalent to its diameter.
-const INITIAL_BACKGROUND_DIAGONAL = INITIAL_BACKGROUND_SIZE;
-
-const MIN_FOOTER_CONTENT_HEIGHT_VH = 80;
+const MIN_FOOTER_CONTENT_HEIGHT_VH = 72;
 
 const SectionFooter = ({ children }: PropsWithChildren) => {
   const [heartPhase, setHeartPhase] = useState<'last' | number>('last');
 
   const cardContainerRef = useRef<HTMLDivElement>(null);
-
-  const [backgroundContainerRef, backgroundGeometry] =
-    useElementGeometry<HTMLDivElement>();
-
-  const backgroundHeight = backgroundGeometry?.height ?? 0;
-  const backgroundWidth = backgroundGeometry?.width ?? 0;
-  const halfOfBackgroundHeight = backgroundHeight / 2;
-
-  const cardDiagonal = Math.sqrt(
-    Math.pow(backgroundHeight, 2) + Math.pow(backgroundWidth, 2)
-  );
-  const finalScaleToFillCard = cardDiagonal / INITIAL_BACKGROUND_DIAGONAL;
 
   const { scrollYProgress } = useScroll({
     target: cardContainerRef,
@@ -69,43 +52,17 @@ const SectionFooter = ({ children }: PropsWithChildren) => {
     bounce: 0,
   });
 
-  const scale = useTransform(
-    animationProgressSpring,
-    [0, 0.5, 1],
-    [0.2, 1, finalScaleToFillCard]
-  );
-  const y = useTransform(
-    animationProgressSpring,
-    [0, 1],
-    [-halfOfBackgroundHeight + INITIAL_BACKGROUND_SIZE, 0]
-  );
-  const opacity = useTransform(
-    scale,
-    [finalScaleToFillCard / 2, finalScaleToFillCard],
-    [0, 1]
-  );
+  const opacity = useTransform(animationProgressSpring, [0, 1], [0.92, 1]);
 
   return (
     <SectionContainer className='pb-8'>
-      <Card ref={cardContainerRef} className='relative w-full'>
-        <div
-          ref={backgroundContainerRef}
-          className='absolute inset-0 m-4 flex items-center justify-center overflow-hidden rounded-xl sm:m-6'
-        >
-          <motion.div
-            style={{
-              y,
-              scale,
-              height: INITIAL_BACKGROUND_SIZE,
-              width: INITIAL_BACKGROUND_SIZE,
-            }}
-            className='rounded-full bg-ctx-primary-inverse'
-          />
-        </div>
-
+      <Card
+        ref={cardContainerRef}
+        className='relative w-full border border-ctx-primary-fg-decorative/80 bg-gradient-to-b from-ctx-secondary via-ctx-secondary to-ctx-primary shadow-[0_2px_10px_rgba(10,22,40,0.05)] dark:from-[#0f1626] dark:via-[#0e1624] dark:to-[#0b1320] dark:shadow-[0_6px_18px_rgba(6,16,34,0.22)]'
+      >
         <motion.footer
           style={{ opacity, minHeight: `${MIN_FOOTER_CONTENT_HEIGHT_VH}vh` }}
-          className='relative z-10 flex w-full flex-col overflow-hidden rounded-xl p-12'
+          className='relative z-10 flex w-full flex-col overflow-hidden rounded-xl p-8 sm:p-10'
         >
           <div className='flex flex-1 flex-col items-center justify-center gap-y-content-sm sm:gap-y-content'>
             {children}
@@ -117,7 +74,7 @@ const SectionFooter = ({ children }: PropsWithChildren) => {
 
           <div className='flex w-full items-center justify-between gap-x-4'>
             <Link title='Home' href={'/'}>
-              <Logo variant='light' />
+              <Logo />
             </Link>
 
             <ButtonWithVideo
@@ -196,7 +153,7 @@ const partners = [
 
 const productsByFern = {
   name: 'Products by Fern',
-  href: 'https://products.fern.so',
+  href: PRODUCTS_BY_FERN_URL,
 };
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -229,9 +186,7 @@ const ArtistsHeadline = () => (
       inverse
       asChild
     >
-      <a href={productsByFern.href} target='_blank' rel='noopener noreferrer'>
-        {productsByFern.name}
-      </a>
+      <Link href={productsByFern.href}>{productsByFern.name}</Link>
     </Button>
     {' '}to turn ideas into maintainable, production-ready software.
   </SectionHeadline>

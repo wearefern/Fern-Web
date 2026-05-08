@@ -52,11 +52,11 @@ const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
       }
 
       const MIN_SCROLL_OFFSET_COMPACT_VIEW = 50;
-      const MIN_SCROLL_OFFSET_NORMAL_VIEW = 200;
+      const MIN_SCROLL_OFFSET_NORMAL_VIEW = 165;
 
       const previous = scrollY.getPrevious() ?? 0;
       const delta = latest - previous;
-      const forceNormalView = latest <= vhToPx(30);
+      const forceNormalView = latest <= vhToPx(12);
 
       let distance = latest - scrollDistanceStartY.get();
 
@@ -86,33 +86,36 @@ const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
         ref={ref}
         variants={{
           compact: {
-            padding: '0.5rem 0',
-            background: 'rgba(var(--ctx-primary-bg), 0.9)',
-            backdropFilter: 'blur(12px)',
-            borderRadius: '0.75rem',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
-            margin: '0.75rem',
-            maxWidth: 'calc(100% - 1.5rem)',
+            padding: '0.45rem 0',
+            background: 'hsla(var(--ctx-primary), 0.86)',
+            backdropFilter: 'blur(8px)',
+            borderRadius: '999px',
+            border: '1px solid hsla(var(--base-fg-decorative), 0.8)',
+            boxShadow: '0 4px 12px rgba(10, 31, 68, 0.05)',
+            maxWidth: 'min(820px, calc(100% - 1.25rem))',
+            left: '50%',
+            transform: 'translateX(-50%)',
           },
           normal: {
-            padding: '2.5rem 0',
+            padding: '0.85rem 0',
             background: 'transparent',
             backdropFilter: 'none',
             borderRadius: '0',
+            border: '1px solid transparent',
             boxShadow: 'none',
-            margin: '0',
             maxWidth: '100%',
+            left: '0%',
+            transform: 'translateX(0%)',
           },
         }}
         initial='normal'
         animate={mounted && compact ? 'compact' : 'normal'}
         transition={{
-          type: 'spring',
-          stiffness: 300,
-          damping: 30,
+          duration: 0.42,
+          ease: [0.19, 1, 0.22, 1],
         }}
         className={cn(
-          'sticky top-0 z-50 flex w-full',
+          'fixed top-0 z-50 flex w-full',
           className
         )}
         {...rest}
