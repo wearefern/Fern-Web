@@ -3,10 +3,8 @@
 import {
   HTMLMotionProps,
   motion,
-  useMotionValue,
   useMotionValueEvent,
   useScroll,
-  useVelocity,
 } from 'framer-motion';
 import { ReactNode, forwardRef, useEffect, useState } from 'react';
 
@@ -24,21 +22,10 @@ const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
     const [compact, setCompact] = useState(false);
 
     const { scrollY } = useScroll();
-    const scrollVelocity = useVelocity(scrollY);
-    const scrollDistanceStartY = useMotionValue(0);
 
     useEffect(() => {
       setMounted(true);
     }, []);
-
-    useMotionValueEvent(scrollVelocity, 'change', (latest) => {
-      if (!mounted) return;
-      // If scroll is slow enough, the velocity will reset `scrollDistanceStartY`
-      // to avoid displaying normal view immediately when user scrolls up.
-      if (latest * 10000 === 0) {
-        scrollDistanceStartY.set(scrollY.get());
-      }
-    });
 
     useMotionValueEvent(scrollY, 'change', (latest) => {
       if (!mounted) return;
@@ -51,32 +38,13 @@ const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
         return;
       }
 
-      const MIN_SCROLL_OFFSET_COMPACT_VIEW = 100;
-      const MIN_SCROLL_OFFSET_NORMAL_VIEW = 300;
-
-      const previous = scrollY.getPrevious() ?? 0;
-      const delta = latest - previous;
+      const SCROLL_THRESHOLD = 100;
       const forceNormalView = latest <= vhToPx(30);
-
-      let distance = latest - scrollDistanceStartY.get();
 
       if (forceNormalView) {
         setCompact(false);
       } else {
-        const directionChanged = delta * distance < 0;
-        if (directionChanged) {
-          scrollDistanceStartY.set(latest);
-          distance = 0;
-        }
-
-        const scrollOffset = Math.abs(distance);
-        const isScrollingDown = delta > 0;
-
-        setCompact((isNowCompact) =>
-          isScrollingDown
-            ? scrollOffset >= MIN_SCROLL_OFFSET_COMPACT_VIEW
-            : isNowCompact && scrollOffset < MIN_SCROLL_OFFSET_NORMAL_VIEW
-        );
+        setCompact(latest > SCROLL_THRESHOLD);
       }
     });
 
@@ -86,12 +54,13 @@ const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
         ref={ref}
         variants={{
           compact: {
-            padding: '0.75rem 1.5rem',
-            background: 'rgba(var(--ctx-primary-bg), 0.85)',
-            backdropFilter: 'blur(12px)',
+            padding: '0.75rem 2rem',
+            background: 'rgba(var(--ctx-primary-bg), 0.95)',
+            backdropFilter: 'blur(8px)',
             borderRadius: '999px',
-            boxShadow: '0 1px 6px rgba(0, 0, 0, 0.04)',
-            maxWidth: 'min(92vw, 800px)',
+            boxShadow: '0 1px 4px rgba(0, 0, 0, 0.08)',
+            border: '1px solid rgba(var(--ctx-primary-fg-decorative), 0.1)',
+            maxWidth: 'min(92vw, 1000px)',
             margin: '1rem auto',
           },
           normal: {
@@ -100,6 +69,7 @@ const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
             backdropFilter: 'none',
             borderRadius: '0',
             boxShadow: 'none',
+            border: 'none',
             maxWidth: '100%',
             margin: '0',
           },
@@ -107,7 +77,7 @@ const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
         initial='normal'
         animate={mounted && compact ? 'compact' : 'normal'}
         transition={{
-          duration: 0.6,
+          duration: 0.5,
           ease: [0.22, 1, 0.36, 1],
         }}
         className={cn(
@@ -118,7 +88,7 @@ const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
       >
         <div
           className={cn(
-            'flex w-full items-center',
+            'flex w-full items-center justify-between',
             innerClassName
           )}
         >
