@@ -178,7 +178,13 @@
   }
 
   ::selection {
-    @apply bg-ctx-accent-secondary text-ctx-accent-secondary-fg-primary;
+    background: rgba(37, 99, 235, 0.22);
+    color: inherit;
+  }
+
+  .dark ::selection {
+    background: rgba(59, 130, 246, 0.35);
+    color: inherit;
   }
 
   @media (prefers-reduced-motion: reduce) {

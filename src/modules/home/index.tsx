@@ -58,7 +58,7 @@ const Home = ({ blogContent, className }: HomeProps) => {
 
   return (
     <HomeContext.Provider value={{ blogContent, authorPortraits: [] }}>
-      <main className={cn('min-h-screen space-y-6', className)}>
+      <main className={cn('space-y-6', className)}>
         <HomeHeader />
 
         <div className='w-full space-y-section-sm sm:space-y-section'>
