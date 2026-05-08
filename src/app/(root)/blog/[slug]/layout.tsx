@@ -1,8 +1,11 @@
 import { Metadata, ResolvingMetadata } from 'next';
+import Link from 'next/link';
 
 import { BASE_URL, BLOG_PATH } from '~constants/index';
 
 import { getAllContent } from '~lib/content/provider';
+
+import { Button } from '~ui/atoms/button';
 
 interface MetadataProps {
   params: { slug: string };
@@ -49,5 +52,14 @@ export default function ContentLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <div className='layout-width-limiter layout-padding pt-6'>
+        <Button variant='outline' className='rounded-lg px-4 py-2 text-sm' asChild>
+          <Link href='/'>← Back to Home</Link>
+        </Button>
+      </div>
+      {children}
+    </>
+  );
 }

@@ -194,6 +194,11 @@ const partners = [
   },
 ];
 
+const productsByFern = {
+  name: 'Products by Fern',
+  href: 'https://products.fern.so',
+};
+
 /* -----------------------------------------------------------------------------------------------*/
 
 const ArtistsHeadline = () => (
@@ -215,8 +220,20 @@ const ArtistsHeadline = () => (
 
         {index < partners.length - 1 && ', '}
       </span>
-    ))}{' '}
-    to turn ideas into maintainable, production-ready software.
+    ))}
+    {' '}and{' '}
+    <Button
+      className='inline text-base'
+      variant='link'
+      size='inline'
+      inverse
+      asChild
+    >
+      <a href={productsByFern.href} target='_blank' rel='noopener noreferrer'>
+        {productsByFern.name}
+      </a>
+    </Button>
+    {' '}to turn ideas into maintainable, production-ready software.
   </SectionHeadline>
 );
 

@@ -13,8 +13,8 @@ export const PLUGINS_PATH = '/plugins';
 
 export const SOCIALS = {
   mail: {
-    url: 'hello@fern.so',
-    handle: 'hello@fern.so',
+    url: 'hello@wearefern.co',
+    handle: 'hello@wearefern.co',
   },
   linkedin: {
     url: 'https://www.linkedin.com/company/fern-software',

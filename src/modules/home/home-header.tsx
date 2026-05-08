@@ -4,7 +4,7 @@ import { MotionConfig, motion } from 'framer-motion';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
-import { BLOG_PATH, PLUGINS_PATH } from '~constants/index';
+import { BLOG_PATH } from '~constants/index';
 
 import { LAYOUT_ID_HOME_LOGO } from '~ui/atoms/motion';
 import { ThemeToggle } from '~ui/atoms/theme/theme-toggle';
@@ -105,7 +105,6 @@ const HomeHeader = () => {
         <motion.nav layout='position' className='flex items-center gap-x-4 sm:gap-x-5'>
           <NavLink href='/#projects'>Services.</NavLink>
           <NavLink href='/#process'>Process.</NavLink>
-          <NavLink href={PLUGINS_PATH}>Products.</NavLink>
           <NavLink href={BLOG_PATH}>Insights.</NavLink>
           <NavLink href='/contact' emphasize>
             Contact.

@@ -64,17 +64,17 @@
   }
 
   .dark {
-    --bg: 0 0% 7%;
-    --surface: 0 0% 15%;
+    --bg: 220 30% 8%;
+    --surface: 220 30% 12%;
     --text: 0 0% 100% / 64%;
-    --text-solid: 0 0% 80%;
+    --text-solid: 0 0% 85%;
     --muted: 0 0% 100% / 48%;
     --hint: 0 0% 100% / 34%;
     --border: 0 0% 100% / 16%;
-    --accent: 90 45% 67%;
+    --accent: 220 50% 55%;
     --accent-contrast: 0 0% 0%;
-    --button-surface: 0 0% 80%;
-    --button-contrast: 0 0% 7%;
+    --button-surface: 220 30% 25%;
+    --button-contrast: 0 0% 100%;
 
     --base-fg-solid: var(--text-solid);
     --base-fg-primary: var(--text);
@@ -91,12 +91,12 @@
     --base-fg-inv-destructive: 0 100% 70%;
 
     --ctx-primary: var(--bg);
-    --ctx-primary-inv: 0 0% 80%;
+    --ctx-primary-inv: 220 30% 20%;
 
     --ctx-secondary: var(--surface);
 
-    --ctx-accent-primary: 90 21% 30%;
-    --ctx-accent-primary-fg: 100 95% 92%;
+    --ctx-accent-primary: 220 40% 25%;
+    --ctx-accent-primary-fg: 220 50% 90%;
 
     --ctx-accent-secondary: var(--accent);
     --ctx-accent-secondary-fg: var(--accent-contrast);

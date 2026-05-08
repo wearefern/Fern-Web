@@ -51,8 +51,8 @@ const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
         return;
       }
 
-      const MIN_SCROLL_OFFSET_COMPACT_VIEW = 0;
-      const MIN_SCROLL_OFFSET_NORMAL_VIEW = 256;
+      const MIN_SCROLL_OFFSET_COMPACT_VIEW = 50;
+      const MIN_SCROLL_OFFSET_NORMAL_VIEW = 200;
 
       const previous = scrollY.getPrevious() ?? 0;
       const delta = latest - previous;
@@ -87,15 +87,32 @@ const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
         variants={{
           compact: {
             padding: '0.5rem 0',
+            background: 'rgba(var(--ctx-primary-bg), 0.9)',
+            backdropFilter: 'blur(12px)',
+            borderRadius: '0.75rem',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+            margin: '0.75rem',
+            maxWidth: 'calc(100% - 1.5rem)',
           },
           normal: {
             padding: '2.5rem 0',
+            background: 'transparent',
+            backdropFilter: 'none',
+            borderRadius: '0',
+            boxShadow: 'none',
+            margin: '0',
+            maxWidth: '100%',
           },
         }}
         initial='normal'
         animate={mounted && compact ? 'compact' : 'normal'}
+        transition={{
+          type: 'spring',
+          stiffness: 300,
+          damping: 30,
+        }}
         className={cn(
-          'sticky top-0 z-50 flex w-full bg-gradient-to-b from-ctx-primary to-ctx-primary/25 backdrop-blur-sm',
+          'sticky top-0 z-50 flex w-full',
           className
         )}
         {...rest}
