@@ -11,6 +11,8 @@ import { DigitalContributionsKnowledgeSharing } from '~modules/home/home-section
 import { DigitalContributionsProjects } from '~modules/home/home-sections/digital-contributions-projects-section';
 import { HeroSection } from '~modules/home/home-sections/hero-section';
 
+import { ClosingCtaSection } from '~ui/molecules/section/closing-cta-section';
+
 import { GsapReveal } from '~ui/atoms/gsap-reveal';
 
 import { cn } from '~utils/style';
@@ -74,6 +76,10 @@ const Home = ({ blogContent, className }: HomeProps) => {
 
           <GsapReveal delay={0.08}>
             <DigitalContributionsKnowledgeSharing />
+          </GsapReveal>
+
+          <GsapReveal delay={0.1}>
+            <ClosingCtaSection />
           </GsapReveal>
         </div>
       </main>

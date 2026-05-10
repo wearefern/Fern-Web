@@ -98,7 +98,7 @@ export const ProductsFloatingButton = () => {
             letterSpacing='0.5'
           >
             <textPath href='#products-circle-path' startOffset='10%'>
-              Products By fern. Products By fern.
+              Products By fern. ------------- Products By fern. -------------
             </textPath>
           </text>
 
