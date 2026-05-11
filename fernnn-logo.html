@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fernnn. - Dot Matrix Logo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            overflow: hidden;
+            font-family: 'Albert Sans', sans-serif;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .logo-container {
+            position: relative;
+            width: 95vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .dot-matrix {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dot {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background-color: #F5F5F5;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .wordmark {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <div class="dot-matrix">
+            <div class="wordmark" id="wordmark">
+                <!-- Dots will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dot matrix configuration
+        const DOT_RADIUS = 1.5;
+        const DOT_SPACING = 4;
+        const GRID_SIZE = DOT_SPACING * 2;
+        
+        // Text configuration
+        const TEXT = "fernnn.";
+        const FONT_FAMILY = "Albert Sans";
+        const FONT_WEIGHT = "900";
+        
+        // Create canvas for text rendering
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        // Configure text rendering
+        ctx.font = `${FONT_WEIGHT} ${Math.floor(window.innerHeight * 0.15)}px ${FONT_FAMILY}`;
+        ctx.fillStyle = '#FFFFFF';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        
+        // Draw text to canvas
+        ctx.fillText(TEXT, canvas.width / 2, canvas.height / 2);
+        
+        // Get image data
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const pixels = imageData.data;
+        
+        // Generate dots based on text pixels
+        const wordmarkElement = document.getElementById('wordmark');
+        const dots = [];
+        
+        for (let y = 0; y < canvas.height; y += GRID_SIZE) {
+            for (let x = 0; x < canvas.width; x += GRID_SIZE) {
+                const index = (y * canvas.width + x) * 4;
+                const alpha = pixels[index + 3];
+                
+                // If pixel has sufficient alpha (is part of text)
+                if (alpha > 128) {
+                    const dot = document.createElement('div');
+                    dot.className = 'dot';
+                    dot.style.left = x + 'px';
+                    dot.style.top = y + 'px';
+                    dot.style.width = (DOT_RADIUS * 2) + 'px';
+                    dot.style.height = (DOT_RADIUS * 2) + 'px';
+                    wordmarkElement.appendChild(dot);
+                    dots.push(dot);
+                }
+            }
+        }
+        
+        // Apply subtle cropping effect
+        wordmarkElement.style.clipPath = 'inset(0 0 2% 0)';
+        
+        // Responsive handling
+        window.addEventListener('resize', () => {
+            location.reload(); // Simple reload for demo purposes
+        });
+    </script>
+</body>
+</html>

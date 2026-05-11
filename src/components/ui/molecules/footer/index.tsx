@@ -1,25 +1,30 @@
-import { ComponentPropsWithoutRef } from 'react';
+'use client';
 
-import { Copyrights } from '~ui/atoms/copyrights';
+import { FooterContent } from './footer-content';
+import { FooterLogoCanvas } from './footer-logo-canvas';
 
-import { cn } from '~utils/style';
+/* -------------------------------------------------------------------------------------------------
+ * Footer - Premium black footer with dot matrix logo
+ * -----------------------------------------------------------------------------------------------*/
 
-export interface FooterProps extends ComponentPropsWithoutRef<'footer'> {}
-
-export const Footer = ({ className, children, ...rest }: FooterProps) => {
+const Footer = () => {
   return (
     <footer
-      className={cn(
-        'bg-background-primary flex w-full flex-col items-center justify-center',
-        className
-      )}
-      {...rest}
+      className='w-full'
+      style={{
+        backgroundColor: '#000000',
+        color: '#F5F5F5',
+        isolation: 'isolate',
+      }}
     >
-      {children}
-
-      <div className='flex w-full justify-center py-4'>
-        <Copyrights />
-      </div>
+      <FooterContent />
+      <FooterLogoCanvas />
     </footer>
   );
 };
+
+Footer.displayName = 'Footer';
+
+/* -----------------------------------------------------------------------------------------------*/
+
+export { Footer };
