@@ -1,3 +1,28 @@
+@font-face {
+  font-family: 'Albert Sans';
+  src: url('/fonts/AlbertSans-800.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: block;
+}
+
+/* -------------------------------------------------------------------------------------------------
+ * Grotesk SH — self-hosted
+ * Place font files in: public/fonts/
+ *   - GroteskSH-Bold.woff2  (preferred)
+ *   - GroteskSH-Bold.woff   (fallback)
+ * License: provide your own licensed copy of Grotesk SH Bold
+ * -----------------------------------------------------------------------------------------------*/
+@font-face {
+  font-family: 'Grotesk SH';
+  src:
+    url('/fonts/GroteskSH-Bold.woff2') format('woff2'),
+    url('/fonts/GroteskSH-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: block; /* block ensures canvas never samples a fallback glyph */
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

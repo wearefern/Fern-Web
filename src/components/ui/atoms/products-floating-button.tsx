@@ -75,8 +75,12 @@ export const ProductsFloatingButton = () => {
         >
           <defs>
             <path
-              id='products-circle-path'
-              d='M 80,80 m -48,0 a 48,48 0 1,1 96,0 a 48,48 0 1,1 -96,0'
+              id='products-circle-path-top'
+              d='M 32 80 A 48 48 0 0 1 128 80'
+            />
+            <path
+              id='products-circle-path-bottom'
+              d='M 128 80 A 48 48 0 0 1 32 80'
             />
           </defs>
 
@@ -90,15 +94,20 @@ export const ProductsFloatingButton = () => {
             strokeWidth='2'
           />
 
-          {/* Text on circular path */}
+          {/* Text on circular paths */}
           <text
             fill='#000000'
-            fontSize='10'
-            fontWeight='600'
-            letterSpacing='0.5'
+            fontSize='9.5'
+            fontFamily='"Albert Sans"'
+            fontWeight='800'
+            letterSpacing='0.2'
+            textAnchor='middle'
           >
-            <textPath href='#products-circle-path' startOffset='10%'>
-              Products By fern. ------------- Products By fern. -------------
+            <textPath href='#products-circle-path-top' startOffset='50%'>
+              Products By fern.
+            </textPath>
+            <textPath href='#products-circle-path-bottom' startOffset='50%'>
+              Products By fern.
             </textPath>
           </text>
 
@@ -108,8 +117,6 @@ export const ProductsFloatingButton = () => {
             cy='80'
             r='5'
             fill='#000000'
-            className='transition-transform duration-300 group-hover:scale-125'
-            style={{ transformOrigin: '80px 80px' }}
           />
         </svg>
       </div>

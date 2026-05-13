@@ -116,7 +116,7 @@ const DigitalContributionsProjects = () => {
                 variant='hero'
                 weight='medium'
                 prose={false}
-                className='text-[3.2rem] leading-[0.94] tracking-tight transition-transform duration-500 ease-out group-hover:translate-x-2 sm:text-[4.8rem] lg:text-[6.6rem]'
+                className='whitespace-nowrap text-[3.2rem] leading-[0.94] tracking-tight transition-transform duration-500 ease-out group-hover:translate-x-2 sm:text-[4.8rem] lg:text-[6.6rem]'
               >
                 {service.name}
               </Typography>

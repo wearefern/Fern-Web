@@ -18,7 +18,9 @@ const Footer = () => {
       }}
     >
       <FooterContent />
-      <FooterLogoCanvas />
+      <section className="relative h-[520px] w-full overflow-hidden bg-black">
+        <FooterLogoCanvas />
+      </section>
     </footer>
   );
 };

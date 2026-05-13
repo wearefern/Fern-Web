@@ -3,12 +3,7 @@
 import { useEffect, useRef } from 'react';
 
 /* -------------------------------------------------------------------------------------------------
- * Footer Logo Canvas - Cinematic dot-matrix "fernnn." with premium magnetic warp
- * Ultra minimal luxury-tech aesthetic
- * Dekonstrukt-style magnetic dot interaction
- * Spring physics, smooth repulsion, elegant motion
- * Balanced wordmark with breathing room, subtle bottom crop only
- * "f" fully visible, centered composition
+ * Footer Logo Canvas - Precision dot-matrix "fernnn." footer wordmark
  * -----------------------------------------------------------------------------------------------*/
 
 interface Dot {
@@ -20,21 +15,23 @@ interface Dot {
   vy: number;
 }
 
-const DOT_RADIUS = 1.3; // Slightly smaller for refined elegance
-const DOT_SPACING = 5; // Slightly more breathing room
-const TARGET_WIDTH_RATIO = 0.84;
-const LEFT_OFFSET_RATIO = 0.01;
-const VERTICAL_OFFSET_RATIO = -0.015;
-const ALPHA_THRESHOLD = 220; // Tighter threshold for cleaner edges
+const DOT_RADIUS = 1.15;
+const DOT_SPACING = 5.2;
+const TARGET_WIDTH_RATIO = 0.75;
+const HORIZONTAL_OFFSET_RATIO = -0.002;
+const VERTICAL_OFFSET_RATIO = 0.062;
+const ALPHA_THRESHOLD = 220;
+const TEXT_COLOR = '#F5F5F5';
+const OFFSCREEN_SCALE = 2.5;
 
-// Magnetic interaction physics
-const INTERACTION_RADIUS = 350; // Balanced cinematic field
-const REPULSION_STRENGTH = 0.58;
-const SPRING_STRENGTH = 0.055;
-const DAMPING = 0.88;
-const MAX_DISPLACEMENT = 108; // Balanced visible displacement
-const TANGENTIAL_FACTOR = 0.40; // Moderate sideways drift
-const FALLOFF_EXPONENT = 1.3; // Smooth falloff
+// Keep interaction restrained so baseline composition remains precise.
+const INTERACTION_RADIUS = 104;
+const REPULSION_STRENGTH = 0.38;
+const SPRING_STRENGTH = 0.06;
+const DAMPING = 0.9;
+const MAX_DISPLACEMENT = 14;
+const TANGENTIAL_FACTOR = 0.22;
+const FALLOFF_EXPONENT = 1.45;
 const MOUSE_THROTTLE_MS = 16;
 
 /* -----------------------------------------------------------------------------------------------*/
@@ -56,105 +53,83 @@ const FooterLogoCanvas = () => {
 
     const TEXT = 'fernnn.';
 
-    const renderMassiveWordmark = async () => {
-      // Ensure Albert Sans font is fully loaded
+    const renderWordmark = async () => {
       await document.fonts.ready;
-
-      // Explicitly load Albert Sans Black/Heavy weight
-      try {
-        const albertSansFont = new FontFace(
-          'Albert Sans',
-          'url("https://fonts.googleapis.com/css2?family=Albert+Sans:wght@900&display=swap")',
-          { weight: '900' }
-        );
-        await albertSansFont.load();
-        document.fonts.add(albertSansFont);
-      } catch {
-        // Font may already be loaded via CSS
-      }
+      await document.fonts.load('800 200px "Albert Sans"');
 
       const rect = canvas.getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-      // Set canvas dimensions with device pixel ratio
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
+      canvas.width = Math.round(rect.width * dpr);
+      canvas.height = Math.round(rect.height * dpr);
 
-      // Reset transform and apply device pixel ratio scaling
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
 
-      // Create offscreen canvas for precise text rendering
       const offCanvas = document.createElement('canvas');
-      offCanvas.width = rect.width;
-      offCanvas.height = rect.height;
-      const offCtx = offCanvas.getContext('2d');
+      offCanvas.width = Math.max(1, Math.round(rect.width * OFFSCREEN_SCALE));
+      offCanvas.height = Math.max(1, Math.round(rect.height * OFFSCREEN_SCALE));
+
+      const offCtx = offCanvas.getContext('2d', { willReadFrequently: true });
       if (!offCtx) return;
 
-      // Calculate optimal font size for 95% viewport width
       const targetWidth = rect.width * TARGET_WIDTH_RATIO;
       let fontSize = 100;
-      let textWidth = 0;
-
-      // Binary search for perfect font size
-      let minSize = 50;
-      let maxSize = 1200;
+      let minSize = 40;
+      let maxSize = 1000;
 
       while (minSize <= maxSize) {
         const testSize = Math.floor((minSize + maxSize) / 2);
-        offCtx.font = `900 ${testSize}px "Albert Sans", "Inter", system-ui, sans-serif`;
-        const testWidth = offCtx.measureText(TEXT).width;
+        offCtx.font = `800 ${testSize * OFFSCREEN_SCALE}px "Albert Sans"`;
+        (
+          offCtx as CanvasRenderingContext2D & { letterSpacing?: string }
+        ).letterSpacing = `${testSize * OFFSCREEN_SCALE * -0.025}px`;
+        const testWidth = offCtx.measureText(TEXT).width / OFFSCREEN_SCALE;
 
         if (testWidth < targetWidth) {
           fontSize = testSize;
-          textWidth = testWidth;
           minSize = testSize + 1;
         } else {
           maxSize = testSize - 1;
         }
       }
 
-      // Set final font configuration for EXACT Albert Sans Black/Heavy
-      offCtx.font = `900 ${fontSize}px "Albert Sans", "Inter", system-ui, sans-serif`;
-      offCtx.fillStyle = 'white';
+      offCtx.clearRect(0, 0, offCanvas.width, offCanvas.height);
+      offCtx.font = `800 ${fontSize * OFFSCREEN_SCALE}px "Albert Sans"`;
+      (
+        offCtx as CanvasRenderingContext2D & { letterSpacing?: string }
+      ).letterSpacing = `${fontSize * OFFSCREEN_SCALE * -0.025}px`;
+      offCtx.fillStyle = '#ffffff';
       offCtx.textBaseline = 'alphabetic';
       offCtx.textAlign = 'left';
 
-      // Get precise text metrics for perfect centering
       const metrics = offCtx.measureText(TEXT);
+      const normalizedWidth = metrics.width / OFFSCREEN_SCALE;
+      const textX =
+        ((rect.width - normalizedWidth) / 2 + rect.width * HORIZONTAL_OFFSET_RATIO) *
+        OFFSCREEN_SCALE;
+      const baselineY =
+        ((rect.height +
+          metrics.actualBoundingBoxAscent / OFFSCREEN_SCALE -
+          metrics.actualBoundingBoxDescent / OFFSCREEN_SCALE) /
+          2 +
+          rect.height * VERTICAL_OFFSET_RATIO) *
+        OFFSCREEN_SCALE;
 
-      // Center horizontally with tiny left offset for visual balance
-      let textX = (rect.width - textWidth) / 2;
-      textX -= rect.width * LEFT_OFFSET_RATIO; // Tiny left offset
+      offCtx.fillText(TEXT, textX, baselineY);
 
-      // Center vertically with metrics, then subtle downward shift for bottom crop
-      let textY =
-        (rect.height +
-          metrics.actualBoundingBoxAscent -
-          metrics.actualBoundingBoxDescent) /
-        2;
-      textY += rect.height * VERTICAL_OFFSET_RATIO; // Subtle upward adjustment
-
-      // Clear offscreen canvas
-      offCtx.clearRect(0, 0, rect.width, rect.height);
-
-      // Draw text for sampling - EXACT Albert Sans geometry
-      offCtx.fillText(TEXT, textX, textY);
-
-      // Get pixel data for dot matrix conversion
-      const imageData = offCtx.getImageData(0, 0, rect.width, rect.height);
+      const imageData = offCtx.getImageData(0, 0, offCanvas.width, offCanvas.height);
       const data = imageData.data;
-
-      // Generate dots from text pixels on perfect engineering grid
       const dots: Dot[] = [];
 
       for (let y = 0; y < rect.height; y += DOT_SPACING) {
         for (let x = 0; x < rect.width; x += DOT_SPACING) {
-          const pixelIndex = (Math.floor(y) * rect.width + Math.floor(x)) * 4;
+          const sx = Math.min(offCanvas.width - 1, Math.floor(x * OFFSCREEN_SCALE));
+          const sy = Math.min(offCanvas.height - 1, Math.floor(y * OFFSCREEN_SCALE));
+          const pixelIndex = (sy * offCanvas.width + sx) * 4;
           const alpha = data[pixelIndex + 3];
 
-          // Only create dots from solid text pixels
-          if (alpha && alpha > ALPHA_THRESHOLD) {
+          if (alpha && alpha >= ALPHA_THRESHOLD) {
             dots.push({
               x,
               y,
@@ -168,28 +143,10 @@ const FooterLogoCanvas = () => {
       }
 
       dotsRef.current = dots;
-
-      // Debug information
-      // eslint-disable-next-line no-console
-      console.log('[FooterLogoCanvas]', {
-        canvasWidth: rect.width,
-        canvasHeight: rect.height,
-        dotCount: dots.length,
-        fontSize,
-        textWidth: Math.round(textWidth),
-        targetWidth: Math.round(targetWidth),
-        textX: Math.round(textX),
-        textY: Math.round(textY),
-        leftOffset: Math.round(rect.width * LEFT_OFFSET_RATIO),
-        verticalOffset: Math.round(rect.height * VERTICAL_OFFSET_RATIO),
-      });
-
-      // Start animation loop
       isActiveRef.current = true;
       startAnimationLoop();
     };
 
-    // Physics animation loop
     const startAnimationLoop = () => {
       if (rafRef.current) return;
 
@@ -218,21 +175,15 @@ const FooterLogoCanvas = () => {
     const updatePhysics = () => {
       const mouse = mouseRef.current;
       const dots = dotsRef.current;
-
       let hasMovement = false;
 
       for (let i = 0; i < dots.length; i++) {
         const dot = dots[i];
         if (!dot) continue;
 
-        // Spring force: pull back to original position
-        const springX = (dot.originalX - dot.x) * SPRING_STRENGTH;
-        const springY = (dot.originalY - dot.y) * SPRING_STRENGTH;
+        dot.vx += (dot.originalX - dot.x) * SPRING_STRENGTH;
+        dot.vy += (dot.originalY - dot.y) * SPRING_STRENGTH;
 
-        dot.vx += springX;
-        dot.vy += springY;
-
-        // Mouse repulsion
         if (mouse.active) {
           const dx = dot.x - mouse.x;
           const dy = dot.y - mouse.y;
@@ -246,28 +197,20 @@ const FooterLogoCanvas = () => {
 
             const dirX = dx / dist;
             const dirY = dy / dist;
-
-            // Tangential drift for organic cinematic motion
             const tangentX = -dirY * TANGENTIAL_FACTOR;
             const tangentY = dirX * TANGENTIAL_FACTOR;
 
-            // Softer spread: outer dots still drift subtly
-            const spreadMultiplier = 0.6 + falloff * 0.4;
-
-            dot.vx += (dirX * force + tangentX * falloff) * spreadMultiplier;
-            dot.vy += (dirY * force + tangentY * falloff) * spreadMultiplier;
+            dot.vx += dirX * force + tangentX * falloff;
+            dot.vy += dirY * force + tangentY * falloff;
           }
         }
 
-        // Apply damping
         dot.vx *= DAMPING;
         dot.vy *= DAMPING;
 
-        // Update position
         const newX = dot.x + dot.vx;
         const newY = dot.y + dot.vy;
 
-        // Cap maximum displacement from original
         const offsetX = newX - dot.originalX;
         const offsetY = newY - dot.originalY;
         const offsetDist = Math.sqrt(offsetX * offsetX + offsetY * offsetY);
@@ -283,13 +226,11 @@ const FooterLogoCanvas = () => {
           dot.y = newY;
         }
 
-        // Check if dot is still moving
         if (Math.abs(dot.vx) > 0.01 || Math.abs(dot.vy) > 0.01 || offsetDist > 0.1) {
           hasMovement = true;
         }
       }
 
-      // Pause if no movement and mouse inactive
       if (!hasMovement && !mouse.active) {
         isActiveRef.current = false;
       }
@@ -297,27 +238,22 @@ const FooterLogoCanvas = () => {
 
     const renderDots = () => {
       const rect = canvas.getBoundingClientRect();
-
-      // Clear with pure black background
       ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, rect.width, rect.height);
 
-      // Draw all dots with refined white
-      ctx.fillStyle = '#F5F5F5';
+      ctx.fillStyle = TEXT_COLOR;
 
       const dots = dotsRef.current;
       for (let i = 0; i < dots.length; i++) {
         const dot = dots[i];
         if (!dot) continue;
 
-        // Draw perfectly uniform circular dot
         ctx.beginPath();
         ctx.arc(dot.x, dot.y, DOT_RADIUS, 0, Math.PI * 2);
         ctx.fill();
       }
     };
 
-    // Mouse tracking with throttling
     const handleMouseMove = (e: MouseEvent) => {
       const now = performance.now();
       if (now - lastMouseTimeRef.current < MOUSE_THROTTLE_MS) return;
@@ -338,13 +274,11 @@ const FooterLogoCanvas = () => {
       mouseRef.current.active = false;
     };
 
-    // Initial render with delay for font loading
-    setTimeout(renderMassiveWordmark, 200);
+    void renderWordmark();
 
-    // Handle window resize
     const handleResize = () => {
       stopAnimationLoop();
-      setTimeout(renderMassiveWordmark, 100);
+      void renderWordmark();
     };
 
     window.addEventListener('resize', handleResize);
@@ -362,24 +296,24 @@ const FooterLogoCanvas = () => {
   return (
     <section
       className='relative w-full overflow-hidden'
-      style={{ backgroundColor: '#000000' }}
+      style={{
+        backgroundColor: '#000000',
+        height: '520px',
+        width: '100%',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
     >
-      <div
-        className='relative w-full'
+      <canvas
+        ref={canvasRef}
+        className='block cursor-default'
         style={{
-          height: 'clamp(420px, 46vh, 580px)',
+          width: '100%',
+          height: '100%',
+          display: 'block',
+          background: '#000',
         }}
-      >
-        <canvas
-          ref={canvasRef}
-          className='block h-full w-full cursor-default'
-          style={{
-            width: '100%',
-            height: '100%',
-            display: 'block',
-          }}
-        />
-      </div>
+      />
     </section>
   );
 };
