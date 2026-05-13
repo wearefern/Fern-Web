@@ -37,7 +37,7 @@ export default function ContactPage() {
             </Typography>
           </div>
 
-          <div className='mx-auto mt-16 grid max-w-[40rem] gap-7 sm:mt-20'>
+          <form className='mx-auto mt-16 max-w-[40rem] space-y-7 sm:mt-20' action={`mailto:${SOCIALS.mail.url}`} method='post'>
             <label className='block'>
               <Typography
                 variant='body'
@@ -52,6 +52,7 @@ export default function ContactPage() {
                 name='name'
                 placeholder='Enter your name'
                 className={inputClassName}
+                required
               />
             </label>
 
@@ -69,6 +70,7 @@ export default function ContactPage() {
                 name='email'
                 placeholder='Enter your email'
                 className={inputClassName}
+                required
               />
             </label>
 
@@ -103,15 +105,16 @@ export default function ContactPage() {
                 rows={6}
                 placeholder='Hi Fern,'
                 className='w-full rounded-2xl border border-ctx-primary-fg-decorative bg-transparent px-5 py-4 text-lg text-ctx-primary-fg-primary outline-none transition-colors duration-300 placeholder:text-ctx-primary-fg-hint focus:border-ctx-primary-fg-solid'
+                required
               />
             </label>
 
             <div className='pt-2'>
-              <Button className='rounded-xl px-6 py-4 text-sm font-medium'>
-                <a href={`mailto:${SOCIALS.mail.url}`}>Send message</a>
+              <Button className='rounded-xl px-6 py-4 text-sm font-medium' type='submit'>
+                Send message
               </Button>
             </div>
-          </div>
+          </form>
         </div>
       </section>
     </main>

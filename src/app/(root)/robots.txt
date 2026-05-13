@@ -1,4 +1,11 @@
-User-Agent: *
-Allow: /
+import { BASE_URL } from '~constants';
 
-Sitemap: https://fern.so/sitemap.xml
+export default function robots() {
+  return {
+    rules: {
+      userAgent: '*',
+      allow: '/',
+    },
+    sitemap: `${BASE_URL}/sitemap.xml`,
+  };
+}

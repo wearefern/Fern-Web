@@ -24,6 +24,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
+    "ignoreDeprecations": "5.0",
     /* Paths */
     "paths": {
       "~api/*": ["src/app/api/*"],

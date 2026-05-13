@@ -1,13 +1,13 @@
 'use client';
 
-import { SectionFooter } from '~ui/molecules/section/section-footer';
+import { Footer } from '~ui/molecules/footer';
 
 /* -------------------------------------------------------------------------------------------------
- * HomeFooter
+ * HomeFooter - Footer wrapper for home page
  * -----------------------------------------------------------------------------------------------*/
 
 const HomeFooter = () => {
-  return <SectionFooter></SectionFooter>;
+  return <Footer />;
 };
 
 HomeFooter.displayName = 'HomeFooter';

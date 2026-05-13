@@ -1,0 +1,11 @@
+1. Run Codex prompt
+2. Add both payment provider prompt
+3. Create Clerk, Stripe, PayHere, DB, R2/S3 accounts
+4. Fill .env.local
+5. Run Prisma migration + seed
+6. Test auth
+7. Test plugin API
+8. Test free plugin unlock
+9. Test Stripe checkout + webhook
+10. Test PayHere checkout + notify_url
+11. Test private download links

@@ -4,13 +4,19 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL")
-  directUrl = env("POSTGRES_URL_NON_POOLING")
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
   hash               String               @id @unique
+  clerkId            String?              @unique @map(name: "clerk_id")
+  email              String?
+  name               String?
+  imageUrl           String?              @map(name: "image_url")
+  role               String               @default("USER")
   createdAt          DateTime             @default(now()) @map(name: "created_at")
+  updatedAt          DateTime             @updatedAt @map(name: "updated_at")
   ContentInteraction ContentInteraction[]
 
   @@map(name: "users")
@@ -38,4 +44,182 @@ model ContentInteraction {
 
   @@id(name: "interactionRelation", [userHash, contentSlug])
   @@map(name: "content_interactions")
+}
+
+model UserPreference {
+  userId             String   @id @unique @map(name: "user_id")
+  orderConfirmations Boolean  @default(true)
+  downloadUpdates    Boolean  @default(false)
+  productAnnouncements Boolean @default(false)
+  marketingEmails    Boolean  @default(false)
+  createdAt          DateTime @default(now()) @map(name: "created_at")
+  updatedAt          DateTime @updatedAt @map(name: "updated_at")
+
+  @@map(name: "user_preferences")
+}
+
+model BillingProfile {
+  userId      String   @id @unique @map(name: "user_id")
+  fullName    String   @default("")
+  billingEmail String  @default("")
+  country     String   @default("")
+  addressLine1 String  @default("")
+  addressLine2 String  @default("")
+  city        String   @default("")
+  postalCode  String   @default("")
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @updatedAt @map(name: "updated_at")
+
+  @@map(name: "billing_profiles")
+}
+
+model Plugin {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  priceCents  Int
+  status      String
+  previewUrl  String?
+  fileKey     String?
+  demoControls Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  orderItems  OrderItem[]
+  purchases   Purchase[]
+
+  @@map(name: "plugins")
+}
+
+model Order {
+  id         String      @id @default(cuid())
+  userId     String      @map(name: "user_id")
+  stripeSessionId String? @unique @map(name: "stripe_session_id")
+  totalCents Int         @map(name: "total_cents")
+  status     String      @default("completed")
+  createdAt  DateTime    @default(now()) @map(name: "created_at")
+  updatedAt  DateTime    @updatedAt @map(name: "updated_at")
+  items      OrderItem[]
+  purchases  Purchase[]
+
+  @@index([userId])
+  @@map(name: "orders")
+}
+
+model OrderItem {
+  id             String   @id @default(cuid())
+  orderId        String   @map(name: "order_id")
+  pluginId       String   @map(name: "plugin_id")
+  quantity       Int      @default(1)
+  unitPriceCents Int      @map(name: "unit_price_cents")
+  createdAt      DateTime @default(now()) @map(name: "created_at")
+
+  order  Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  plugin Plugin @relation(fields: [pluginId], references: [id], onDelete: Restrict)
+
+  @@index([orderId])
+  @@index([pluginId])
+  @@map(name: "order_items")
+}
+
+model Purchase {
+  id        String    @id @default(cuid())
+  userId    String    @map(name: "user_id")
+  pluginId  String    @map(name: "plugin_id")
+  orderId   String?   @map(name: "order_id")
+  createdAt DateTime  @default(now()) @map(name: "created_at")
+
+  plugin         Plugin          @relation(fields: [pluginId], references: [id], onDelete: Restrict)
+  order          Order?          @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  downloadTokens DownloadToken[]
+
+  @@unique([userId, pluginId])
+  @@index([userId])
+  @@index([pluginId])
+  @@index([orderId])
+  @@map(name: "purchases")
+}
+
+model DownloadToken {
+  id         String    @id @default(cuid())
+  purchaseId String    @map(name: "purchase_id")
+  token      String    @unique
+  expiresAt  DateTime  @map(name: "expires_at")
+  usedAt     DateTime? @map(name: "used_at")
+  createdAt  DateTime  @default(now()) @map(name: "created_at")
+
+  purchase Purchase @relation(fields: [purchaseId], references: [id], onDelete: Cascade)
+
+  @@index([purchaseId])
+  @@map(name: "download_tokens")
+}
+
+model Tool {
+  id              String   @id @default(cuid())
+  name            String
+  slug            String   @unique
+  description     String?
+  longDescription String?
+  priceCents      Int
+  status          String
+  category        String?
+  previewImageUrl String?
+  fileKey         String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  orders          ToolOrder[]
+  downloads       ToolDownload[]
+  downloadTokens  ToolDownloadToken[]
+
+  @@map(name: "tools")
+}
+
+model ToolOrder {
+  id                    String   @id @default(cuid())
+  userId                String
+  toolId                String
+  amountCents           Int
+  status                String
+  stripeSessionId       String?  @unique
+  stripePaymentIntentId String?
+  createdAt             DateTime @default(now())
+
+  tool Tool @relation(fields: [toolId], references: [id], onDelete: Restrict)
+
+  @@unique([userId, toolId])
+  @@index([userId])
+  @@index([toolId])
+  @@map(name: "tool_orders")
+}
+
+model ToolDownload {
+  id           String   @id @default(cuid())
+  userId       String
+  toolId       String
+  downloadedAt DateTime @default(now())
+  ipAddress    String?
+
+  tool Tool @relation(fields: [toolId], references: [id], onDelete: Restrict)
+
+  @@index([userId])
+  @@index([toolId])
+  @@map(name: "tool_downloads")
+}
+
+model ToolDownloadToken {
+  id        String    @id @default(cuid())
+  toolId    String
+  userId    String
+  token     String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  tool Tool @relation(fields: [toolId], references: [id], onDelete: Cascade)
+
+  @@index([toolId])
+  @@index([userId])
+  @@map(name: "tool_download_tokens")
 }

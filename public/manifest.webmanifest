@@ -1,0 +1,18 @@
+{
+  "name": "Fern",
+  "short_name": "Fern",
+  "description": "Fern is a software firm that designs, builds, and scales digital products for modern businesses.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

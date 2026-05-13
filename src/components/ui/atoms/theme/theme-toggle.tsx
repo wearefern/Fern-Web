@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
@@ -19,7 +20,25 @@ const themeToIcon = {
 } as const;
 
 const ThemeToggle = ({ className }: ThemeToggleProps) => {
+  const [mounted, setMounted] = useState(false);
   const { setTheme, theme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <Button
+        className={cn(className, 'relative flex items-center justify-center')}
+        variant='ghost'
+        size='icon'
+        aria-label='Toggle theme'
+      >
+        <span className='sr-only'>Toggle theme</span>
+      </Button>
+    );
+  }
 
   const currentTheme = (theme === 'light' || theme === 'dark')
     ? theme

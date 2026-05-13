@@ -1,0 +1,242 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
+import { AccountShell } from './account-shell';
+import { getPluginDemoControls, parseDemoControls } from '~modules/plugins/demo-controls';
+
+interface AdminPlugin {
+  id: string;
+  name: string;
+  slug: string;
+  description: string | null;
+  priceCents: number;
+  status: string;
+  previewUrl: string | null;
+  fileKey: string | null;
+  demoControls: unknown;
+}
+
+export function AdminPluginsPage() {
+  const [plugins, setPlugins] = useState<AdminPlugin[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [controlErrors, setControlErrors] = useState<Record<string, string>>({});
+  const [uploading, setUploading] = useState(false);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const response = await fetch('/api/admin/plugins', { cache: 'no-store' });
+        if (!response.ok) return;
+        const data = (await response.json()) as AdminPlugin[];
+        setPlugins(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    void load();
+  }, []);
+
+  const updatePlugin = async (plugin: AdminPlugin) => {
+    await fetch(`/api/admin/plugins/${plugin.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: plugin.name,
+        slug: plugin.slug,
+        description: plugin.description,
+        priceCents: plugin.priceCents,
+        status: plugin.status,
+        previewUrl: plugin.previewUrl,
+        fileKey: plugin.fileKey,
+      }),
+    });
+  };
+
+  const updateDemoControls = async (plugin: AdminPlugin) => {
+    const text = (plugin.demoControls as string) ?? '';
+    let parsedJson: unknown;
+    try {
+      parsedJson = JSON.parse(text);
+    } catch (error) {
+      console.error(error);
+      setControlErrors((prev) => ({ ...prev, [plugin.id]: 'Invalid JSON.' }));
+      return;
+    }
+
+    const parsed = parseDemoControls(parsedJson);
+    if (!parsed) {
+      setControlErrors((prev) => ({
+        ...prev,
+        [plugin.id]: 'Expected demoControls.controls with valid key/label/min/max/default values.',
+      }));
+      return;
+    }
+
+    setControlErrors((prev) => ({ ...prev, [plugin.id]: '' }));
+    const response = await fetch(`/api/admin/plugins/${plugin.id}/demo-controls`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ demoControls: parsed }),
+    });
+
+    if (!response.ok) {
+      setControlErrors((prev) => ({ ...prev, [plugin.id]: 'Unable to save demo controls.' }));
+    }
+  };
+
+  const handleFileUpload = async (pluginId: string, file: File) => {
+    setUploading(true);
+    try {
+      console.log('ADMIN UPLOAD START: pluginId:', pluginId, 'file:', file.name);
+
+      // Step 1: Get signed upload URL from R2
+      const urlResponse = await fetch('/api/admin/upload-url', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fileName: file.name,
+          contentType: file.type,
+          fileType: 'plugin',
+        }),
+      } as RequestInit);
+
+      if (!urlResponse.ok) {
+        throw new Error('Failed to get upload URL');
+      }
+
+      const data: { uploadUrl: string; fileKey: string } = await urlResponse.json();
+      const { uploadUrl, fileKey } = data;
+      console.log('ADMIN UPLOAD: Got fileKey:', fileKey);
+
+      // Step 2: Upload file directly to R2
+      const uploadResponse = await fetch(uploadUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type },
+        body: file,
+      } as RequestInit);
+
+      if (!uploadResponse.ok) {
+        throw new Error('Failed to upload file');
+      }
+      console.log('ADMIN UPLOAD: File uploaded to R2 successfully');
+
+      // Step 3: Update plugin record with fileKey
+      const patchResponse = await fetch(`/api/admin/plugins/${pluginId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fileKey }),
+      });
+
+      if (!patchResponse.ok) {
+        const errorText = await patchResponse.text();
+        console.error('ADMIN UPLOAD FILEKEY SAVE FAILED:', errorText);
+        throw new Error('Failed to save fileKey to database');
+      }
+
+      console.log('ADMIN UPLOAD FILEKEY SAVED: pluginId:', pluginId, 'fileKey:', fileKey);
+
+      // Reload plugins from server to verify persistence
+      const reloadResponse = await fetch('/api/admin/plugins', { cache: 'no-store' });
+      if (reloadResponse.ok) {
+        const reloadedData = (await reloadResponse.json()) as AdminPlugin[];
+        setPlugins(reloadedData);
+        console.log('ADMIN UPLOAD: Reloaded plugins from server, fileKey persisted');
+      }
+    } catch (error) {
+      console.error('ADMIN UPLOAD ERROR:', error);
+      alert('Upload failed. Please try again.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  return (
+    <AccountShell
+      title='Admin Plugins'
+      subtitle='Manage plugin catalog and demo defaults.'
+    >
+      {loading ? <p className='text-gray-600'>Loading plugins...</p> : null}
+      <div className='space-y-6'>
+        {plugins.map((plugin) => (
+          <div key={plugin.id} className='rounded-lg border border-gray-200 bg-white p-6'>
+
+            <h3 className='font-semibold text-lg'>
+              {plugin.name} ({plugin.slug})
+            </h3>
+            <div className='grid gap-3 sm:grid-cols-2'>
+              <input className='border border-gray-300 rounded px-3 py-2' value={plugin.name} onChange={(e) => setPlugins((prev) => prev.map((item) => item.id === plugin.id ? { ...item, name: e.target.value } : item))} />
+              <input className='border border-gray-300 rounded px-3 py-2' value={plugin.slug} onChange={(e) => setPlugins((prev) => prev.map((item) => item.id === plugin.id ? { ...item, slug: e.target.value } : item))} />
+              <input className='border border-gray-300 rounded px-3 py-2' value={plugin.status} onChange={(e) => setPlugins((prev) => prev.map((item) => item.id === plugin.id ? { ...item, status: e.target.value } : item))} />
+              <input className='border border-gray-300 rounded px-3 py-2' type='number' value={plugin.priceCents} onChange={(e) => setPlugins((prev) => prev.map((item) => item.id === plugin.id ? { ...item, priceCents: Number(e.target.value) } : item))} />
+              <input className='border border-gray-300 rounded px-3 py-2' placeholder='/audio/baby.mp3 (no public prefix)' value={plugin.previewUrl ?? ''} onChange={(e) => setPlugins((prev) => prev.map((item) => item.id === plugin.id ? { ...item, previewUrl: e.target.value } : item))} />
+              <input className='border border-gray-300 rounded px-3 py-2' placeholder='File key' value={plugin.fileKey ?? ''} onChange={(e) => setPlugins((prev) => prev.map((item) => item.id === plugin.id ? { ...item, fileKey: e.target.value } : item))} />
+            <div className='mt-2'>
+              <label className='block text-sm font-medium text-gray-700 mb-1'>Upload ZIP File:</label>
+              <input
+                type='file'
+                accept='.zip'
+                disabled={uploading}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    void handleFileUpload(plugin.id, file);
+                  }
+                }}
+                className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-black file:text-white hover:file:bg-gray-700'
+              />
+              {uploading && <p className='mt-1 text-sm text-gray-600'>Uploading...</p>}
+            </div>
+            </div>
+            <textarea className='mt-3 w-full border border-gray-300 rounded px-3 py-2' value={plugin.description ?? ''} onChange={(e) => setPlugins((prev) => prev.map((item) => item.id === plugin.id ? { ...item, description: e.target.value } : item))} />
+            <textarea
+              className='mt-3 w-full border border-gray-300 rounded px-3 py-2 font-mono text-sm'
+              rows={8}
+              value={
+                typeof plugin.demoControls === 'string'
+                  ? plugin.demoControls
+                  : JSON.stringify(
+                      getPluginDemoControls(plugin.slug, plugin.demoControls) ?? { controls: [] },
+                      null,
+                      2
+                    )
+              }
+              onChange={(e) =>
+                setPlugins((prev) =>
+                  prev.map((item) =>
+                    item.id === plugin.id
+                      ? {
+                          ...item,
+                          demoControls: e.target.value,
+                        }
+                      : item
+                  )
+                )
+              }
+            />
+            {controlErrors[plugin.id] ? (
+              <p className='mt-2 text-sm text-red-600'>{controlErrors[plugin.id]}</p>
+            ) : null}
+            <button
+              type='button'
+              onClick={() => void updatePlugin(plugin)}
+              className='mt-4 rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:opacity-90'
+            >
+              Save Plugin
+            </button>
+            <button
+              type='button'
+              onClick={() => void updateDemoControls(plugin)}
+              className='mt-2 rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-black hover:border-gray-400'
+            >
+              Save Demo Controls
+            </button>
+          </div>
+        ))}
+      </div>
+    </AccountShell>
+  );
+}

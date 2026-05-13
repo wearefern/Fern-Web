@@ -9,11 +9,8 @@ import { Button } from '~ui/atoms/button';
 import { LAYOUT_ID_HOME_LOGO } from '~ui/atoms/motion';
 import { Typography } from '~ui/atoms/typography';
 import { AppHeader } from '~ui/molecules/app-header';
-import {
-  PrompterHandle,
-  PrompterRenderer,
-  createPrompterParts,
-} from '~ui/organisms/prompter';
+import { PrompterHandle, PrompterRenderer } from '~ui/organisms/prompter';
+import { createPrompterParts } from '~ui/organisms/prompter/index';
 import { HighlightPrompter } from '~ui/organisms/prompter/implementations';
 import { Logo } from '~ui/widgets/logo';
 

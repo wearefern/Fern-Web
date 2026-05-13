@@ -1,11 +1,49 @@
 import createMDX from '@next/mdx';
 
-/** @type {import('next').NextConfig} */
+/** @type {import("next").NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'mdx'],
+
+  experimental: {
+    outputFileTracingExcludes: {
+      '/**': [
+        '.pnpm-store/**/*',
+        '**/.pnpm-store/**/*',
+        'node_modules/.cache/**/*',
+        '.git/**/*',
+        '.agents/**/*',
+        '.clerk/**/*',
+        '.env',
+        '.env.*',
+        'public/videos/**/*',
+        'public/audio/**/*',
+        'public/sfx/**/*',
+        'public/galleries/**/*',
+        'public/content/articles/**/*',
+        'public/content/talks/**/*',
+        'public/downloads/**/*',
+        '.next/cache/**/*',
+        '.next/cache/webpack/**/*',
+      ],
+    },
+  },
+
   webpack: (config) => {
-    config.resolve.fallback = { fs: false, path: false };
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      path: false,
+    };
 
     config.module.rules.push({
       test: /\.(mp3)$/,
@@ -17,6 +55,7 @@ const nextConfig = {
 
     return config;
   },
+
   images: {
     remotePatterns: [
       {

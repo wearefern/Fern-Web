@@ -1,0 +1,93 @@
+
+> portfolio@0.1.0 dev C:\Users\ASUS\Desktop\Fern-Web
+> next dev "--port" "3010"
+
+   ▲ Next.js 14.1.4
+   - Local:        http://localhost:3010
+   - Environments: .env.local, .env
+
+   automatically enabled Fast Refresh for 1 custom loader
+ ✓ Ready in 5.5s
+ ○ Compiling /src/middleware ...
+ ✓ Compiled /src/middleware in 1971ms (186 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 20.9s (2265 modules)
+
+[35m
+[Clerk]:[0m You are running in keyless mode.
+You can [35mclaim your keys[0m by visiting https://dashboard.clerk.com/apps/claim?framework=nextjs&token=soa9udkbds1cj0iky2xne1y746r6w0jkisa1pgsp&return_url=http%3A%2F%2F127.0.0.1%3A3010%2F
+
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 909ms (1254 modules)
+ ○ Compiling /plugins ...
+ ✓ Compiled /plugins in 1976ms (2283 modules)
+ ✓ Compiled /api/plugins in 422ms (1270 modules)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 2.8s (2435 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /plugins/[slug] in 1616ms (2440 modules)
+ ✓ Compiled in 954ms (1133 modules)
+ ✓ Compiled /api/plugins/[slug] in 492ms (1324 modules)
+ ○ Compiling /cart ...
+ ✓ Compiled /cart in 1841ms (2464 modules)
+ ○ Compiling /sign-in/[[...sign-in]] ...
+ ✓ Compiled /sign-in/[[...sign-in]] in 1292ms (2470 modules)
+ ○ Compiling /checkout ...
+ ✓ Compiled /checkout in 1681ms (2450 modules)
+ ○ Compiling /api/orders ...
+ ✓ Compiled /api/orders in 2.1s (1333 modules)
+ ○ Compiling /account ...
+ ✓ Compiled /account in 2.6s (2494 modules)
+ ○ Compiling /api/account/me ...
+ ✓ Compiled /api/account/me in 585ms (1340 modules)
+ ○ Compiling /account/downloads ...
+ ✓ Compiled /account/downloads in 1386ms (2494 modules)
+ ○ Compiling /api/downloads ...
+ ✓ Compiled /api/downloads in 532ms (1350 modules)
+ ○ Compiling /account/settings ...
+ ✓ Compiled /account/settings in 1977ms (2491 modules)
+ ○ Compiling /account/settings/profile ...
+ ✓ Compiled /account/settings/profile in 1188ms (2483 modules)
+ ○ Compiling /account/settings/billing ...
+ ✓ Compiled /account/settings/billing in 1573ms (2501 modules)
+ ○ Compiling /api/account/billing ...
+ ✓ Compiled /api/account/billing in 572ms (1336 modules)
+ ○ Compiling /contact ...
+ ✓ Compiled /contact in 2.6s (2513 modules)
+ ○ Compiling /account/profile ...
+ ✓ Compiled /account/profile in 1602ms (2483 modules)
+ ○ Compiling /account/settings ...
+ ✓ Compiled /account/settings in 626ms (1333 modules)
+ ○ Compiling /account/settings/security ...
+ ✓ Compiled /account/settings/security in 1243ms (2495 modules)
+ ○ Compiling /cart ...
+ ✓ Compiled /cart in 1263ms (1294 modules)
+   Reload env: .env.local
+ ✓ Compiled in 15.5s (2669 modules)
+
+[35m
+[Clerk]:[0m You are running in keyless mode.
+You can [35mclaim your keys[0m by visiting https://dashboard.clerk.com/apps/claim?framework=nextjs&token=soa9udkbds1cj0iky2xne1y746r6w0jkisa1pgsp&return_url=http%3A%2F%2Flocalhost%3A3010%2F
+
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 777ms (1315 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 1325ms (2446 modules)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 13.4s (2463 modules)
+ ✓ Compiled in 24.6s (2627 modules)
+ ✓ Compiled in 744ms (1170 modules)
+ ✓ Compiled in 952ms (1170 modules)
+   Reload env: .env.local
+ ✓ Compiled in 11.7s (2642 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 21.4s (2446 modules)
+ ✓ Compiled in 11.8s (2461 modules)
+
+[35m
+[Clerk]:[0m You are running in keyless mode.
+You can [35mclaim your keys[0m by visiting https://dashboard.clerk.com/apps/claim?framework=nextjs&token=soa9udkbds1cj0iky2xne1y746r6w0jkisa1pgsp&return_url=http%3A%2F%2Flocalhost%3A3010%2F
+
+ ✓ Compiled in 4.4s (1170 modules)
+ ✓ Compiled in 846ms (1170 modules)
+ ✓ Compiled in 4.6s (1170 modules)

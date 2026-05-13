@@ -4,7 +4,7 @@ export type ModelClient = PrismaClient;
 
 let client: ModelClient;
 
-export const getModelClient = () => {
+export const getModelClient = (): ModelClient => {
   if (client) {
     return client;
   }

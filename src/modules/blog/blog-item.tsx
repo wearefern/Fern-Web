@@ -1,18 +1,15 @@
-import Image from 'next/image';
 import Link, { LinkProps } from 'next/link';
+import { BLOG_PATH } from '~constants/index';
 
 import { Content } from '~lib/content/provider';
 
 import { Typography } from '~ui/atoms/typography';
 import { ContentIcon } from '~ui/molecules/content-icon';
 import { TagsList } from '~ui/organisms/tags-list';
+import { BlogItemThumbnail } from './blog-item-thumbnail';
 
 import { dayMonthNameAndYearDate, readingTime } from '~utils/string';
 import { cn } from '~utils/style';
-
-/* -------------------------------------------------------------------------------------------------
- * BlogItem
- * -----------------------------------------------------------------------------------------------*/
 
 interface BlogItemProps extends Partial<LinkProps> {
   content: Content;
@@ -27,27 +24,17 @@ const BlogItem = ({ content, className, ...rest }: BlogItemProps) => {
         className
       )}
       key={content.slug}
-      href={`/blog/${content.slug}`}
+      href={`${BLOG_PATH}/${content.slug}`}
       {...rest}
     >
       <article className='flex w-full flex-col' key={content.slug}>
         <div className='grid w-full gap-5 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-x-10 lg:grid-cols-[11rem_minmax(0,1fr)]'>
           <div className='flex flex-wrap items-center gap-3 self-start sm:block'>
-            <Typography
-              className='uppercase'
-              variant='sm'
-              weight='bold'
-              color='secondary'
-            >
+            <Typography className='uppercase' variant='sm' weight='bold' color='secondary'>
               {content.type.replace('-', ' ')}
             </Typography>
 
-            <Typography
-              className='whitespace-nowrap sm:mt-3'
-              variant='body-sm'
-              weight='normal'
-              color='hint'
-            >
+            <Typography className='whitespace-nowrap sm:mt-3' variant='body-sm' weight='normal' color='hint'>
               {dayMonthNameAndYearDate(new Date(content.date))}
             </Typography>
           </div>
@@ -61,20 +48,12 @@ const BlogItem = ({ content, className, ...rest }: BlogItemProps) => {
                 balance
               >
                 <h3>
-                  <ContentIcon
-                    className='mr-2 inline align-middle'
-                    contentType={content.type}
-                  />
+                  <ContentIcon className='mr-2 inline align-middle' contentType={content.type} />
                   {content.title}
                 </h3>
               </Typography>
 
-              <Typography
-                className='mt-4 max-w-3xl'
-                variant='body-sm'
-                color='secondary'
-                weight='normal'
-              >
+              <Typography className='mt-4 max-w-3xl' variant='body-sm' color='secondary' weight='normal'>
                 {content.description}
               </Typography>
 
@@ -82,22 +61,17 @@ const BlogItem = ({ content, className, ...rest }: BlogItemProps) => {
                 <Typography variant='sm' color='hint' weight='normal'>
                   {readingTime(content.body)}
                 </Typography>
-
                 <TagsList tags={content.tags} />
               </div>
             </div>
 
-            <ItemThumbnail className='hidden md:flex' content={content} />
+            <BlogItemThumbnail className='hidden md:flex' content={content} />
           </div>
         </div>
       </article>
     </Link>
   );
 };
-
-/* -------------------------------------------------------------------------------------------------
- * BlogFeatureItem
- * -----------------------------------------------------------------------------------------------*/
 
 const BlogFeatureItem = ({ content, className, ...rest }: BlogItemProps) => {
   return (
@@ -107,16 +81,11 @@ const BlogFeatureItem = ({ content, className, ...rest }: BlogItemProps) => {
         className
       )}
       key={content.slug}
-      href={`/blog/${content.slug}`}
+      href={`${BLOG_PATH}/${content.slug}`}
       {...rest}
     >
       <article className='flex min-w-0 flex-col justify-center'>
-        <Typography
-          className='uppercase'
-          variant='sm'
-          color='secondary'
-          weight='bold'
-        >
+        <Typography className='uppercase' variant='sm' color='secondary' weight='bold'>
           Featured {content.type.replace('-', ' ')}
         </Typography>
 
@@ -127,19 +96,12 @@ const BlogFeatureItem = ({ content, className, ...rest }: BlogItemProps) => {
           balance
         >
           <h3>
-            <ContentIcon
-              className='mr-2 inline align-middle'
-              contentType={content.type}
-            />
+            <ContentIcon className='mr-2 inline align-middle' contentType={content.type} />
             {content.title}
           </h3>
         </Typography>
 
-        <Typography
-          className='mt-5 max-w-3xl'
-          color='secondary'
-          weight='normal'
-        >
+        <Typography className='mt-5 max-w-3xl' color='secondary' weight='normal'>
           {content.description}
         </Typography>
 
@@ -147,23 +109,17 @@ const BlogFeatureItem = ({ content, className, ...rest }: BlogItemProps) => {
           <Typography variant='body-sm' color='hint' weight='normal'>
             {dayMonthNameAndYearDate(new Date(content.date))}
           </Typography>
-
           <Typography variant='sm' color='hint' weight='normal'>
             {readingTime(content.body)}
           </Typography>
-
           <TagsList tags={content.tags} />
         </div>
       </article>
 
-      <ItemThumbnail className='min-h-48 sm:min-h-full' content={content} />
+      <BlogItemThumbnail className='min-h-48 sm:min-h-full' content={content} />
     </Link>
   );
 };
-
-/* -------------------------------------------------------------------------------------------------
- * BlogSecondaryItem
- * -----------------------------------------------------------------------------------------------*/
 
 const BlogSecondaryItem = ({ content, className, ...rest }: BlogItemProps) => {
   return (
@@ -173,34 +129,19 @@ const BlogSecondaryItem = ({ content, className, ...rest }: BlogItemProps) => {
         className
       )}
       key={content.slug}
-      href={`/blog/${content.slug}`}
+      href={`${BLOG_PATH}/${content.slug}`}
       {...rest}
     >
       <article className='flex h-full flex-col'>
-        <Typography
-          className='uppercase'
-          variant='sm'
-          color='secondary'
-          weight='bold'
-        >
+        <Typography className='uppercase' variant='sm' color='secondary' weight='bold'>
           {content.type.replace('-', ' ')}
         </Typography>
 
-        <Typography
-          className='mt-3 text-lg leading-7 underline-offset-4 group-hover:underline'
-          asChild
-          prose={false}
-          balance
-        >
+        <Typography className='mt-3 text-lg leading-7 underline-offset-4 group-hover:underline' asChild prose={false} balance>
           <h3>{content.title}</h3>
         </Typography>
 
-        <Typography
-          className='mt-3 line-clamp-3'
-          variant='body-sm'
-          color='secondary'
-          weight='normal'
-        >
+        <Typography className='mt-3 line-clamp-3' variant='body-sm' color='secondary' weight='normal'>
           {content.description}
         </Typography>
 
@@ -208,57 +149,12 @@ const BlogSecondaryItem = ({ content, className, ...rest }: BlogItemProps) => {
           <Typography variant='sm' color='hint' weight='normal'>
             {dayMonthNameAndYearDate(new Date(content.date))}
           </Typography>
-
           <TagsList tags={content.tags} />
         </div>
       </article>
     </Link>
   );
 };
-
-/* -------------------------------------------------------------------------------------------------
- * ItemThumbnail
- * -----------------------------------------------------------------------------------------------*/
-
-interface ItemThumbnailProps {
-  content: Content;
-  className?: string;
-}
-
-const ItemThumbnail = ({ content, className }: ItemThumbnailProps) => {
-  return (
-    <div
-      className={cn(
-        'relative flex aspect-video h-min w-full flex-initial flex-col items-center justify-center overflow-hidden rounded-xl bg-ctx-secondary',
-        className
-      )}
-    >
-      {content.thumbnail ? (
-        <Image
-          fill
-          priority
-          sizes='100%'
-          className='object-cover'
-          src={content.thumbnail}
-          alt={content.description}
-        />
-      ) : (
-        <Typography
-          className='uppercase'
-          variant='sm'
-          color='secondary'
-          weight='bold'
-        >
-          Soon
-        </Typography>
-      )}
-    </div>
-  );
-};
-
-ItemThumbnail.displayName = 'ItemThumbnail';
-
-/* -----------------------------------------------------------------------------------------------*/
 
 export { BlogFeatureItem, BlogItem, BlogSecondaryItem };
 export type { BlogItemProps };

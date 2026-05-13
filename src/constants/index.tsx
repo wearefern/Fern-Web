@@ -3,20 +3,26 @@ import { ContentType } from '~lib/content/provider';
 export const BASE_URL =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
-    : 'https://fern.so';
+    : process.env.NEXT_PUBLIC_APP_URL || 'https://fern-web-cyan.vercel.app';
 
-export const BLOG_PATH = '/blog';
+export const INSIGHTS_PATH = '/insights';
+export const INSIGHTS_PATH_WITH_CATEGORY = (category: ContentType) =>
+  `${INSIGHTS_PATH}?content=${category}`;
+export const BLOG_PATH = INSIGHTS_PATH;
 export const BLOG_PATH_WITH_CATEGORY = (category: ContentType) =>
   `${BLOG_PATH}?content=${category}`;
 
+export const PLUGINS_PATH = '/plugins';
+export const PRODUCTS_BY_FERN_URL = '/products';
+
 export const SOCIALS = {
   mail: {
-    url: 'hello@fern.so',
-    handle: 'hello@fern.so',
+    url: 'hello@wearefern.co',
+    handle: 'hello@wearefern.co',
   },
   linkedin: {
     url: 'https://www.linkedin.com/company/fern-software',
-    handle: 'company/fern-software',
+    handle: 'fern-software',
   },
   github: {
     url: 'https://github.com/fern-software',

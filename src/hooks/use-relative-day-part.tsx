@@ -74,12 +74,19 @@ const generateLatestTimestamp = () => {
   return new Date().getTime();
 };
 
+const DEFAULT_RELATIVE_DAY_PART: RelativeDayPart = {
+  startAt: 6,
+  endAt: 12,
+  part: 'morning',
+  phase: 'early',
+};
+
 const useRelativeDayPart = (refreshDelay = DEFAULT_REFRESH_DELAY) => {
-  const [latestTimestamp, setLatestTimestamp] = useState(
-    generateLatestTimestamp()
-  );
+  const [latestTimestamp, setLatestTimestamp] = useState<number | null>(null);
 
   useEffect(() => {
+    setLatestTimestamp(generateLatestTimestamp());
+
     const intervalId = setInterval(
       () => setLatestTimestamp(generateLatestTimestamp()),
       refreshDelay
@@ -89,6 +96,10 @@ const useRelativeDayPart = (refreshDelay = DEFAULT_REFRESH_DELAY) => {
   }, [refreshDelay]);
 
   return useMemo<RelativeDayPart>(() => {
+    if (latestTimestamp === null) {
+      return DEFAULT_RELATIVE_DAY_PART;
+    }
+
     const date = new Date(latestTimestamp);
     const hour = date.getHours();
 

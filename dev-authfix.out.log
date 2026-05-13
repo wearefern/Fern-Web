@@ -1,0 +1,53 @@
+
+> portfolio@0.1.0 dev C:\Users\ASUS\Desktop\Fern-Web
+> next dev
+
+   ▲ Next.js 14.1.4
+   - Local:        http://localhost:3000
+   - Environments: .env.local, .env
+
+   automatically enabled Fast Refresh for 1 custom loader
+ ✓ Ready in 3.8s
+ ✓ Compiled /src/middleware in 367ms (186 modules)
+ ○ Compiling / ...
+ ✓ Compiled / in 11s (2265 modules)
+
+[35m
+[Clerk]:[0m You are running in keyless mode.
+You can [35mclaim your keys[0m by visiting https://dashboard.clerk.com/apps/claim?framework=nextjs&token=soa9udkbds1cj0iky2xne1y746r6w0jkisa1pgsp&return_url=http%3A%2F%2Flocalhost%3A3000%2F
+
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 5.6s (2243 modules)
+ ○ Compiling /plugins ...
+ ✓ Compiled /plugins in 877ms (2244 modules)
+ ✓ Compiled /api/plugins in 319ms (1246 modules)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 1432ms (2413 modules)
+ ○ Compiling /plugins/[slug] ...
+ ✓ Compiled /plugins/[slug] in 723ms (2428 modules)
+ ✓ Compiled /api/plugins/[slug] in 271ms (1297 modules)
+ ○ Compiling /cart ...
+ ✓ Compiled /cart in 667ms (2437 modules)
+ ○ Compiling /checkout ...
+ ✓ Compiled /checkout in 629ms (2444 modules)
+ ○ Compiling /api/checkout ...
+ ✓ Compiled /api/checkout in 1753ms (1518 modules)
+ ✓ Compiled in 1808ms (2437 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 609ms (2427 modules)
+ ○ Compiling /cart ...
+ ✓ Compiled /cart in 644ms (1296 modules)
+ ○ Compiling /api/plugins ...
+ ✓ Compiled /api/plugins in 639ms (1304 modules)
+ ✓ Compiled /_error in 477ms (2442 modules)
+ ○ Compiling /api/plugins/[slug] ...
+ ✓ Compiled /api/plugins/[slug] in 681ms (1307 modules)
+   automatically enabled Fast Refresh for 1 custom loader
+ ○ Compiling /api/checkout ...
+ ✓ Compiled /api/checkout in 2.1s (1149 modules)
+ ○ Compiling /not-found ...
+ ✓ Compiled /not-found in 2s (2427 modules)
+ ✓ Compiled in 414ms (1151 modules)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 3.6s (2429 modules)
+ ✓ Compiled in 844ms (1149 modules)
